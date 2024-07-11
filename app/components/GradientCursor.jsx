@@ -11,7 +11,7 @@ const colors2 = [
     "#832388",
     "#e3436b",
     "#f0772f",
-    "#cad0ff"
+    "#cad0ff",
     
 ]
 
