@@ -1,13 +1,16 @@
-import React from 'react';
-import { useGLTF, Text, MeshTransmissionMaterial } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
+import { MeshTransmissionMaterial, Text, useGLTF } from '@react-three/drei';
+import { useFrame, useState, useThree } from '@react-three/fiber';
 import { useControls } from 'leva';
+import React from 'react';
 import { BackSide } from 'three';
 
 export default function Model() {
 
+    //creating a state to know when cursor is hovering over the model/text
+    const [isHovered, setIsHovered] = React.useState(false);
+
     const torus = React.useRef();
-    const { nodes } = useGLTF('media/torus.glb');
+    const { nodes } = useGLTF('media/torus-knot.glb');
     const {  viewport } = useThree();
 
     useFrame( () => {
@@ -16,20 +19,22 @@ export default function Model() {
     });
 
     const materialProps = useControls({
-        thickness: {value: 0.2, min: 0.01, max: 1, step: 0.05},
+        thickness: {value: 0.25, min: 0.01, max: 1, step: 0.05},
         roughness: {value: 0, min: 0, max: 1, step: 0.1},
         transmission: {value: 1, min: 0, max: 1, step: 0.1},
         ior: {value: 1.5, min: 1, max: 2, step: 0.1},
-        chromaticAberration: {value: 0.02, min: 0, max: 1},
-        BackSide: {value: false},
+        chromaticAberration: {value: 0.22, min: 0, max: 1},
+        BackSide: {value: true},
     });
 
   return (
-    <group scale={viewport.width / 5.5}>
-        <Text fontSize={.7} font='fonts/Dirtyline.otf' position={[0,0,-1]}>
+    <group scale={viewport.width / 6}>
+        {/* <Text fontSize={.9} font='fonts/Dirtyline.otf' position={[0,0,-1]}
+          onPointerOver={() => setIsHovered(true)} 
+          onPointerLeave={() => setIsHovered(false)}>
             Me aNd mY Torus
-        </Text>
-        <mesh ref={torus} {...nodes.Torus002} scale={.9}>
+        </Text> */}
+        <mesh ref={torus} {...nodes.TorusKnot001} scale={.4}>
             <MeshTransmissionMaterial {...materialProps}/>
         </mesh>
 
