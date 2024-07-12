@@ -1,23 +1,17 @@
-import { MeshTransmissionMaterial, Text, useGLTF } from '@react-three/drei';
-import { useFrame, useState, useThree } from '@react-three/fiber';
+import { MeshTransmissionMaterial, useGLTF } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useControls } from 'leva';
-import React from 'react';
-import { BackSide } from 'three';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function Model() {
 
     //creating a state to know when cursor is hovering over the model/text
-    const [isHovered, setIsHovered] = React.useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [meshScale, setMeshScale] = useState(0.4);
 
-    const torus = React.useRef();
+    const torus = useRef();
     const { nodes } = useGLTF('media/torus-knot.glb');
-    const {  viewport } = useThree();
-
-    useFrame( () => {
-        torus.current.rotation.x += materialProps.xSpeed;
-        torus.current.rotation.y += materialProps.ySpeed;
-        
-    });
+    const { viewport } = useThree();
 
     const materialProps = useControls({
         thickness: {value: 0.25, min: 0.01, max: 1, step: 0.05},
@@ -28,19 +22,40 @@ export default function Model() {
         BackSide: {value: true},
         xSpeed: {value: 0.016, min: 0, max: 0.1, step: 0.01},
         ySpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
+        //zSpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
     });
 
-  return (
-    <group scale={viewport.width / 6.5}>
-        {/* <Text fontSize={.9} font='fonts/Dirtyline.otf' position={[0,0,-1]}
-          onPointerOver={() => setIsHovered(true)} 
-          onPointerLeave={() => setIsHovered(false)}>
-            Me aNd mY Torus
-        </Text> */}
-        <mesh ref={torus} {...nodes.TorusKnot001} scale={.4}>
-            <MeshTransmissionMaterial {...materialProps}/>
-        </mesh>
+    useFrame(() => {
+        torus.current.rotation.x += materialProps.xSpeed;
+        torus.current.rotation.y += materialProps.ySpeed;
+    });
 
-    </group>
-  )
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setMeshScale(0.7);
+            } else {
+                setMeshScale(0.4);
+            }
+            console.log(window.innerWidth, meshScale);
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Set initial scale based on current window width
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return (
+        <group scale={viewport.width / 6}>
+            {/* <Text fontSize={.9} font='fonts/Dirtyline.otf' position={[0,0,-1]}
+            onPointerOver={() => setIsHovered(true)} 
+            onPointerLeave={() => setIsHovered(false)}>
+                Me aNd mY Torus
+            </Text> */}
+            <mesh ref={torus} {...nodes.TorusKnot001} scale={meshScale}>
+                <MeshTransmissionMaterial {...materialProps} />
+            </mesh>
+        </group>
+    );
 }
