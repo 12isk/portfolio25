@@ -11,13 +11,13 @@ const colors2 = [
     "#832388",
     "#e3436b",
     "#f0772f",
-    "#cad0ff",
+    "#33CCFF",
     
 ]
 
 export default function GradientCursor({isHovered}) {
     const size = isHovered ? 100 : 60;
-    
+
     // creating a ref for the cursor and setting the size
     const mouse = useRef({ x: 0, y: 0 })
     const circles = useRef([]);

@@ -51,7 +51,7 @@ export default function Presentation() {
                     onPointerOver={() => setIsHovered(true)}
                     onPointerLeave={() => setIsHovered(false)}
                 />
-            <Text fontSize={getWindowDimensions().width/950} font='fonts/Dirtyline.otf' position={[0,0,-1]}
+            <Text scale={getWindowDimensions().width/950} font='fonts/Dirtyline.otf' position={[0,0,-1]}
                 onPointerOver={() => setIsHovered(true)} 
                 onPointerLeave={() => setIsHovered(false)}>
                 CoMinG SoON
