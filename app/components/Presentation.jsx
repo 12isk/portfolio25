@@ -1,15 +1,12 @@
+import { Environment, Text } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
 // ./components/Presentation.js
 
-import React, { useState, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import Model from './Model';
-import { Environment, Text } from '@react-three/drei';
+import React, { useEffect, useState } from 'react';
+
 import Cursor from './Cursor';
 import GradientCursor from './GradientCursor';
-
-
-
-
+import Model from './Model';
 
 export default function Presentation() {
     const [isHovered, setIsHovered] = useState(false);
@@ -45,6 +42,8 @@ export default function Presentation() {
             </h1> */}
             <GradientCursor isHovered={isHovered} />
             <Canvas>
+                
+                <color attach="background" args={[0,0,0]} />
                 <directionalLight intensity={0.5} position={[0, 3, 2]} />
                 <Environment preset="city" />
                 <Model

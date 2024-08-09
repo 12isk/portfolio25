@@ -1,5 +1,6 @@
-import { MeshTransmissionMaterial, useGLTF } from '@react-three/drei';
+import { MeshTransmissionMaterial, OrbitControls, useGLTF } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
+import { useMotionValue } from 'framer-motion';
 import { useControls } from 'leva';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -13,6 +14,12 @@ export default function Model() {
     const { nodes } = useGLTF('media/torus-knot.glb');
     const { viewport } = useThree();
 
+    //creating a mouse object to store the x and y coordinates of the mouse
+    const mouse = {
+        x: useMotionValue(0),
+        y: useMotionValue(0),
+    }
+
     const materialProps = useControls({
         thickness: {value: 0.25, min: 0.01, max: 1, step: 0.05},
         roughness: {value: 0, min: 0, max: 1, step: 0.1},
@@ -25,12 +32,20 @@ export default function Model() {
         //zSpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
     });
 
+
+
     useFrame(() => {
         torus.current.rotation.x += materialProps.xSpeed;
         torus.current.rotation.y += materialProps.ySpeed;
     });
 
     useEffect(() => {
+
+        // handleMouseMove function to update the mouse object with the current x and y coordinates of the mouse
+        //window.addEventListener('mousemove', manageMouseMove());
+
+
+        //handle resize function to change the scale of the model based on the window width
         const handleResize = () => {
             if (window.innerWidth < 768) {
                 setMeshScale(0.7);
@@ -43,11 +58,12 @@ export default function Model() {
         window.addEventListener('resize', handleResize);
         handleResize(); // Set initial scale based on current window width
 
-        return () => window.removeEventListener('resize', handleResize);
+        return () => {window.removeEventListener('resize', handleResize); window.removeEventListener('mousemove', manageMouseMove())};
     }, []);
 
     return (
         <group scale={viewport.width / 6}>
+            <OrbitControls enableZoom={false} enablePan={false} />
             {/* <Text fontSize={.9} font='fonts/Dirtyline.otf' position={[0,0,-1]}
             onPointerOver={() => setIsHovered(true)} 
             onPointerLeave={() => setIsHovered(false)}>

@@ -15,9 +15,14 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-* {
-  cursor: none;
+
+main::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }
+
+/* * {
+  cursor: none;
+} */
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -26,6 +31,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  margin: 0px;
 }
 
 @layer utilities {
