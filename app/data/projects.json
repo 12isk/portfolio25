@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "title": "Existence Magazine",
+    "src": [
+      "media/projects/existence/prev_f-w.webp", 
+      "media/projects/existence/flyer_b.webp",
+      "media/projects/existence/flyer_w.webp"
+    ],
+    "color": "#81D8D0",
+    "desc": "Graphic Design, 3D Modeling",
+    "paragraph": "I was tasked with creating a set of flyers for a Magazine Launch event. \nThe flyers were to be printed in black and white, and the design was to be inspired by the magazine's identity.\nThe design was created using a combination of texturing and classic typography work on Photoshop.",
+    "slug": "existence"
+  },
+  {
+    "id": 2,
+    "title": "Gryse Giveaway",
+    "src": [
+      "media/projects/gryse/giveaway.webp", 
+      "media/projects/gryse/giv2.webp", 
+      "media/projects/gryse/giv.webp", 
+      "media/projects/gryse/giv3.webp", 
+      "media/projects/gryse/instapost.webp"
+    ],
+    "color": "#f0772f",
+    "desc": "Graphic Design",
+    "paragraph": "",
+    "slug": "gryse"
+  },
+  {
+    "id": 3,
+    "title": "(re)generation",
+    "src": [
+      "media/projects/regen/falling.webp", 
+      "media/projects/regen/falling-red.webp"
+    ],
+    "color": "#e3436b",
+    "desc": "Graphic Design",
+    "paragraph": "A series of posters that explore the concept of (re)generation.\nThe posters are meant to be displayed in a sequence, with each poster representing a different form of the process.",
+    "slug": "regen"
+  },
+  {
+    "id": 4,
+    "title": "(unsolicited) statements",
+    "src": [
+      "media/projects/statements/statement1.webp"
+    ],
+    "color": "#daa661",
+    "desc": "Graphic Design",
+    "paragraph": "",
+    "slug": "statements"
+  }
+]

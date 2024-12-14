@@ -1,4 +1,4 @@
-import { MeshTransmissionMaterial, OrbitControls, useGLTF } from '@react-three/drei';
+import { MeshTransmissionMaterial, useGLTF } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useMotionValue } from 'framer-motion';
 import { useControls } from 'leva';
@@ -11,7 +11,7 @@ export default function Model() {
     const [meshScale, setMeshScale] = useState(0.4);
 
     const torus = useRef();
-    const { nodes } = useGLTF('media/torus-knot.glb');
+    const { nodes } = useGLTF('media/models/torus-knot.glb');
     const { viewport } = useThree();
 
     //creating a mouse object to store the x and y coordinates of the mouse
@@ -20,7 +20,7 @@ export default function Model() {
         y: useMotionValue(0),
     }
 
-    const materialProps = useControls({
+    const materialProps = useControls('material',{
         thickness: {value: 0.25, min: 0.01, max: 1, step: 0.05},
         roughness: {value: 0, min: 0, max: 1, step: 0.1},
         transmission: {value: 1, min: 0, max: 1, step: 0.1},
@@ -52,23 +52,18 @@ export default function Model() {
             } else {
                 setMeshScale(0.4);
             }
-            console.log(window.innerWidth, meshScale);
+            // console.log(window.innerWidth, meshScale);
         };
 
         window.addEventListener('resize', handleResize);
         handleResize(); // Set initial scale based on current window width
 
-        return () => {window.removeEventListener('resize', handleResize); window.removeEventListener('mousemove', manageMouseMove())};
+        return () => {window.removeEventListener('resize', handleResize); };
     }, []);
 
     return (
         <group scale={viewport.width / 6}>
-            <OrbitControls enableZoom={false} enablePan={false} />
-            {/* <Text fontSize={.9} font='fonts/Dirtyline.otf' position={[0,0,-1]}
-            onPointerOver={() => setIsHovered(true)} 
-            onPointerLeave={() => setIsHovered(false)}>
-                Me aNd mY Torus
-            </Text> */}
+           
             <mesh ref={torus} {...nodes.TorusKnot001} scale={meshScale}>
                 <MeshTransmissionMaterial {...materialProps} />
             </mesh>

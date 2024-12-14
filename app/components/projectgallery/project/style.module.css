@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'Dirtyline';
+    src: url('/fonts/Dirtyline.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* TODO: fix responsiveness (specify padding for mobile & less than 768px width) */
+
+.project{
+    display: flex;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 50px 100px 50px 100px;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #808080;
+    transition: all 0.2s linear;
+    font-family: Dirtyline;
+
+}
+
+.project h2{
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin:0px;
+    transition: all 0.2s linear;
+}
+
+.project p{
+    font-size: 1.4rem;
+    font-weight: 200;
+    margin:0px;
+    transition: all 0.2s linear;
+}
+
+.project:hover{
+    opacity: 0.45;
+}
+
+.project:hover h2{
+    transform: translateX(-10px);
+}
+
+.project:hover p{
+    transform: translateX(10px);
+}

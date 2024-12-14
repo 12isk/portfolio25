@@ -15,14 +15,21 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+@font-face {
+  font-family: 'Dirtyline';
+  src: url('/fonts/Dirtyline.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
 
 main::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
 
-/* * {
-  cursor: none;
-} */
+* {
+  cursor: text;
+  /* overflow: auto; */
+}
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -32,6 +39,24 @@ body {
     )
     rgb(var(--background-start-rgb));
   margin: 0px;
+  font-family: 'Dirtyline';
+  /* overflow: hidden; Ensure overflow is hidden */
+}
+
+html, body {
+  /* height: 100%; Ensure root elements don't interfere with scrolling */
+  overflow: auto;
+}
+
+.projects-header{
+  font-family: Dirtyline;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 20px 50px ;
 }
 
 @layer utilities {

@@ -1,0 +1,26 @@
+.returnButton {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: none;
+    padding: 10px;
+    border-radius: 80px;
+    backdrop-filter: blur(1px); // Semi-transparent background
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Optional: add a subtle shadow
+    overflow: hidden;
+    
+    /* Define the transitions for transform and background */
+    transition: 
+      transform 0.6s cubic-bezier(0, 0.55, 0.45, 1), /* Hover easing */
+      background 0.7s cubic-bezier(0.25, 0.1, 0.25, 1); /* After hover easing */
+  
+    &:hover {
+      transform: scale(1.25) translateX(-5px);
+      //background: rgba(255, 255, 255, 0.2); // Optional background change
+    }
+  }
+  

@@ -43,10 +43,10 @@ export default function GradientCursor({isHovered}) {
     // moving the cursor and setting the position while resetting the position
     // so its at the center of the mouse
     const moveCircle = (x,y) => {
-        //gsap.set(circle.current, {x,y, xPercent: -50, yPercent: -50});
-
         circles.current.forEach((circle, i) => {
-            gsap.set(circle, {x,y, xPercent: -50, yPercent: -50});
+            if (circle) {
+                gsap.set(circle, {x,y, xPercent: -50, yPercent: -50});
+            }
         });
     };
 
@@ -54,8 +54,8 @@ export default function GradientCursor({isHovered}) {
     const animate = () => {
         const {x,y} = delayedMouse.current;
         delayedMouse.current = {
-            x: lerp(x, mouse.current.x, 0.07),
-            y: lerp(y, mouse.current.y, 0.07)
+            x: lerp(x, mouse.current.x, 0.03),
+            y: lerp(y, mouse.current.y, 0.03)
         };
 
 
@@ -86,18 +86,10 @@ export default function GradientCursor({isHovered}) {
                         zIndex: 9999,
                         filter: `blur(${isHovered ? '20px' : '5px'})`,
                         transition: `width 0.3s ease-out, height 0.3s ease-out, filter 0.3s ease-out, transform ${(array.length -i) * 0.05 }s ease-out `,
-                        // background: 'linear-gradient(135deg, rgba(255 , 255, 255, 0.2), rgba(255, 255, 255, 0))',
-                        // WebkitBackdropFilter: 'blur(5px)',
-                        // backdropFilter: 'blur(5px)',
-                        //borderRadius: '20px',
-                        //border: '1px solid rgba(255, 255, 255, 0.18)',
-                        //boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
                     }}
                 >
                 </div>
             })}
         </>
     );
-        
-    
 }

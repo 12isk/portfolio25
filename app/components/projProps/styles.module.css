@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Dirtyline';
+    src: url('/fonts/Dirtyline.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  
+.bg{
+    cursor:text;
+    display: block;
+    /* background-color: black;
+    color: white; */
+    font-family: 'Dirtyline';
+}
+.first{
+    display: block;
+    
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 20px 20px;
+    font-family: 'Dirtyline';
+}
+
+.image {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: auto;
+    padding-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: 'Dirtyline';
+    z-index: 0;
+}
+
+.type {
+    justify-content: center;
+    align-items: center;
+    /* display: block; */
+    font-size: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 10px;
+}

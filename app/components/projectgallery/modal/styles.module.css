@@ -1,0 +1,66 @@
+.modalContainer{
+    height:420px;
+    width: 320px;
+    /* transform: translate(-50%, -50%); */
+    display:flex;
+    position: absolute;
+    align-items:center;
+    justify-content:center;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.modalSlider{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    /* overflow: visible; */
+    transition: top 0.5s cubic-bezier(0.76, 0, 0.24, 1)
+}
+
+.modal{
+    position: relative;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index: -1;
+}
+
+.modalBackground {
+    position: relative;
+    background-color: inherit;
+    filter: blur(10px); /* Apply blur here */
+    z-index: 1;
+  }
+.modalContent{
+    position: relative;
+    z-index: 2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.modalContent img{
+    height:auto;
+    filter:none;
+}
+
+.cursor .cursorLabel{
+    width: 80px;
+    height: 80px;
+    background-color: #832388;
+    opacity: 0.9;
+    filter: blur(10px);
+    border-radius: 50%;
+    position: absolute;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    pointer-events: none;
+    z-index: 100010;
+}
+.cursorLabel{
+    background-color: transparent;
+}

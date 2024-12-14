@@ -19,6 +19,9 @@ export default function Presentation() {
             height
         };
     }
+    const manageMouseMove = (e) => {
+        const { clientX, clientY } = e;
+      }
     useEffect(() => {
         function handleResize() {
             setDimensions(getWindowDimensions());
@@ -42,8 +45,8 @@ export default function Presentation() {
             </h1> */}
             <GradientCursor isHovered={isHovered} />
             <Canvas>
-                
                 <color attach="background" args={[0,0,0]} />
+                
                 <directionalLight intensity={0.5} position={[0, 3, 2]} />
                 <Environment preset="city" />
                 <Model
