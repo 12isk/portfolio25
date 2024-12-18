@@ -65,7 +65,7 @@ body {
   font-weight: 700;
   text-align: center;
   padding: 20px 50px ;
-  margin-top: 300px
+  /* margin-top: 300px */
 }
 
 @layer utilities {

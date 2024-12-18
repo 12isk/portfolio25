@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Dirtyline';
+    src: url('/fonts/Dirtyline.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+@import url('../../css/satoshi.css');
+
+.main{
+    font-family: 'Dirtyline';
+    font-size: 1rem;
+    color: #f00;
+    width: 100vw;
+    height: 100vh;
+}
+
+.h1 {
+    font-family: 'Dirtyline';
+    font-size: 2rem;
+    color: #f00;
+}

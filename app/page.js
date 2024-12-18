@@ -7,8 +7,9 @@ import { ScrollTrigger } from 'gsap-trial/dist/ScrollTrigger';
 import { ScrollSmoother } from 'gsap-trial/dist/ScrollSmoother';
 
 import ProjectPage from './components/ProjectPage';
-import Project from './components/projectgallery/project';
 import Modal from './components/projectgallery/modal';
+import ProjectList from './components/projectgallery/projectlist';
+import About from './components/about';
 
 // Import the projects JSON file
 import projects from "./data/projects.json";
@@ -40,24 +41,11 @@ export default function Home() {
         <Scene />
         <div className="body">
           <h2 className='projects-header'>ProJecTs</h2>
-          {projects.map((project, index) => (
-            <Link
-              key={project.slug}
-              href={{
-                pathname: `/projects/${encodeURIComponent(project.slug)}`
-              }}
-            >
-              <Project
-                key={project.slug}
-                index={index}
-                title={project.title}
-                desc={project.desc}
-                setModal={setModal}
-              />
-            </Link>
-          ))}
+          <ProjectList projects={projects} setModal={setModal} />
+          <About />
         </div> 
         <Modal projects={projects} modal={modal} /> 
+
       </div>
     </main>
   

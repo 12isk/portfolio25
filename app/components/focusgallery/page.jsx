@@ -115,6 +115,9 @@ export default function FocusGallery({ project }) {
     }
   };
 
+  let isDragging = false;
+  let touchStartX = 0;
+  let touchStartY = 0;
   const manageTouchStart = (e) => {
     const touch = e.touches[0];
     isDragging = true;
