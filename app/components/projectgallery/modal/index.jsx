@@ -1,18 +1,16 @@
-import { cubicBezier, motion } from 'framer-motion';
-import gsap from 'gsap';
+import { gsap } from 'gsap';
 import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
-
+import React, { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 
 const scaleAnimation = {
   initial: { scale: 0, x: "-50%", y: "60%" },
-  open: { scale: 1, x: "-50%", y: "60%", 
-    transition: { duration: 0.5, ease:[0.76, 0, 0.24, 1] } },
-  closed: { scale: 0, x: "-50%", y: "50%", 
-    transition: { duration: 0.8, ease:[0.76, 0, 0.24, 1] } },
+  open: { scale: 1, x: "-50%", y: "60%",
+    transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] } },
+  closed: { scale: 0, x: "-50%", y: "50%",
+    transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } },
 };
-//todo: fix index not updating
 
 export default function Modal({ modal, projects }) {
   const { active, index } = modal;
@@ -20,34 +18,56 @@ export default function Modal({ modal, projects }) {
   const cursor = useRef(null);
   const cursorLabel = useRef(null);
 
+  // Track mouse position
+  const mouse = useRef({ x: 0, y: 0 });
+  const delayedMouse = useRef({ x: 0, y: 0 });
+
+  // Track scroll position
+  const [scrollPos, setScrollPos] = useState(0);
+
+  const manageMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    mouse.current = {
+      x: clientX,
+      y: clientY
+    };
+  };
+
+  const manageScroll = () => {
+    setScrollPos(window.scrollY);
+  };
+
+  // Linear interpolation for the modal
+  const lerp = (a, b, n) => (1 - n) * a + n * b;
+
+  const moveContainer = (x, y) => {
+    if (container.current) {
+      gsap.set(container.current, { x, y, xPercent: -50, yPercent: -50 });
+    }
+  };
+
+  const ease = 0.03;
+
+  const animate = () => {
+    const { x, y } = delayedMouse.current;
+    delayedMouse.current = {
+      x: lerp(x, mouse.current.x, ease),
+      y: lerp(y, mouse.current.y + scrollPos * 0.2, ease)
+    };
+
+    moveContainer(delayedMouse.current.x, delayedMouse.current.y);
+    window.requestAnimationFrame(animate);
+  };
+
   useEffect(() => {
-    const moveContainerX = gsap.quickTo(container.current, "left", { duration: 0.82, ease: "power3", xPercent: "-50%" });
-    const moveContainerY = gsap.quickTo(container.current, "top", { duration: 0.82, ease: "power3", yPercent: "-50%" });
-    // Move cursor 
-    let xMoveCursor = gsap.quickTo(cursor.current, "left", { duration: 1, ease: "power3" });
-    let yMoveCursor = gsap.quickTo(cursor.current, "top", { duration: 1, ease: "power3" });
-    // Move cursor label
-    let xMoveCursorLabel = gsap.quickTo(cursorLabel.current, "left", { duration: 0.45, ease: "power3" });
-    let yMoveCursorLabel = gsap.quickTo(cursorLabel.current, "top", { duration: 0.45, ease: "power3" });
-    
-    console.log(`index is ${index}`);
-
-    const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      moveContainerX(clientX);
-      moveContainerY(clientY);
-      xMoveCursor(clientX);
-      yMoveCursor(clientY);
-      xMoveCursorLabel(clientX);
-      yMoveCursorLabel(clientY);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    
+    animate();
+    window.addEventListener('mousemove', manageMouseMove);
+    window.addEventListener('scroll', manageScroll);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener('mousemove', manageMouseMove);
+      window.removeEventListener('scroll', manageScroll);
     };
-  }, []);
+  }, [scrollPos]);
 
   return (
     <>
@@ -67,8 +87,8 @@ export default function Modal({ modal, projects }) {
                     />
                   </div>
                 </div>
-            );
-          })}
+              );
+            })}
         </div>
       </motion.div>
       <motion.div variants={scaleAnimation} initial="initial" animate={active ? "open" : "closed"} ref={cursor} className={styles.cursor} />

@@ -1,0 +1,170 @@
+@import url('../../css/satoshi.css');
+@font-face {
+    font-family: 'Mango';
+    src: url('/fonts/MangoGrotesk.ttf');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Disket Mono';
+    src: url('/fonts/disket/DisketMono-Bold.woff2') format('woff2'),
+        url('/fonts/disket/DisketMono-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Disket Mono';
+    src: url('/fonts/disket/DisketMono.woff2') format('woff2'),
+        url('/fonts/disket/DisketMono.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.menuContainer {
+    font-family: "Satoshi-Bold";
+    background: #000;
+    color: #fff;
+
+    a,
+    p {
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 100%;
+      cursor: pointer;
+    }
+}
+
+// Menu Bar
+.menuBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    background: transparent;
+    //filter: blur(5px);
+}
+
+// Menu Overlay
+.menuOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 9999; // Ensure it's above other content
+    padding: 2em;
+    display: flex;
+    flex-direction: column; // Align items vertically
+    justify-content: space-between; // Push content to the top and bottom
+}
+
+.menuOverlayBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menuBottom {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1em 2em;
+}
+
+.menuCloseIcon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menuCloseIcon p {
+    font-size: 100px;
+    -webkit-text-stroke: 1px #e3436b;
+    line-height: 70%;
+}
+
+.menuCopy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 2em;
+}
+
+.menuLinkItem {
+    width: max-content;
+    clip-path: polygon(0 0, 115% 0, 110% 110%, 0 110%);
+
+    /* Apply initial state of scaling */
+    // transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+
+    // &:hover {
+    //     transform: scale(1.05);  /* Scale the element on hover */
+    //     transform-origin: center; /* Scale from the center */
+    // }
+}
+
+.menuLinkItemHolder {
+    position: relative;
+}
+
+.menuLinkItemHolder a {
+    color: #33ccff;
+    font-size: 80px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 85%;
+}
+
+.menuInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%; // Take half of the available space
+}
+
+.menuInfoCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 0 1em; // Add margin to separate columns
+    text-align: center;
+}
+
+.menuInfoCol a, .menuInfoCol p {
+    font-size: 14px;
+}
+
+.menuPreview {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 25%; // Take a quarter of the available space
+}
+
+@media (max-width: 768px) {
+    .menuCloseIcon {
+        display: none;
+    }
+
+    .menuCopy {
+        padding-top: 8em;
+    }
+
+    .menuLinkItemHolder a {
+        font-size: 60px;
+    }
+}

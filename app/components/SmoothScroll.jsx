@@ -1,39 +1,83 @@
-// ./components/ContinuousScroll.js
+"use client";
+import React, { useEffect, useRef } from "react";
 
-import React, { useRef, useEffect } from 'react';
+// Easing functions (manually implemented)
+const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3); // Example from easings.net
+const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
-export default function ContinuousScroll() {
-    const scrollContainerRef = useRef(null);
+const SmoothScroll = ({ children }) => {
+  const scrollContainerRef = useRef(null); // Scrollable container
+  const startTimeRef = useRef(null); // Tracks the start time of easing
 
-    useEffect(() => {
-        const scrollHeight = scrollContainerRef.current.scrollHeight;
-        const clientHeight = scrollContainerRef.current.clientHeight;
+  const currentScroll = useRef(0); // Current scroll position
+  const targetScroll = useRef(0); // Target scroll position
+  const ease = 0.08; // Base easing factor
+  const duration = 500; // Duration for scroll ease (in ms)
 
-        const scrollStep = () => {
-            if (scrollContainerRef.current.scrollTop < scrollHeight - clientHeight) {
-                scrollContainerRef.current.scrollTop += 1; // Adjust scroll speed here
-            } else {
-                scrollContainerRef.current.scrollTop = 0; // Scroll back to the top
-            }
-        };
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
 
-        const scrollInterval = setInterval(scrollStep, 50); // Adjust scroll speed here (milliseconds)
+    // Handle mouse wheel event
+    const onWheel = (e) => {
+      e.preventDefault();
+      targetScroll.current += e.deltaY; // Adjust target position
+      // Clamp target scroll position
+      targetScroll.current = Math.max(
+        0,
+        Math.min(
+          targetScroll.current,
+          scrollContainer.scrollHeight - window.innerHeight
+        )
+      );
+    };
 
-        return () => clearInterval(scrollInterval); // Clean up on unmount
-    }, []);
 
-    return (
-        <div
-            ref={scrollContainerRef}
-            style={{
-                width: '100%',
-                height: '100vh',
-                overflowY: 'scroll',
-                border: '1px solid #ccc',
-            }}
-        >
-            {/* Placeholder content to make the container scrollable */}
-            <div style={{ height: '200vh' }} />
-        </div>
-    );
-}
+    const smoothScroll = (timestamp) => {
+      if (!startTimeRef.current) startTimeRef.current = timestamp;
+
+      const elapsedTime = timestamp - startTimeRef.current; // Elapsed time
+      const progress = Math.min(elapsedTime / duration, 1); // Normalize progress [0, 1]
+
+      // Apply easing function
+      const easedProgress = easeOutCubic(progress); // Try other easing functions here
+      const scrollDifference = targetScroll.current - currentScroll.current;
+
+      currentScroll.current += scrollDifference * easedProgress;
+
+      // Apply the scroll position with transform
+      scrollContainer.style.transform = `translateY(-${currentScroll.current}px)`;
+
+      if (progress < 1 || Math.abs(scrollDifference) > 0.1) {
+        requestAnimationFrame(smoothScroll);
+      } else {
+        startTimeRef.current = null; // Reset easing timer for next animation
+      }
+    };
+
+    // Attach event listeners
+    window.addEventListener("wheel", onWheel, { passive: false });
+    requestAnimationFrame(smoothScroll);
+
+    // Cleanup
+    return () => window.removeEventListener("wheel", onWheel);
+  }, []);
+
+  return (
+    <div
+      ref={scrollContainerRef}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflow: "hidden",
+        willChange: "transform",
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default SmoothScroll;

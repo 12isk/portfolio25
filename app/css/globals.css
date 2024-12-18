@@ -25,6 +25,14 @@
 main::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
+main {
+  scrollbar-width: none; /* Firefox */
+  overflow: hidden;
+}
+
+html{
+  scroll-behavior: smooth;
+}
 
 * {
   cursor: text;
@@ -43,10 +51,10 @@ body {
   /* overflow: hidden; Ensure overflow is hidden */
 }
 
-html, body {
+/* html, body {
   /* height: 100%; Ensure root elements don't interfere with scrolling */
-  overflow: auto;
-}
+  /* overflow: auto; 
+} */
 
 .projects-header{
   font-family: Dirtyline;
@@ -57,6 +65,7 @@ html, body {
   font-weight: 700;
   text-align: center;
   padding: 20px 50px ;
+  margin-top: 300px
 }
 
 @layer utilities {

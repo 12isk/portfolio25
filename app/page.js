@@ -1,17 +1,18 @@
 "use client";
 import dynamic from 'next/dynamic';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, use } from 'react';
 import Link from 'next/link';
-import Lenis from 'lenis';
-import 'lenis/dist/lenis.css';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap-trial/dist/ScrollTrigger';
+import { ScrollSmoother } from 'gsap-trial/dist/ScrollSmoother';
 
-import ContinuousScroll from './components/SmoothScroll';
 import ProjectPage from './components/ProjectPage';
 import Project from './components/projectgallery/project';
 import Modal from './components/projectgallery/modal';
 
 // Import the projects JSON file
 import projects from "./data/projects.json";
+import { Scroll } from '@react-three/drei';
 
 const Scene = dynamic(() => import('./components/Presentation'), {
   ssr: false // Ensure server-side rendering is disabled for dynamic import
@@ -21,40 +22,45 @@ export default function Home() {
   const [modal, setModal] = useState({ active: false, index: 0 });
   const mainRef = useRef(null);
 
-
   useEffect(() => {
-    const lenis = new Lenis(); 
-    console.log(mainRef.current);
+
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    let smoother = ScrollSmoother.create({
+      wrapper: mainRef.current,
+      content: "#smooth-content", // The ID of the content element
+      smooth: .8,
+    });
   }, []);
-  
-  
 
   return (
   
     <main ref ={mainRef} className="relative h-screen overflow-y-scroll">
-      {/* <ContinuousScroll /> */}
-      <Scene />
-      <div className="body">
-        <h2 className='projects-header'>ProJecTs</h2>
-        {projects.map((project, index) => (
-          <Link
-            key={project.slug}
-            href={{
-              pathname: `/projects/${encodeURIComponent(project.slug)}`
-            }}
-          >
-            <Project
+      <div id="smooth-content">
+        <Scene />
+        <div className="body">
+          <h2 className='projects-header'>ProJecTs</h2>
+          {projects.map((project, index) => (
+            <Link
               key={project.slug}
-              index={index}
-              title={project.title}
-              desc={project.desc}
-              setModal={setModal}
-            />
-          </Link>
-        ))}
+              href={{
+                pathname: `/projects/${encodeURIComponent(project.slug)}`
+              }}
+            >
+              <Project
+                key={project.slug}
+                index={index}
+                title={project.title}
+                desc={project.desc}
+                setModal={setModal}
+              />
+            </Link>
+          ))}
+        </div> 
+        <Modal projects={projects} modal={modal} /> 
       </div>
-      <Modal projects={projects} modal={modal} />
     </main>
   
   );
 }
+                                                                                                                                                                                                                                                                                                                                                                                                

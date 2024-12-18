@@ -1,95 +1,98 @@
 import { gsap } from 'gsap';
 import React, { useEffect, useRef } from 'react';
 
-const colors = [
-    "#c32d27",
-    "#f5c63f",
-    "#457ec4",
-    "356fdb"
-]
-const colors2 = [
-    "#832388",
-    "#e3436b",
-    "#f0772f",
-    "#33CCFF",
-    
-]
+const colors2 = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
 
-export default function GradientCursor({isHovered}) {
-    const size = isHovered ? 100 : 60;
+export default function GradientCursor({ isHovered }) {
+  const size = isHovered ? 100 : 60;
 
-    // creating a ref for the cursor and setting the size
-    const mouse = useRef({ x: 0, y: 0 })
-    const circles = useRef([]);
+  // Cursor positions
+  const mouse = useRef({ x: 0, y: 0 });
+  const delayedMouse = useRef({ x: 0, y: 0 });
 
-    //creating a delayed cursor
-    const delayedMouse = useRef({ x: 0, y: 0 }); 
-    
-    //colors for cursor
-    
+  // Scroll position references
+  const currentScroll = useRef(0); // Current lerped scroll
+  const targetScroll = useRef(0); // Target scroll position
 
-    const manageMouseMove = (e) => {
-        const { clientX, clientY } = e;
-        mouse.current = { 
-            x: clientX,
-            y: clientY 
-        };
-        
+  const circles = useRef([]); // Refs for the cursor circles
+
+  const ease = 0.03; // Lerp easing factor
+
+  // Lerp function
+  const lerp = (a, b, n) => (1 - n) * a + n * b;
+
+  // Handle mouse movement
+  const manageMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    mouse.current = { x: clientX, y: clientY };
+  };
+
+  // Handle scroll
+  const manageScroll = () => {
+    targetScroll.current = window.scrollY;
+  };
+
+  // Move and position cursor circles
+  const moveCircle = (x, y) => {
+    circles.current.forEach((circle, i) => {
+      if (circle) {
+        gsap.set(circle, { x, y, xPercent: -50, yPercent: -50 });
+      }
+    });
+  };
+
+  // Animation loop
+  const animate = () => {
+    // Smoothly lerp the scroll position
+    currentScroll.current = lerp(currentScroll.current, targetScroll.current, ease);
+
+    // Smoothly lerp the mouse position
+    delayedMouse.current = {
+      x: lerp(delayedMouse.current.x, mouse.current.x, ease),
+      y: lerp(delayedMouse.current.y, mouse.current.y + currentScroll.current, ease),
     };
 
-    //linear interpolation for the cursor
-    const lerp = (a,b,n) => (1 - n) * a + n * b;
+    // Move cursor
+    moveCircle(delayedMouse.current.x, delayedMouse.current.y);
 
-    // moving the cursor and setting the position while resetting the position
-    // so its at the center of the mouse
-    const moveCircle = (x,y) => {
-        circles.current.forEach((circle, i) => {
-            if (circle) {
-                gsap.set(circle, {x,y, xPercent: -50, yPercent: -50});
-            }
-        });
+    requestAnimationFrame(animate);
+  };
+
+  // Setup event listeners
+  useEffect(() => {
+    targetScroll.current = window.scrollY; // Initialize scroll position
+
+    window.addEventListener("mousemove", manageMouseMove);
+    window.addEventListener("scroll", manageScroll);
+
+    animate(); // Start animation loop
+
+    return () => {
+      window.removeEventListener("mousemove", manageMouseMove);
+      window.removeEventListener("scroll", manageScroll);
     };
+  }, []);
 
-    //setting the animation for the cursor
-    const animate = () => {
-        const {x,y} = delayedMouse.current;
-        delayedMouse.current = {
-            x: lerp(x, mouse.current.x, 0.03),
-            y: lerp(y, mouse.current.y, 0.03)
-        };
-
-
-        //more ctrl over the animation
-        moveCircle(delayedMouse.current.x, delayedMouse.current.y)
-        window.requestAnimationFrame(animate);
-    }
-
-    useEffect(() => {
-        animate();
-        window.addEventListener('mousemove', manageMouseMove);
-        return () => {
-            window.removeEventListener('mousemove', manageMouseMove);
-        };
-    }, []);
-
-    return (
-        <>
-            {colors2.map((color, i, array) => {
-                return <div
-                    ref={ref => circles.current[i] = ref}
-                    key={color}
-                    className='fixed top-0 left-0  rounded-full mix-blend-difference pointer-events-none'
-                    style={{
-                        backgroundColor: color,
-                        width: size,
-                        height: size,
-                        zIndex: 9999,
-                        filter: `blur(${isHovered ? '20px' : '5px'})`,
-                        transition: `width 0.3s ease-out, height 0.3s ease-out, filter 0.3s ease-out, transform ${(array.length -i) * 0.05 }s ease-out `,
-                    }}
-                >
-                </div>
-            })}
-        </>
-    );
+  // Render cursor elements
+  return (
+    <>
+      {colors2.map((color, i, array) => (
+        <div
+          ref={(ref) => (circles.current[i] = ref)}
+          key={color}
+          className="fixed top-0 left-0 rounded-full mix-blend-difference pointer-events-none"
+          style={{
+            backgroundColor: color,
+            width: size,
+            height: size,
+            zIndex: 9999,
+            filter: `blur(${isHovered ? '20px' : '5px'})`,
+            transition: `width 0.3s ease-out, height 0.3s ease-out, filter 0.3s ease-out, transform ${
+              (array.length - i) * 0.05
+            }s ease-out`,
+          }}
+        ></div>
+      ))}
+    </>
+  );
 }

@@ -20,17 +20,27 @@ export default function Model() {
         y: useMotionValue(0),
     }
 
-    const materialProps = useControls('material',{
-        thickness: {value: 0.25, min: 0.01, max: 1, step: 0.05},
-        roughness: {value: 0, min: 0, max: 1, step: 0.1},
-        transmission: {value: 1, min: 0, max: 1, step: 0.1},
-        ior: {value: 1.5, min: 1, max: 2, step: 0.1},
-        chromaticAberration: {value: 0.22, min: 0, max: 1},
-        BackSide: {value: true},
-        xSpeed: {value: 0.016, min: 0, max: 0.1, step: 0.01},
-        ySpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
-        //zSpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
-    });
+    // const materialProps = useControls('material',{
+    //     thickness: {value: 0.25, min: 0.01, max: 1, step: 0.05},
+    //     roughness: {value: 0, min: 0, max: 1, step: 0.1},
+    //     transmission: {value: 1, min: 0, max: 1, step: 0.1},
+    //     ior: {value: 1.5, min: 1, max: 2, step: 0.1},
+    //     chromaticAberration: {value: 0.22, min: 0, max: 1},
+    //     BackSide: {value: true},
+    //     xSpeed: {value: 0.016, min: 0, max: 0.1, step: 0.01},
+    //     ySpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
+    //     //zSpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
+    // });
+    const materialProps = {
+        thickness: 0.25,
+        roughness: 0,
+        transmission: 1,
+        ior: 1.5,
+        chromaticAberration: 0.22,
+        BackSide: true,
+        xSpeed: 0.016,
+        ySpeed: 0.01,
+      };
 
 
 
