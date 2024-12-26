@@ -1,0 +1,41 @@
+.avContainer {
+    display: flex;
+    flex-direction: row; /* Change to row to align items side by side */
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-transform: none;
+
+    @media (max-width: 768px) {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .diskContainer {
+        display: flex;
+        justify-content: flex-start;
+        margin-right: 20px; /* Add some space between the diskContainer and the text */
+        margin-bottom: 10px;
+    }
+
+    .diskWrapper {
+        position: relative; /* Ensure the disks are positioned relative to this container */
+
+        .disk {
+            position: absolute; /* Position the disks absolutely within the .diskWrapper */
+            top: -5%;
+            left: 0;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            mix-blend-mode: difference;
+            filter: blur(1px);
+        }
+    }
+
+    .text {
+        justify-content: flex-end;
+    }
+}

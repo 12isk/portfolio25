@@ -1,0 +1,217 @@
+@import url('../../css/satoshi.css');
+@import url('../../css/dirtyline.css');
+@import url('../../css/nyght.css');
+@import url('../../css/aston.css');
+
+
+@import url('https://use.typekit.net/myw7ngh.css');
+@keyframes noise {
+    0% { transform: translate(0,0) }
+    10% { transform: translate(-5%,-5%) }
+    20% { transform: translate(-10%,5%) }
+    30% { transform: translate(5%,-10%) }
+    40% { transform: translate(-5%,15%) }
+    50% { transform: translate(-10%,5%) }
+    60% { transform: translate(15%,0) }
+    70% { transform: translate(0,10%) }
+    80% { transform: translate(-15%,0) }
+    90% { transform: translate(10%,5%) }
+    100% { transform: translate(5%,0) }
+}
+@keyframes bg-animation {
+    0% { transform: translate(0,0) }
+    10% { transform: translate(-5%,-5%) }
+    20% { transform: translate(-10%,5%) }
+    30% { transform: translate(5%,-10%) }
+    40% { transform: translate(-5%,15%) }
+    50% { transform: translate(-10%,5%) }
+    60% { transform: translate(15%,0) }
+    70% { transform: translate(0,10%) }
+    80% { transform: translate(-15%,0) }
+    90% { transform: translate(10%,5%) }
+    100% { transform: translate(5%,0) }
+}
+@keyframes bg-animation3 {
+    0% { transform: translate(0, 0) scale(1.3); }
+    10% { transform: translate(-5%, -5%) scale(1.3); }
+    20% { transform: translate(-10%, 5%) scale(1.3); }
+    30% { transform: translate(5%, -10%) scale(1.3); }
+    40% { transform: translate(-5%, 15%) scale(1.3); }
+    50% { transform: translate(-10%, 5%) scale(1.3); }
+    60% { transform: translate(15%, 0) scale(1.3); }
+    70% { transform: translate(0, 10%) scale(1.3); }
+    80% { transform: translate(-15%, 0) scale(1.3); }
+    90% { transform: translate(10%, 5%) scale(1.3); }
+    100% { transform: translate(5%, 0) scale(1.3); }
+}
+@keyframes bg-animation2 {
+    0% { transform: translate(0, 0) scale(1.3); }
+    25% { transform: translate(10%, 10%) scale(1.3); }
+    50% { transform: translate(0, 20%) scale(1.3); }
+    75% { transform: translate(-10%, 10%) scale(1.3); }
+    100% { transform: translate(0, 0) scale(1.3); }
+}
+
+.aboutContainer {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    color: #000;
+    background-color: #fffcfa;
+    padding: 2rem;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+    justify-content: center; /* Vertically center the content */
+    align-items: center; /* Horizontally center the content */
+    text-align: center; /* Center-align text */
+    overflow: hidden; /* Clip the excess noise texture */
+    scroll-snap-type: y mandatory;
+
+    @media (max-width: 768px) {
+        height: 60vh;
+        
+    }
+
+    &::after {
+        content: "";
+        position: absolute; // Change from fixed to absolute
+        top: 0;           // Change from -150%
+        left: 0;          // Change from -150%
+        width: 100%;      // Change from 400%
+        height: 100%; 
+        //animation: noise 8s steps(10) infinite;
+        background: transparent url('/media/noise-transparent.png') repeat 0 0;
+        background-repeat: repeat;
+        animation: bg-animation3 .3s infinite;
+        opacity: .6;
+        visibility: visible; 
+        overflow: hidden; 
+        // will-change: transform; /* Hint the browser about the upcoming changes */
+        // transform: scale(1.3); /* Scale the noise texture to zoom in */  
+    }
+}
+
+.title {
+    font-family: 'Dirtyline';
+    font-size: 1rem;
+    //color: #FF4D4D; // Red color for [CONTACT]
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}
+
+.textWrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    top: 30%; /* Reset any default margins */
+
+    @media (max-width: 768px) {
+        top: 35%; // Adjust as needed
+    }
+}
+
+.text {
+    font-family: "Nyght Serif";
+    font-weight: 500;
+    font-style: italic;
+    font-size: 6vw;
+    line-height: 1.2; /* Adjust line-height for better spacing */
+
+    @media (max-width: 768px) {
+        font-size: clamp(6vw, 10vw, 12vw); /* Responsive font size */
+        
+    }
+
+    .newLine {
+        display: block;
+        margin: 0;
+        //padding-top: 1em;
+    }
+
+    .firstLetter {
+        color: #33ccff;
+        font-family: 'Aston Script';
+        font-size: larger;
+        position: relative;
+        display: inline-block;
+    }
+
+    .at {
+        font-family: 'Aston Script';
+        font-size: larger;
+        color: #e3436b;
+        padding-left: 20px;
+        display: inline-block;
+    }
+}
+
+.mail {
+    font-family: 'Satoshi-Black';
+    margin-top: auto; // This will push the email to the bottom
+    position: relative;
+
+    a {
+        font-size: clamp(4vw, 8vw, 10vw);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        display: block;
+        height: 100%;
+        width: 100%;
+        transition: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1), opacity 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+
+        &:hover {
+            transform: scale(1.05) ;
+        }
+
+        @media (max-width: 768px) {
+            font-size: clamp(6vw, 9vw, 12vw); // Increase font size on mobile
+            text-align: center; // Center the text horizontally
+        }
+    }
+}
+
+
+.socials {
+    position: absolute;
+    top: 75%; /* Position just above the email section */
+    right: 12.5%;
+    //right: 2rem; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    //margin-top: auto;
+
+    a {
+        font-family: 'Satoshi-Variable';
+        font-weight: 700;
+        margin-left: auto;
+        justify-self: flex-end;
+        transition: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1), opacity 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+
+        &:hover {
+            transform: scale(1.05) translate(1px);
+        }
+
+        
+    
+    }
+    .mailLink{
+        font-weight: 900;
+        @media (max-width: 768px) {
+            font-size: clamp(6vw, 10vw, 12vw); // Increase font size on mobile
+        }
+    }
+
+
+    @media (max-width: 768px) {
+        top: 85%; // Position just above the email section
+        right: 10%; // Adjust as needed
+        justify-content: center; // Center the social icons horizontally
+    }
+}

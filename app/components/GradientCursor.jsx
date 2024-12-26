@@ -1,10 +1,14 @@
 import { gsap } from 'gsap';
 import React, { useEffect, useRef } from 'react';
+import useIsMobile from './hooks/useIsMobile';
+import { useLenis } from 'lenis/react';
 
 const colors2 = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
 
 export default function GradientCursor({ isHovered }) {
   const size = isHovered ? 100 : 60;
+  const isMobile = useIsMobile();
+  const lenis = useLenis();
 
   // Cursor positions
   const mouse = useRef({ x: 0, y: 0 });
@@ -16,7 +20,7 @@ export default function GradientCursor({ isHovered }) {
 
   const circles = useRef([]); // Refs for the cursor circles
 
-  const ease = 0.03; // Lerp easing factor
+  const ease = 0.025; // Lerp easing factor
 
   // Lerp function
   const lerp = (a, b, n) => (1 - n) * a + n * b;
@@ -28,9 +32,11 @@ export default function GradientCursor({ isHovered }) {
   };
 
   // Handle scroll
-  const manageScroll = () => {
-    targetScroll.current = window.scrollY;
-  };
+  // const manageScroll = () => {
+  //   if (lenis) {
+  //     targetScroll.current = lenis.scroll;
+  //   }
+  // }; removed bc with lenis there is no need to lerp scroll
 
   // Move and position cursor circles
   const moveCircle = (x, y) => {
@@ -44,12 +50,12 @@ export default function GradientCursor({ isHovered }) {
   // Animation loop
   const animate = () => {
     // Smoothly lerp the scroll position
-    currentScroll.current = lerp(currentScroll.current, targetScroll.current, ease);
+    //currentScroll.current = lerp(currentScroll.current, targetScroll.current, ease);
 
     // Smoothly lerp the mouse position
     delayedMouse.current = {
       x: lerp(delayedMouse.current.x, mouse.current.x, ease),
-      y: lerp(delayedMouse.current.y, mouse.current.y + currentScroll.current, ease),
+      y: lerp(delayedMouse.current.y, mouse.current.y , ease),
     };
 
     // Move cursor
@@ -60,7 +66,7 @@ export default function GradientCursor({ isHovered }) {
 
   // Setup event listeners
   useEffect(() => {
-    targetScroll.current = window.scrollY; // Initialize scroll position
+    targetScroll.current = lenis ? lenis.scroll : window.scrollY; // Initialize scroll position
 
     window.addEventListener("mousemove", manageMouseMove);
     window.addEventListener("scroll", manageScroll);
@@ -71,9 +77,11 @@ export default function GradientCursor({ isHovered }) {
       window.removeEventListener("mousemove", manageMouseMove);
       window.removeEventListener("scroll", manageScroll);
     };
-  }, []);
+  }, [lenis]);
 
   // Render cursor elements
+  if (isMobile) return null;
+  else
   return (
     <>
       {colors2.map((color, i, array) => (

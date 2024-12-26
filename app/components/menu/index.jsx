@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation"; // Use router for navigation
 import Link from "next/link";
 import { motion, AnimatePresence, transform } from "framer-motion";
 import styles from "./styles.module.scss";
@@ -7,9 +8,9 @@ import Showreel from "../Showreel";
 
 const menuLinks = [
   { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Projects", path: "/projects" },
-  { label: "Contact", path: "/contact" },
+  { label: "About", path: "#about" },
+  { label: "Projects", path: "#projects" },
+  { label: "Contact", path: "#contact" },
 ];
 
 const colors = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
@@ -17,19 +18,21 @@ const colors = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
 export default function Menu() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const blurOverlay = useRef(null);
+  const router = useRouter(); // Hook to control navigation
 
   const menuVariants = {
     open: {
       clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
       transition: {
-        duration: 1.25,
+        duration: 0.75,
         ease: [0.42, 0, 0.58, 1], // Cubic Bézier easing
       },
     },
     closed: {
       clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
       transition: {
-        duration: 1.25,
+        duration: 0.9,
         ease: [0.42, 0, 0.58, 1], // Cubic Bézier easing
       },
     },
@@ -56,6 +59,45 @@ export default function Menu() {
     },
   };
 
+  const handleHomeAndScroll = (targetId) => {
+    toggleMenu(); // Close the menu
+    router.push("/"); // Navigate to homepage
+    setTimeout(() => {
+      const target = document.querySelector(targetId);
+      if (target) {
+        // console.log("Scrolling to target:", targetId);
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 500); // Delay to ensure page has loaded
+  };
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY; // How far the page is scrolled
+  
+      const blurStrength = Math.min(scrollY / 20, 10); // Adjust blur intensity (max 10px)
+      const overlayOpacity = Math.min(scrollY / 500, 1); // Fade in overlay (0 to 1)
+  
+      // Apply the dynamic styles to the blurOverlay
+      if (blurOverlay.current) {
+        blurOverlay.current.style.backdropFilter = `blur(${blurStrength}px)`;
+        blurOverlay.current.style.webkitBackdropFilter = `blur(${blurStrength}px)`;
+        blurOverlay.current.style.opacity = overlayOpacity;
+      }
+    };
+  
+    window.addEventListener("scroll", handleScroll);
+  
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // TOODO: Add blur effect on the back of the nav bar, along with some chromatic abberation lol
+
   const hoverVariants = {
     scale: 1.1,
     x: 10,
@@ -66,8 +108,12 @@ export default function Menu() {
   };
 
   return (
+    <>
+    
     <div className={styles.menuContainer}>
       <div className={styles.menuBar} style={{ display: menuOpen ? "none" : "flex" }}>
+        {/* <div ref={blurOverlay} className={styles.blurOverlay}/> */}
+
         <div className={styles.menuLogo}>
           <Link href="/">12isk</Link>
         </div>
@@ -75,6 +121,8 @@ export default function Menu() {
           <p>Menu</p>
         </div>
       </div>
+
+
 
       <AnimatePresence>
         {menuOpen && (
@@ -104,9 +152,21 @@ export default function Menu() {
                     whileHover={hoverVariants} // Apply hover animation
                   >
                     <div className={styles.menuLinkItemHolder}>
-                      <Link href={link.path} onClick={toggleMenu} style={{ color: colors[index] }}>
+                      {link.path.startsWith("#") ? (
+                        <a href="/" onClick={(e) => { 
+                          e.preventDefault();
+                          handleHomeAndScroll(link.path);
+                        }}
+                        style={{ color: colors[index] }}
+                      >
                         {link.label}
-                      </Link>
+                      </a>)
+                      :(
+                        <Link href={link.path} onClick={toggleMenu} style={{ color: colors[index] }}>
+                          {link.label}
+                        </Link>
+                      )}
+  
                     </div>
                   </motion.div>
                 ))}
@@ -136,5 +196,6 @@ export default function Menu() {
         )}
       </AnimatePresence>
     </div>
+    </>
   );
 }

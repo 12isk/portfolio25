@@ -28,6 +28,7 @@
     font-family: "Satoshi-Bold";
     background: #000;
     color: #fff;
+    cursor: pointer;
 
     a,
     p {
@@ -53,8 +54,30 @@
     align-items: center;
     z-index: 10;
     background: transparent;
+    mix-blend-mode: difference;
     //filter: blur(5px);
+//     -webkit-backdrop-filter: blur(8px);
+//     backdrop-filter: blur(8px);
 }
+
+// .blurOverlay {
+//     position: absolute; // Position it relative to the navbar
+//     top: 0;
+//     left: 0;
+//     width: 100%; // Match the width of the navbar
+//     height: 140%; // Match the height of the navbar
+//     //background: rgba(255, 255, 255, 0); // Light overlay
+//     background: linear-gradient(rgba(0,0,0,1), transparent); // Dark overlay
+//     pointer-events: none; // Allow clicks to pass through
+//     z-index: -1; // Place it behind the navbar content
+//     backdrop-filter: blur(10px); // Apply the blur effect
+//     -webkit-backdrop-filter: blur(8px);
+//     mask-image: linear-gradient(to bottom, black, transparent); // Mask gradient effect
+//     mask-mode: alpha; // Ensure it supports alpha
+//     opacity: 1; // Default opacity
+//     transition: backdrop-filter 0.3s ease;
+//   }
+  
 
 // Menu Overlay
 .menuOverlay {
@@ -69,6 +92,7 @@
     display: flex;
     flex-direction: column; // Align items vertically
     justify-content: space-between; // Push content to the top and bottom
+    cursor: pointer;
 }
 
 .menuOverlayBar {

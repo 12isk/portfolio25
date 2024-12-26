@@ -34,81 +34,6 @@ export default function Modal({ modal, projects }) {
     targetScroll.current = window.scrollY;
   };
 
-  // useEffect(() => {
-  //   targetScroll.current = window.scrollY;
-  //   // Lerp function for smooth transitions
-  //   const lerp = (a, b, n) => a + (b - a) * n;
-  
-  //   // Initialize GSAP quick setters for performance
-  //   const moveContainerX = gsap.quickTo(container.current, "left", {
-  //     duration: 0.82,
-  //     ease: "power3",
-  //     xPercent: "-50%",
-  //   });
-  //   const moveContainerY = gsap.quickTo(container.current, "top", {
-  //     duration: 0.82,
-  //     ease: "power3",
-  //     yPercent: "-50%",
-  //   });
-  //   const xMoveCursor = gsap.quickTo(cursor.current, "left", {
-  //     duration: 1,
-  //     ease: "power3",
-  //   });
-  //   const yMoveCursor = gsap.quickTo(cursor.current, "top", {
-  //     duration: 1,
-  //     ease: "power3",
-  //   });
-  //   const xMoveCursorLabel = gsap.quickTo(cursorLabel.current, "left", {
-  //     duration: 0.45,
-  //     ease: "power3",
-  //   });
-  //   const yMoveCursorLabel = gsap.quickTo(cursorLabel.current, "top", {
-  //     duration: 0.45,
-  //     ease: "power3",
-  //   });
-
-    
-  
-  //   const animateFrame = () => {
-  //     // Smoothly lerp the scroll position
-  //     currentScroll.current = lerp(currentScroll.current, targetScroll.current, 0.1); // Adjust the 0.1 for smoother or faster interpolation
-  //     console.log(`currentScroll is ${currentScroll.current}`);
-  //     console.log(`scroll is ${window.scrollY}`);
-  
-  //     // Move container, cursor, and label
-  //     moveContainerX(mouse.current.x);
-  //     moveContainerY(lerp(mouse.current.y + currentScroll.current, mouse.current.y, 0.05)); // Adjust the 0.1 for smoother or faster interpolation
-  //     xMoveCursor(mouse.current.x);
-  //     yMoveCursor(mouse.current.y + currentScroll.current);
-  //     xMoveCursorLabel(mouse.current.x);
-  //     yMoveCursorLabel(mouse.current.y);
-  
-  //     // Request the next frame
-  //     requestAnimationFrame(animateFrame);
-  //   };
-  
-  //   // Handle mouse movement
-  //   const handleMouseMove = (e) => {
-  //     mouse.current = { x: e.clientX, y: e.clientY };
-  //   };
-  
-  //   // Handle scroll updates
-  //   const manageScroll = () => {
-  //     targetScroll.current = window.scrollY;
-  //   };
-  
-  //   // Add event listeners
-  //   window.addEventListener("mousemove", handleMouseMove);
-  //   window.addEventListener("scroll", manageScroll);
-  
-  //   // Start the animation loop
-  //   requestAnimationFrame(animateFrame);
-  
-  //   return () => {
-  //     window.removeEventListener("mousemove", handleMouseMove);
-  //     window.removeEventListener("scroll", manageScroll);
-  //   };
-  // }, []);
 
   useEffect(() => {
     // Ensure initial scroll position is set
@@ -151,16 +76,16 @@ export default function Modal({ modal, projects }) {
   
     const animateFrame = () => {
       // Smoothly lerp the scroll position
-      currentScroll.current = lerp(currentScroll.current, targetScroll.current, 0.1);
+      currentScroll.current = lerp(currentScroll.current, targetScroll.current, 0.05);
   
-      // Debug logging
-      console.log(`currentScroll is ${currentScroll.current}`);
-      console.log(`targetScroll is ${targetScroll.current}`);
-      console.log(`window.scrollY is ${window.scrollY}`);
+      // // Debug logging
+      // console.log(`currentScroll is ${currentScroll.current}`);
+      // console.log(`targetScroll is ${targetScroll.current}`);
+      // console.log(`window.scrollY is ${window.scrollY}`);
   
       // Move container, cursor, and label
       moveContainerX(mouse.current.x);
-      moveContainerY(lerp(mouse.current.y + currentScroll.current, mouse.current.y, 0.05));
+      moveContainerY(lerp(mouse.current.y + currentScroll.current, mouse.current.y, 0.03));
       xMoveCursor(mouse.current.x);
       yMoveCursor(mouse.current.y + currentScroll.current);
       xMoveCursorLabel(mouse.current.x);

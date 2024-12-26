@@ -5,6 +5,9 @@
     font-style: normal;
 }
 @import url('../../../css/satoshi.css');
+@import url('../../../css/nyght.css');
+@import url('../../../css/aston.css');
+@import url('https://use.typekit.net/myw7ngh.css');
 
 
 /* TODO: fix responsiveness (specify padding for mobile & less than 768px width) */
@@ -70,9 +73,21 @@
 
     .project p {
         font-size: 1.2rem;
+        // font-family: 'Nyght-Serif';
+        // font-weight: 500;
+        // font-style: normal;
         font-family: 'Satoshi-Medium';
-        text-transform: uppercase;
+        // text-transform: uppercase;
+
+        
     }
+    // .firstLetter{
+    //     // font-family: "ltc-artscript-pro", sans-serif;
+    //     // font-weight: 400;
+    //     // font-style: normal;
+    //     // font-family: 'Aston Script';
+
+    // }
 
     .project:hover h2 {
         transform: translateX(-5px);

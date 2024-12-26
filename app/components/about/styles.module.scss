@@ -6,16 +6,153 @@
 }
 @import url('../../css/satoshi.css');
 
-.main{
+.main {
     font-family: 'Dirtyline';
-    font-size: 1rem;
-    color: #f00;
-    width: 100vw;
+    font-size: 2.75rem;
+    color: #fff;
+    opacity: 0.97;
+    padding: 1em 2em;
+    width: 100%;
     height: 100vh;
+    position: relative;
+
+    @media (max-width: 1024px) {
+        font-size: 2.25rem;
+        padding: 1em 1.5em;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.75rem;
+        padding: 1em;
+        height: auto; // Allow content to determine height on mobile
+    }
 }
 
-.h1 {
+.title {
     font-family: 'Dirtyline';
-    font-size: 2rem;
-    color: #f00;
+    font-size: 4rem;
+    padding-bottom: 0.75em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 1024px) {
+        font-size: 3rem;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 2.5rem;
+        padding-bottom: 0.3em;
+    }
 }
+
+.firstLetter {
+    color: #e3436b;
+    font-size: larger;
+    position: relative; /* Needed for the absolute positioning of ::before and ::after */
+    display: inline-block; /* Ensure it behaves like an inline element */
+    // filter: blur(2px);
+    // mix-blend-mode: difference;
+}
+
+
+.paragraph {
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 1;
+
+    @media (max-width: 768px) {
+        line-height: 1.2; // Improve readability on mobile
+    }
+
+    .word {
+        margin-right: 12px;
+        margin-top: 12px;
+        //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        @media (max-width: 768px) {
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+    }
+
+    .love {
+        top: 10px;
+
+        @media (max-width: 768px) {
+            top: 6px;
+        }
+    }
+}
+
+.preview {
+    z-index: -1;
+    position: absolute;
+    left: 65%;
+    top: 10%;
+    transition: linear 0.5s;
+
+    @media (max-width: 1024px) {
+        left: 65%;
+        top: 10%;
+    }
+
+    @media (max-width: 768px) {
+        position: absolute;
+        left: 50%;
+        top: 75%;
+        height: 80%;
+        width: 100%;
+        max-width: 150px;
+        margin: 20px 0px;
+        //margin-bottom: 1em;
+    }
+}
+
+.preview2 {
+    z-index: -1;
+    position: absolute;
+    left: 2%;
+    top: 50%;
+
+    @media (max-width: 1024px) {
+        left: 5%;
+        top: 45%;
+    }
+
+    @media (max-width: 768px) {
+        // position: relative;
+        // left: auto;
+        // top: auto;
+        // width: 100%;
+        // max-width: 300px;
+        // margin: 20px auto;
+        display:none;
+    }
+}
+
+// Preserved commented code
+// .firstLetter::before {
+//     content: "A"; /* Uncomment to make it visible */
+//     color: #e3436b;
+//     position: absolute;
+//     left: 2px; /* Adjust as needed to place it above */
+//     // left: 0; /* Align with the first letter */
+//     //font-size: larger;
+//     transform: translateX(-10px); /* Fine-tune positioning */
+//     filter: blur(2px);
+//     mix-blend-mode: difference;
+//     z-index: -2;
+// }
+
+// .firstLetter::after {
+//     content: "A"; /* Uncomment to make it visible */
+//     color: #33CCFF ;
+//     position: absolute;
+//     // top: 20px; /* Adjust as needed to place it below */
+//     left: -4px; /* Align with the first letter */
+//     //font-size: larger;
+//     filter: blur(2px);
+//     mix-blend-mode: difference;
+//     z-index: -1;
+// }

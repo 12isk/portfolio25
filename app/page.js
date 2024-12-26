@@ -1,19 +1,19 @@
 "use client";
 import dynamic from 'next/dynamic';
-import { useEffect, useState, useRef, use } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap-trial/dist/ScrollTrigger';
-import { ScrollSmoother } from 'gsap-trial/dist/ScrollSmoother';
+import { ReactLenis, useLenis } from 'lenis/react';
 
 import ProjectPage from './components/ProjectPage';
 import Modal from './components/projectgallery/modal';
 import ProjectList from './components/projectgallery/projectlist';
 import About from './components/about';
+import Contact from './components/contact';
+import useIsMobile from './components/hooks/useIsMobile';
 
 // Import the projects JSON file
 import projects from "./data/projects.json";
-import { Scroll } from '@react-three/drei';
+import { lerp } from 'three/src/math/MathUtils';
 
 const Scene = dynamic(() => import('./components/Presentation'), {
   ssr: false // Ensure server-side rendering is disabled for dynamic import
@@ -22,33 +22,34 @@ const Scene = dynamic(() => import('./components/Presentation'), {
 export default function Home() {
   const [modal, setModal] = useState({ active: false, index: 0 });
   const mainRef = useRef(null);
+  const isMobile = useIsMobile();
 
-  useEffect(() => {
+  const lenisOptions = {
+    lerp: 0.03,
+    duration: 0.85,
+    smoothTouch: false, //smooth scroll for touch devices
+    smooth: true,
+  };
 
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
-    let smoother = ScrollSmoother.create({
-      wrapper: mainRef.current,
-      content: "#smooth-content", // The ID of the content element
-      smooth: .8,
-    });
-  }, []);
+   // Use the Lenis hook to track scroll position and log it
+   useLenis((lenis) => {
+    console.log("Scroll position:", lenis.scroll);
+  });
 
   return (
-  
-    <main ref ={mainRef} className="relative h-screen overflow-y-scroll">
-      <div id="smooth-content">
-        <Scene />
-        <div className="body">
-          <h2 className='projects-header'>ProJecTs</h2>
-          <ProjectList projects={projects} setModal={setModal} />
-          <About />
-        </div> 
-        <Modal projects={projects} modal={modal} /> 
-
-      </div>
-    </main>
-  
+    <ReactLenis root options={lenisOptions}>
+      <main ref={mainRef}>
+          <Scene />
+          <div className="body">
+            <ProjectList id="projects" projects={projects} setModal={setModal} />
+            {isMobile ? <div style={{ height: "20vh" }} /> : <div style={{ height: "40vh" }} />}
+            <About />
+            {isMobile ? <div style={{ height: "20vh" }}></div> : null}
+          </div>
+          <Modal projects={projects} modal={modal} />
+          <Contact />
+        
+      </main>
+    </ReactLenis>
   );
 }
-                                                                                                                                                                                                                                                                                                                                                                                                

@@ -72,7 +72,7 @@ export default function Model() {
     }, []);
 
     return (
-        <group scale={viewport.width / 6}>
+        <group scale={viewport.width / 5.5}>
            
             <mesh ref={torus} {...nodes.TorusKnot001} scale={meshScale}>
                 <MeshTransmissionMaterial {...materialProps} />
