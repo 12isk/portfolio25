@@ -49,7 +49,7 @@ export default function Cursor({isHovered}) {
         return () => {
             window.removeEventListener('mousemove', manageMouseMove);
         };
-    }, []);
+    }, [animate]);
 
     return (
         <div

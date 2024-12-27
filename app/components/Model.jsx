@@ -19,10 +19,7 @@ export default function Model() {
     const { viewport } = useThree();
     
     // Show the loading screen with progress while the model is loading
-    if ( progress < 100) {
-        
-        return <Preloader progress={progress} />;
-    }
+    
     
 
     // const materialProps = useControls('material',{

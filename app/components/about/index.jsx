@@ -15,13 +15,10 @@ export default function Index() {
   const preview2 = useRef(null);
   const isMobile = useIsMobile();
 
-  const { scrollYProgress } = isMobile ?
+  const { scrollYProgress } =
     useScroll({
       target: title,
-      offset: ['start 0.9', 'start 0.4']
-    }) : useScroll({
-      target: title,
-      offset: ['start end', 'start 0.7']
+      offset: isMobile ? ['start 0.9', 'start 0.4'] :['start end', 'start 0.7']
     });
 
   const smoothProgress = useSpring(scrollYProgress, {

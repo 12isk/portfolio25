@@ -26,7 +26,7 @@ const NextButton = ({ label = "Go Forward", project }) => {
       className={styles.returnButton}
       aria-label={label}
     >
-      <img
+      <Image
         src="../../icons/next_btn.svg"
         alt="Return"
         style={{ width: "48px", height: "48px", marginRight: "8px", padding: "10px" }}

@@ -11,14 +11,10 @@ export default function Paragraph({value}) {
   
     const element = useRef(null);
     const isMobile = useIsMobile();
-    const { scrollYProgress } = isMobile ? 
-        useScroll({
+    const { scrollYProgress } = useScroll({
           target: element,
-          offset: ['start 0.9', 'end 0.9']
-        }) :  useScroll({
-        target: element,
-        offset: ['start end', '0.2 0.6']
-    });
+          offset: isMobile ? ['start 0.9', 'end 0.9'] : ['start end', '0.2 0.6']
+        });
 
     const smoothProgress = useSpring(scrollYProgress, {
       damping: 10,

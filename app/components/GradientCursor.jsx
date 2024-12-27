@@ -77,7 +77,7 @@ export default function GradientCursor({ isHovered }) {
       window.removeEventListener("mousemove", manageMouseMove);
       // window.removeEventListener("scroll", manageScroll);
     };
-  }, [lenis]);
+  }, [lenis, animate]);
 
   // Render cursor elements
   if (isMobile) return null;
