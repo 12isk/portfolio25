@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, use } from 'react';
 import { ReactLenis, useLenis } from 'lenis/react';
 
 import Modal from './components/projectgallery/modal';
-import ProjectList from './components/projectgallery/projectlist';
+import ProjectList from './components/projectgallery/projectList';
 import About from './components/about';
 import Contact from './components/contact';
 import useIsMobile from './components/hooks/useIsMobile';
