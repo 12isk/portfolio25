@@ -1,6 +1,6 @@
 "use client";
 import React, {useRef, useEffect} from 'react'
-import { useScroll, motion, useTransform } from 'framer-motion'
+import { useScroll, motion, useTransform, useSpring } from 'framer-motion'
 import useIsMobile from '../../hooks/useIsMobile';
 
 import styles from '../styles.module.scss'
@@ -20,6 +20,12 @@ export default function Paragraph({value}) {
         offset: ['start end', '0.2 0.6']
     });
 
+    const smoothProgress = useSpring(scrollYProgress, {
+      damping: 10,
+      stiffness: 35,
+      mass: 0.1,
+    });
+
     // useEffect(() => {  
     //     scrollYProgress.on('change', e => console.log(e));
     // }, []);
@@ -28,13 +34,13 @@ export default function Paragraph({value}) {
     return (
         <p className={styles.paragraph} 
             ref={element}
-            style={{opacity: scrollYProgress}}
+            style={{opacity: smoothProgress}}
         >
         { words.map((word, index) => {
             const start = (index / words.length); // Multiply by 0.5 to stretch the range
             const end = start + (1 / words.length); // Add 0.5 to extend the fade-in
             //.log([start, end]);
-            return <Word word={word} range={[start,end]} progress={scrollYProgress} index={index} key={index} >
+            return <Word word={word} range={[start,end]} progress={smoothProgress} index={index} key={index} >
                 {word}</Word>;
         })}
         </p>

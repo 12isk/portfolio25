@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './styles.module.scss';
 
-export default function index() {
+export default function index({home}) {
 
 const colors = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
 const colors2 = [
@@ -13,7 +13,7 @@ const colors2 = [
 const size = 10;
 
   return (
-    <div className={styles.avContainer}>
+    <div className={home ? `${styles.avContainer} ${styles.avHome}` : styles.avContainer}>
         <div className={styles.diskContainer}>
             <div className={styles.diskWrapper}>
                 {colors.map((color, i) => {

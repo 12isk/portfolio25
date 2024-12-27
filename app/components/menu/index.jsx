@@ -59,6 +59,8 @@ export default function Menu() {
     },
   };
 
+  // TODO: fix navigation to home and scroll to target
+
   const handleHomeAndScroll = (targetId) => {
     toggleMenu(); // Close the menu
     router.push("/"); // Navigate to homepage

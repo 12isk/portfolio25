@@ -1,10 +1,52 @@
-import { motion, useScroll, useTransform, useSpring, animate } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
-import Available from '../available';
+import { useLenis } from '@studio-freight/react-lenis';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+
+import Available from '../precisions/available';
 import useIsMobile from '../hooks/useIsMobile';
 import styles from './styles.module.scss';
 
-export default function Contact() {
+
+
+const INSTA = "https://instagram.com/twelveisk";
+
+function easeInOutExpo(x) {
+    if (x === 0) return 0;
+    if (x === 1) return 1;
+  
+    if (x < 0.5) {
+      return Math.pow(2, 20 * x - 10) / 2;
+    } else {
+      return (2 - Math.pow(2, -20 * x + 10)) / 2;
+    }
+  }
+
+  function easeOutBounce(x) {
+    const n1 = 7.5625;
+    const d1 = 2.75;
+    
+    if (x < 1 / d1) {
+        return n1 * x * x;
+    } else if (x < 2 / d1) {
+        return n1 * (x -= 1.5 / d1) * x + 0.75;
+    } else if (x < 2.5 / d1) {
+        return n1 * (x -= 2.25 / d1) * x + 0.9375;
+    } else {
+        return n1 * (x -= 2.625 / d1) * x + 0.984375;
+    }
+    }
+  
+    // Check easing for changes:
+    // Sizes
+    // Positions
+    // Transparencies
+    // This function:
+    // This function
+    // Linear function:
+    // Linear function
+    
+
+export default function Contact({lenis}) {
     const mail = "contact@12isk.xyz";
     const isMobile = useIsMobile();
     
@@ -14,9 +56,8 @@ export default function Contact() {
     const at = useRef(null);
     const insta = useRef(null);
     const mailLink = useRef(null);
-
-    const [isScrolling, setIsScrolling] = useState(false);
-    let scrollTimeout;
+    
+    //const lenis = useLenis();
 
     const { scrollYProgress } = useScroll({
         target: container,
@@ -25,68 +66,71 @@ export default function Contact() {
             ['0.1 end', 'end end']
     });
 
-    // Add spring physics for smoother animations
     const smoothProgress = useSpring(scrollYProgress, {
         damping: 20,
         stiffness: 100,
         mass: 0.5
     });
-    
 
-    // Original parallax animations
     const small = useTransform(smoothProgress, [0, 1], [-75, 0]);
     const medium = useTransform(smoothProgress, [0, 1], [-100, 0]);
     const invMedium = useTransform(smoothProgress, [0, 1], [100, 0]);
     const large = useTransform(smoothProgress, [0, 1], [-150, 0]);
     const rotation = useTransform(smoothProgress, [0, 1], [360, 0]);
 
-    // Magnetic scroll effect
     useEffect(() => {
+        console.log('lenis', lenis);
+
+        if (!lenis) return;
+        let scrollTimeout;
+        
         const handleScrollEnd = () => {
-            if (scrollTimeout) clearTimeout(scrollTimeout);
+            if (!container.current) return;
+            
+            const rect = container.current.getBoundingClientRect();
+            const containerTop = rect.top;
+            const windowHeight = window.innerHeight;
+            
+            const visiblePercentage = 1 - (Math.abs(containerTop) / windowHeight);
+            
+            if (visiblePercentage >= 0.12) {
+                const targetScroll = lenis.scroll + containerTop;
+                lenis.scrollTo(targetScroll, {
+                    duration: 1.2,
+                    easing: easeInOutExpo
+                });
+            }
+        };
+
+        const onScroll = () => {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
             
             scrollTimeout = setTimeout(() => {
-                if (!container.current) return;
-                
-                const rect = container.current.getBoundingClientRect();
-                const containerTop = rect.top;
-                const windowHeight = window.innerHeight;
-                
-                // Calculate how visible the container is
-                const visiblePercentage = 1 - (Math.abs(containerTop) / windowHeight);
-                
-                if (visiblePercentage > 0.2) {
-                    // If container is more than 30% visible, snap to it
-                    const targetScroll = window.scrollY + containerTop;
-                    window.scrollTo({
-                        top: targetScroll,
-                        behavior: 'smooth'
-                    });
-                }
-            }, 150);
+                handleScrollEnd();
+            }, 50); // Lower value reduces delay 150 originally
+            
         };
 
-        const handleScroll = () => {
-            setIsScrolling(true);
-            handleScrollEnd();
-        };
+        // Subscribe to Lenis scroll events
+        lenis.on('scroll', onScroll);
 
-        window.addEventListener('scroll', handleScroll);
         return () => {
-            window.removeEventListener('scroll', handleScroll);
             if (scrollTimeout) clearTimeout(scrollTimeout);
+            lenis.off('scroll', onScroll);
         };
-    }, []);
+    }, [lenis]);
 
     return (
-        <div ref={container} className={styles.aboutContainer} id="contact">
+        <div ref={container} className={styles.aboutContainer}>
             <Available />
             
             <div className={styles.socials}>
                 <motion.a 
                     style={{ y: small }} 
                     ref={insta} 
-                    href="https://instagram.com/twelveisk"
+                    href={INSTA}
                 >
                     [instagram]
                 </motion.a>

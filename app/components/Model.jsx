@@ -1,24 +1,29 @@
-import { MeshTransmissionMaterial, useGLTF } from '@react-three/drei';
+import { MeshTransmissionMaterial, useGLTF, useProgress } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useMotionValue } from 'framer-motion';
 import { useControls } from 'leva';
 import React, { useEffect, useRef, useState } from 'react';
+import useIsMobile from './hooks/useIsMobile';
+import Preloader from './preloader';
 
 export default function Model() {
 
     //creating a state to know when cursor is hovering over the model/text
     const [isHovered, setIsHovered] = useState(false);
     const [meshScale, setMeshScale] = useState(0.4);
+    const isMobile = useIsMobile();
 
     const torus = useRef();
     const { nodes } = useGLTF('media/models/torus-knot.glb');
+    const { active, progress, errors, item, loaded, total } = useProgress();
     const { viewport } = useThree();
-
-    //creating a mouse object to store the x and y coordinates of the mouse
-    const mouse = {
-        x: useMotionValue(0),
-        y: useMotionValue(0),
+    
+    // Show the loading screen with progress while the model is loading
+    if ( progress < 100) {
+        
+        return <Preloader progress={progress} />;
     }
+    
 
     // const materialProps = useControls('material',{
     //     thickness: {value: 0.25, min: 0.01, max: 1, step: 0.05},
@@ -51,10 +56,6 @@ export default function Model() {
 
     useEffect(() => {
 
-        // handleMouseMove function to update the mouse object with the current x and y coordinates of the mouse
-        //window.addEventListener('mousemove', manageMouseMove());
-
-
         //handle resize function to change the scale of the model based on the window width
         const handleResize = () => {
             if (window.innerWidth < 768) {
@@ -71,8 +72,13 @@ export default function Model() {
         return () => {window.removeEventListener('resize', handleResize); };
     }, []);
 
+    // Show the loading screen with progress while the model is loading
+    // if (isLoading || progress < 100) {
+    //     return <LoadingScreen progress={progress} />;
+    // }
+
     return (
-        <group scale={viewport.width / 5.5}>
+        <group scale={isMobile ? viewport.width/5.5 : viewport.width / 6}>
            
             <mesh ref={torus} {...nodes.TorusKnot001} scale={meshScale}>
                 <MeshTransmissionMaterial {...materialProps} />

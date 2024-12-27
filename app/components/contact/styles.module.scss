@@ -53,6 +53,7 @@
 }
 
 .aboutContainer {
+    z-index: 1;
     position: relative;
     width: 100%;
     min-height: 100vh;
@@ -67,7 +68,7 @@
     align-items: center; /* Horizontally center the content */
     text-align: center; /* Center-align text */
     overflow: hidden; /* Clip the excess noise texture */
-    scroll-snap-type: y mandatory;
+    //scroll-snap-type: y mandatory;
 
     @media (max-width: 768px) {
         height: 60vh;
@@ -76,6 +77,7 @@
 
     &::after {
         content: "";
+        z-index: 0;
         position: absolute; // Change from fixed to absolute
         top: 0;           // Change from -150%
         left: 0;          // Change from -150%
@@ -99,6 +101,7 @@
     //color: #FF4D4D; // Red color for [CONTACT]
     text-transform: uppercase;
     margin-bottom: 2rem;
+    z-index: 2;
 }
 
 .textWrapper {
@@ -110,6 +113,7 @@
     text-align: center;
     width: 100%;
     top: 30%; /* Reset any default margins */
+    z-index: 2;
 
     @media (max-width: 768px) {
         top: 35%; // Adjust as needed
@@ -155,6 +159,8 @@
     font-family: 'Satoshi-Black';
     margin-top: auto; // This will push the email to the bottom
     position: relative;
+    z-index: 2;
+
 
     a {
         font-size: clamp(4vw, 8vw, 10vw);
@@ -164,6 +170,7 @@
         display: block;
         height: 100%;
         width: 100%;
+        cursor: pointer;
         transition: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1), opacity 0.6s cubic-bezier(0.83, 0, 0.17, 1);
 
         &:hover {
@@ -180,11 +187,13 @@
 
 .socials {
     position: absolute;
-    top: 75%; /* Position just above the email section */
+    top: 70%; /* Position just above the email section */
     right: 12.5%;
     //right: 2rem; /* Adjust as needed */
     display: flex;
     align-items: center;
+    z-index: 2;
+
     //margin-top: auto;
 
     a {
@@ -193,6 +202,7 @@
         margin-left: auto;
         justify-self: flex-end;
         transition: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1), opacity 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+        cursor: pointer;
 
         &:hover {
             transform: scale(1.05) translate(1px);

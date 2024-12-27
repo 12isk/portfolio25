@@ -1,0 +1,55 @@
+@import url('../../../css/satoshi.css');
+@import url('../../../css/nyght.css');
+
+
+.specialty{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 35%;
+    left: 2%;
+    z-index: 10;
+
+    @media (max-width: 768px) {
+        top: 15%;
+        font-size: clamp(0.35em, .9em, 2em);
+    }
+}
+
+.lv1{
+    font-family: 'Satoshi-Black';
+    font-size: 1em;
+    color: #fff;
+    opacity: 0.98;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    text-transform: none;
+    text-align: center;
+    @media (max-width: 768px) {
+        
+        font-size: clamp(0.35em, .9em, 2em);
+    }
+}
+
+.lv2{
+    font-family: 'Satoshi-Medium';
+    font-size: 1em;
+    opacity: 0.98;
+    color: #fff;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-transform: none;
+    text-align: center;
+    @media (max-width: 768px) {
+        font-size: clamp(0.35em, 0.9em, 2em);
+    }
+
+    
+}
+.and{
+    font-family: 'Nyght Serif';
+    font-weight: bold;
+}
+
+

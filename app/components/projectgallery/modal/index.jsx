@@ -29,10 +29,7 @@ export default function Modal({ modal, projects }) {
   const ease = 0.03; // Lerp easing factor
 
 
-    // Handle scroll
-  const manageScroll = () => {
-    targetScroll.current = window.scrollY;
-  };
+
 
 
   useEffect(() => {
@@ -85,11 +82,11 @@ export default function Modal({ modal, projects }) {
   
       // Move container, cursor, and label
       moveContainerX(mouse.current.x);
-      moveContainerY(lerp(mouse.current.y + currentScroll.current, mouse.current.y, 0.03));
-      xMoveCursor(mouse.current.x);
-      yMoveCursor(mouse.current.y + currentScroll.current);
-      xMoveCursorLabel(mouse.current.x);
-      yMoveCursorLabel(mouse.current.y);
+      moveContainerY(lerp(mouse.current.y + currentScroll.current, mouse.current.y, ease));
+      // xMoveCursor(mouse.current.x);
+      // yMoveCursor(mouse.current.y + currentScroll.current);
+      // xMoveCursorLabel(mouse.current.x);
+      // yMoveCursorLabel(mouse.current.y);
   
       // Continue the animation loop
       animationFrameId = requestAnimationFrame(animateFrame);
@@ -126,195 +123,6 @@ export default function Modal({ modal, projects }) {
     };
   }, []);
   
-
-
-  // useEffect(() => {
-   
-  
-    
-  
-  //   // GSAP quick setters
-  //   const moveContainerX = gsap.quickTo(container.current, "left", {
-  //     duration: 0.82,
-  //     ease: "power3",
-  //     xPercent: "-50%",
-  //   });
-  //   const moveContainerY = gsap.quickTo(container.current, "top", {
-  //     duration: 0.82,
-  //     ease: "power3",
-  //     yPercent: "-50%",
-  //   });
-  //   const xMoveCursor = gsap.quickTo(cursor.current, "left", {
-  //     duration: 1,
-  //     ease: "power3",
-  //   });
-  //   const yMoveCursor = gsap.quickTo(cursor.current, "top", {
-  //     duration: 1,
-  //     ease: "power3",
-  //   });
-  //   const xMoveCursorLabel = gsap.quickTo(cursorLabel.current, "left", {
-  //     duration: 0.45,
-  //     ease: "power3",
-  //   });
-  //   const yMoveCursorLabel = gsap.quickTo(cursorLabel.current, "top", {
-  //     duration: 0.45,
-  //     ease: "power3",
-  //   });
-  
-  //   const animateFrame = () => {
-  //     // Calculate the scroll delta
-  //     const deltaScroll = scrollPositions.current[1] - scrollPositions.current[0];
-  
-  //     // Smoothly lerp the deltaScroll value
-  //     const lerpedDeltaScroll = lerp(0, deltaScroll, ease);
-  
-  //     // Move elements
-  //     moveContainerX(mouse.current.x);
-  //     moveContainerY(mouse.current.y + lerpedDeltaScroll);
-  //     xMoveCursor(mouse.current.x);
-  //     yMoveCursor(mouse.current.y + lerpedDeltaScroll);
-  //     xMoveCursorLabel(mouse.current.x);
-  //     yMoveCursorLabel(mouse.current.y);
-  
-  //     // Request next frame
-  //     requestAnimationFrame(animateFrame);
-  //   };
-  
-  //   const handleMouseMove = (e) => {
-  //     mouse.current = { x: e.clientX, y: e.clientY };
-  //   };
-  
-  //   const manageScroll = () => {
-  //     // Update scroll positions and calculate delta
-  //     const currentScroll = window.scrollY;
-  //     scrollPositions.current = [scrollPositions.current[1], currentScroll];
-  //   };
-  
-  //   // Add event listeners
-  //   window.addEventListener("mousemove", handleMouseMove);
-  //   window.addEventListener("scroll", manageScroll);
-  
-  //   // Start animation loop
-  //   requestAnimationFrame(animateFrame);
-  
-  //   return () => {
-  //     window.removeEventListener("mousemove", handleMouseMove);
-  //     window.removeEventListener("scroll", manageScroll);
-  //   };
-  // }, []);
-  
-  
-
-  //stops working after hover more than 1sec
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     targetScroll.current = window.scrollY; // Update target scroll position
-  //   };
-  
-  //   const handleMouseMove = (e) => {
-  //     const { clientX, clientY } = e;
-  //     mouse.current = { x: clientX, y: clientY }; // Update current mouse position
-  //   };
-  
-  //   const animate = () => {
-  //     if ( active) {
-        
-  //     }
-  //     // Lerp scroll position
-  //     currentScroll.current = lerp(currentScroll.current, targetScroll.current, ease);
-  
-  //     // Lerp mouse position
-  //     delayedMouse.current = {
-  //       x: mouse.current.x,
-  //       y: lerp(delayedMouse.current.y, mouse.current.y + currentScroll.current, ease),
-  //     };
-  
-  //     // Move the container
-  //     if (container.current) {
-  //       gsap.set(container.current, {
-  //         left: delayedMouse.current.x,
-  //         top: delayedMouse.current.y,
-  //         xPercent: -50,
-  //         yPercent: -50,
-  //       });
-  //     }
-  
-  //     // Move the cursor
-  //     if (cursor.current) {
-  //       gsap.set(cursor.current, {
-  //         left: delayedMouse.current.x,
-  //         top: delayedMouse.current.y,
-  //         xPercent: -50,
-  //         yPercent: -50,
-  //       });
-  //     }
-  
-  //     // Move the cursor label
-  //     if (cursorLabel.current) {
-  //       gsap.set(cursorLabel.current, {
-  //         x: delayedMouse.current.x,
-  //         y: delayedMouse.current.y,
-  //       });
-  //     }
-  
-  //     // Continue the animation loop
-  //     requestAnimationFrame(animate);
-  //   };
-  
-  //   // Add event listeners
-  //   window.addEventListener("mousemove", handleMouseMove);
-  //   window.addEventListener("scroll", handleScroll);
-  
-  //   // Start the animation loop
-  //   animate();
-  
-  //   return () => {
-  //     // Cleanup event listeners
-  //     window.removeEventListener("mousemove", handleMouseMove);
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-  
-
-
- 
-
-//   useEffect(() => {
-
-//     // Smoothly lerp the scroll position
-//     currentScroll.current = lerp(currentScroll.current, targetScroll.current, ease);
-//     console.log(`currentScroll is ${currentScroll.current}`);
-//     const moveContainerX = gsap.quickTo(container.current, "left", { duration: 0.82, ease: "power3", xPercent: "-50%" });
-//     const moveContainerY = gsap.quickTo(container.current, "top", { duration: 0.82, ease: "power3", yPercent: "-50%" });
-//     // Move cursor 
-//     let xMoveCursor = gsap.quickTo(cursor.current, "left", { duration: 1, ease: "power3" });
-//     let yMoveCursor = gsap.quickTo(cursor.current, "top", { duration: 1, ease: "power3" });
-//     // Move cursor label
-//     let xMoveCursorLabel = gsap.quickTo(cursorLabel.current, "left", { duration: 0.45, ease: "power3" });
-//     let yMoveCursorLabel = gsap.quickTo(cursorLabel.current, "top", { duration: 0.45, ease: "power3" });
-    
-//     console.log(`index is ${index}`);
-
-//     const handleMouseMove = (e) => {
-//       const { clientX, clientY } = e;
-//       moveContainerX(clientX);
-//       moveContainerY(clientY+currentScroll.current);
-//       xMoveCursor(clientX);
-//       yMoveCursor(clientY+currentScroll.current);
-//       xMoveCursorLabel(clientX);
-//       yMoveCursorLabel(clientY);
-//     };
-// // TODO: fix follow cursor, when scroll, lost
-// // TODO: implement getting scroll pos or wtv i cant think anymore
-//     window.addEventListener("mousemove", handleMouseMove);
-//     window.addEventListener("scroll", manageScroll);
-    
-//     return () => {
-//       window.removeEventListener("mousemove", handleMouseMove);
-//       window.removeEventListener("scroll", manageScroll);
-//     };
-//   }, []);
-
     // Lerp function
     const lerp = (a, b, n) => (1 - n) * a + n * b;
 

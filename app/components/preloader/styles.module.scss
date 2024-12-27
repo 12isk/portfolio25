@@ -1,0 +1,56 @@
+@import url('../../css/satoshi.css');
+@import url('../../css/nyght.css');
+
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: Adds a dark background */
+}
+
+.counter {
+    font-family: "Satoshi-Black";
+    font-size: 24vw;
+    color: white;
+    opacity: .98;
+    position: relative; /* To allow the positioning of the duplicates behind it */
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: Adds a dark background */
+}
+
+.counter {
+    font-family: "Satoshi-Black";
+    font-size: 24vw;
+    color: white;
+    opacity: .98;
+    position: relative; /* To allow the positioning of the duplicates behind it */
+}
+
+.percent{
+    font-family: 'Nyght';
+    font-weight: 900;
+    font-style: italic;
+}
+
+
+
+/* Add four ::after pseudo-elements with different colors and blur effects */
+
+
+

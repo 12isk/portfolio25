@@ -69,13 +69,13 @@ export default function GradientCursor({ isHovered }) {
     targetScroll.current = lenis ? lenis.scroll : window.scrollY; // Initialize scroll position
 
     window.addEventListener("mousemove", manageMouseMove);
-    window.addEventListener("scroll", manageScroll);
+    // window.addEventListener("scroll", manageScroll);
 
     animate(); // Start animation loop
 
     return () => {
       window.removeEventListener("mousemove", manageMouseMove);
-      window.removeEventListener("scroll", manageScroll);
+      // window.removeEventListener("scroll", manageScroll);
     };
   }, [lenis]);
 

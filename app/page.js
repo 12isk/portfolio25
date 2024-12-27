@@ -1,21 +1,20 @@
 "use client";
 import dynamic from 'next/dynamic';
-import { useEffect, useState, useRef } from 'react';
-import Link from 'next/link';
+import { useEffect, useState, useRef, use } from 'react';
 import { ReactLenis, useLenis } from 'lenis/react';
 
-import ProjectPage from './components/ProjectPage';
 import Modal from './components/projectgallery/modal';
 import ProjectList from './components/projectgallery/projectlist';
 import About from './components/about';
 import Contact from './components/contact';
 import useIsMobile from './components/hooks/useIsMobile';
+import Specialty from './components/precisions/specialty';
+
 
 // Import the projects JSON file
 import projects from "./data/projects.json";
-import { lerp } from 'three/src/math/MathUtils';
 
-const Scene = dynamic(() => import('./components/Presentation'), {
+const Hero = dynamic(() => import('./components/Hero'), {
   ssr: false // Ensure server-side rendering is disabled for dynamic import
 });
 
@@ -23,7 +22,7 @@ export default function Home() {
   const [modal, setModal] = useState({ active: false, index: 0 });
   const mainRef = useRef(null);
   const isMobile = useIsMobile();
-
+ 
   const lenisOptions = {
     lerp: 0.03,
     duration: 0.85,
@@ -31,23 +30,36 @@ export default function Home() {
     smooth: true,
   };
 
-   // Use the Lenis hook to track scroll position and log it
-   useLenis((lenis) => {
-    console.log("Scroll position:", lenis.scroll);
-  });
+
+  const [lenisInstance, setLenisInstance] = useState(null);
+
+  const lenis = useLenis(); // Access Lenis instance
+
+  useEffect(() => {
+    if (lenis) {
+      console.log("Lenis instance home:", lenis);
+    }
+    return () => {
+      if (lenis) {
+        lenis.destroy(); // Clean up the Lenis instance on unmount
+      }
+    };
+  }, [lenis]);
 
   return (
-    <ReactLenis root options={lenisOptions}>
+    <ReactLenis root options={lenisOptions} >
       <main ref={mainRef}>
-          <Scene />
+          {/* <Specialty  /> */}
+          <Hero />
+          <div style={{ height: "15vh" }} />
           <div className="body">
             <ProjectList id="projects" projects={projects} setModal={setModal} />
             {isMobile ? <div style={{ height: "20vh" }} /> : <div style={{ height: "40vh" }} />}
-            <About />
+            <About id="about"/>
             {isMobile ? <div style={{ height: "20vh" }}></div> : null}
           </div>
           <Modal projects={projects} modal={modal} />
-          <Contact />
+          <Contact id="contact" lenis={lenis} />
         
       </main>
     </ReactLenis>

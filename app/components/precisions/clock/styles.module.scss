@@ -1,0 +1,124 @@
+@import url('../../../css/satoshi.css');
+@import url('../../../css/nyght.css');
+
+.clockContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 35%;
+    right: 2%;
+    z-index: 10;
+
+    @media (max-width: 768px) {
+        top: 15%;
+        font-size: clamp(0.35em, .9em, 2em);
+    }
+}
+
+.lv1{
+    font-family: 'Satoshi-Black';
+    font-size: 1em;
+    color: #fff;
+    opacity: 0.98;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    text-transform: none;
+    text-align: center;
+    @media (max-width: 768px) {
+        
+        font-size: clamp(0.35em, .9em, 2em);
+    }
+}
+
+.location{
+    font-family: 'Nyght Serif';
+    font-weight: bold;
+}
+.wrap{
+    display: inline-block
+}
+
+.diskContainer {
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 20px; /* Add some space between the diskContainer and the text */
+    margin-bottom: 10px;
+}
+
+.diskWrapper {
+    position: relative; /* Ensure the disks are positioned relative to this container */
+    z-index: 11;
+    .disk {
+        position: absolute; /* Position the disks absolutely within the .diskWrapper */
+        top: -5%;
+        left: 0;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        //mix-blend-mode: difference;
+        filter: blur(1px);
+
+        &:nth-child(1) {
+            animation: oscillate 4s ease-in-out infinite;
+            display: inline-block; /* Ensure element behaves properly */
+            transform-origin: center; /* Ensure scaling occurs from the center */
+            animation-delay: 0.1s;
+        }
+        &:nth-child(2) {
+            animation: oscillate-mirror 4s ease-in-out infinite; /* Apply the mirrored animation */
+            display: inline-block; /* Ensure element behaves properly */
+            transform-origin: center; /* Ensure scaling occurs from the center */
+            animation-delay: 0.2s;
+        }
+    }
+}
+
+.clock{
+    font-family: 'Satoshi-Medium';
+    font-size: 1em;
+    opacity: 0.98;
+    color: #fff;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-transform: none;
+    text-align: center;
+    @media (max-width: 768px) {
+        font-size: clamp(0.35em, 0.9em, 2em);
+    }
+}
+
+@keyframes oscillate {
+    0% {
+      transform: scale(1); /* Initial scale (normal size) */
+    }
+    50% {
+      transform: scale(1.5); /* Grow to 1.5 times the original size */
+    }
+    75% {
+      transform: scale(0.5); /* Return to original size */
+    }
+    100% {
+        transform: scale(1); /* Return to original size */
+      }
+  }
+
+  @keyframes oscillate-mirror {
+    0% {
+      transform: scale(1); /* Initial scale (normal size) */
+    }
+    25% {
+      transform: scale(0.5); /* Scale down to 0.5 times the original size */
+    }
+    50% {
+      transform: scale(1.5); /* Grow to 1.5 times the original size */
+    }
+    75% {
+      transform: scale(0.5); /* Scale down to 0.5 again */
+    }
+    100% {
+      transform: scale(1); /* Return to original size */
+    }
+  }
+  
+  
