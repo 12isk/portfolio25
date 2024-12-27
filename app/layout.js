@@ -1,10 +1,9 @@
-import { Inter } from "next/font/google";
 
 import Menu from "./components/menu";
 
 import "./css/globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "12isk",
@@ -18,7 +17,7 @@ export default function RootLayout({ children }) {
         sizes="<generated>"
       />
       
-      <body className={inter.className}>
+      <body >
       <Menu />
 
         {children}

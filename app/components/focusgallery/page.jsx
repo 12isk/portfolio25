@@ -189,7 +189,7 @@ export default function FocusGallery({ project }) {
 
       {project.src.length >= 5 && (
         <div ref={plane3} className={styles.plane}>
-          {project.src.slice(5, 9).map((src, index) => (
+          {project.src.slice(5, project.src.length).map((src, index) => (
             <Image
               key={index}
               src={`../${src}`}
