@@ -163,7 +163,7 @@ export default function FocusGallery({ project }) {
     >
       <div ref={plane1} className={styles.plane}>
         {project.src.slice(0, 2).map((src, index) => (
-          <Image
+          <img
             key={index}
             src={`../${src}`}
             width={imageSizes.newWidth}
