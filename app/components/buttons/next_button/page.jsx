@@ -30,6 +30,8 @@ const NextButton = ({ label = "Go Forward", project }) => {
       <Image
         src="../../icons/next_btn.svg"
         alt="Return"
+        width={48}
+        height={48}
         style={{ width: "48px", height: "48px", marginRight: "8px", padding: "10px" }}
       />
     </button>
