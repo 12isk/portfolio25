@@ -1,6 +1,7 @@
 'use client'; // This ensures that this code runs only on the client side
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import React from 'react';
 import styles from './styles.module.scss';
 import projects from '../../../data/projects.json'; // Update the import statement
