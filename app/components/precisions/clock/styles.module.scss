@@ -7,7 +7,7 @@
     align-items: flex-start;
     position: absolute;
     top: 35%;
-    right: 2%;
+    right: 3%;
     z-index: 10;
 
     @media (max-width: 768px) {
@@ -35,44 +35,66 @@
     font-family: 'Nyght Serif';
     font-weight: bold;
 }
-.wrap{
-    display: inline-block
+// Updated SCSS
+.wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  //gap: 4px; // Space between clock and disks
 }
 
 .diskContainer {
-    display: flex;
-    justify-content: flex-start;
-    margin-right: 20px; /* Add some space between the diskContainer and the text */
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-left: 10px; // Fine-tune spacing
 }
 
 .diskWrapper {
-    position: relative; /* Ensure the disks are positioned relative to this container */
-    z-index: 11;
-    .disk {
-        position: absolute; /* Position the disks absolutely within the .diskWrapper */
-        top: -5%;
-        left: 0;
-        height: 10px;
-        width: 10px;
-        border-radius: 50%;
-        //mix-blend-mode: difference;
-        filter: blur(1px);
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  
+  .disk {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      border-radius: 50%;
+      filter: blur(1px);
 
-        &:nth-child(1) {
-            animation: oscillate 4s ease-in-out infinite;
-            display: inline-block; /* Ensure element behaves properly */
-            transform-origin: center; /* Ensure scaling occurs from the center */
-            animation-delay: 0.1s;
-        }
-        &:nth-child(2) {
-            animation: oscillate-mirror 4s ease-in-out infinite; /* Apply the mirrored animation */
-            display: inline-block; /* Ensure element behaves properly */
-            transform-origin: center; /* Ensure scaling occurs from the center */
-            animation-delay: 0.2s;
-        }
-    }
+      &:nth-child(1) {
+          animation: ripple 3s ease-out infinite;
+          animation-delay: 0s;
+          opacity: 0.8;
+      }
+      &:nth-child(2) {
+          animation: ripple 3s ease-out infinite;
+          animation-delay: 1s;
+          opacity: 0.6;
+      }
+  }
 }
+
+@keyframes ripple {
+  0% {
+      transform: translateY(-50%) scale(0.8);
+      opacity: 0.8;
+  }
+  50% {
+      transform: translateY(-50%) scale(1.1);
+      opacity: 0.5;
+  }
+  100% {
+      transform: translateY(-50%) scale(0.8);
+      opacity: 0.8;
+  }
+}
+
+// Keep other styles the same...
 
 .clock{
     font-family: 'Satoshi-Medium';

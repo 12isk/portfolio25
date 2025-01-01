@@ -1,56 +1,78 @@
 @import url('../../../css/satoshi.css');
 
-.avHome{
+.avHome {
     position: absolute;
     top: 90%;
     left: 50%;
-    transform: translate(-50%, -50%); /* This centers the element */
+    transform: translate(-50%, -50%);
     z-index: 10;
-    
 }
 
 .avContainer {
     display: flex;
-    flex-direction: row; /* Change to row to align items side by side */
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    align-items: center; // This helps with vertical alignment
+    margin: 20px;
     text-transform: none;
+    gap: 8px; // Reduced gap to bring disk closer to text
+    white-space: nowrap;
 
     @media (max-width: 768px) {
-        flex-direction: column; /* Stack items vertically on smaller screens */
-        margin-top: 10px;
-        margin-bottom: 10px;
+        gap: 5px; // Even smaller gap on mobile
+        margin: 10px;
+        font-size: 0.9em;
     }
 
     .diskContainer {
         display: flex;
-        justify-content: flex-start;
-        margin-right: 20px; /* Add some space between the diskContainer and the text */
-        margin-bottom: 10px;
+        justify-content: center; // Center the disk horizontally
+        align-items: center; // Center the disk vertically
+        padding-top: 2px; // Small adjustment to align with text baseline
+
+        @media (max-width: 768px) {
+            padding-top: 1px; // Adjust for mobile
+        }
     }
 
     .diskWrapper {
-        position: relative; /* Ensure the disks are positioned relative to this container */
+        position: relative;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center; // Center disk vertically
+
+        @media (max-width: 480px) {
+            width: 15px;
+            height: 15px;
+        }
 
         .disk {
-            position: absolute; /* Position the disks absolutely within the .diskWrapper */
-            top: -5%;
+            position: absolute;
+            top: 50%; // Center vertically
+            transform: translateY(-50%); // Perfect centering
             left: 0;
             height: 10px;
             width: 10px;
             border-radius: 50%;
             mix-blend-mode: difference;
             filter: blur(1px);
+
+            @media (max-width: 480px) {
+                height: 8px;
+                width: 8px;
+            }
         }
     }
 
     .text {
         justify-content: flex-end;
         font-family: 'Satoshi-Medium';
+        white-space: nowrap;
+        display: flex;
+        align-items: center; // Align text vertically
         
-        .avHome{
+        .avHome {
             opacity: 0.98;
         }
     }

@@ -1,8 +1,7 @@
 @import url('../aston.css');
 @import url('../nyght.css');
 
-
-.container{
+.container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,59 +9,109 @@
     height: 100vh;
     width: 100%;
     background-color: #000;
+    padding: 1rem; // Add some padding for smaller screens
+    text-align: center; // Center text on mobile
 }
 
-.code{
+.code {
     font-size: 10em;
     color: #fff;
+
+    // Responsive font sizes
+    @media (max-width: 768px) {
+        font-size: 6em; // Smaller for tablets
+    }
+
+    @media (max-width: 480px) {
+        font-size: 4em; // Even smaller for phones
+    }
 }
 
-.zero{
+.zero {
     font-family: 'Aston Script';
 }
 
-.sad{
+.sad {
     padding-left: 10px;
     color: #e3436b;
     transform: scale(2);
-    //animation: scaleAnimation 1s linear;
-    //transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-block; // Better control over spacing
 
+    @media (max-width: 768px) {
+        transform: scale(1.5); // Slightly smaller scale for tablets
+        padding-left: 5px;
+    }
+
+    @media (max-width: 480px) {
+        transform: scale(1.2); // Even smaller scale for phones
+        padding-left: 3px;
+    }
 }
 
-.yap{
+.yap {
     font-size: 2em;
     font-family: 'Nyght Serif';
+    margin: 1rem 0; // Add some vertical spacing
+    word-wrap: break-word; // Prevent text overflow
+
+    @media (max-width: 768px) {
+        font-size: 1.5em;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1.2em;
+    }
 }
 
-.homeBtn{
+.homeBtn {
     margin-top: 3em;
     padding: 1em 2em;
-    //background-color: #e3436b;
-    border-radius: 50%;
-    border: 5px solid #fff;
-    color: #fff;
     border: none;
     border-radius: 5px;
+    color: #fff;
     cursor: pointer;
     transition: color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    font-size: 1em; // Base font size
 
-    &:hover{
+    @media (max-width: 768px) {
+        margin-top: 2em;
+        padding: 0.8em 1.6em;
+    }
+
+    @media (max-width: 480px) {
+        margin-top: 1.5em;
+        padding: 0.6em 1.2em;
+    }
+
+    &:hover {
         color: #e3436b;
-        // transform: scale(1.2);
-        // transition: scale 1s cubic-bezier(0.5, 1, 0.89, 1);
+    }
+
+    // Add touch-friendly target size for mobile
+    @media (hover: none) {
+        &:active {
+            color: #e3436b;
+        }
     }
 }
 
-
-
-@keyframes scaleAnimation {
-    from {
-      transform: scale(1);
-      opacity: 1;
+// Optional: Add landscape orientation support
+@media (max-height: 500px) and (orientation: landscape) {
+    .container {
+        padding: 0.5rem;
     }
-    to {
-      transform: scale(2);
-      opacity: 1;
+
+    .code {
+        font-size: 4em;
     }
-  }
+
+    .yap {
+        font-size: 1.2em;
+        margin: 0.5rem 0;
+    }
+
+    .homeBtn {
+        margin-top: 1em;
+        padding: 0.5em 1em;
+    }
+}
