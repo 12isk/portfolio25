@@ -63,7 +63,7 @@ export default function Contact({lenis}) {
         target: container,
         offset: isMobile ? 
             ['start 0.9', 'end 0.9'] : 
-            ['0.1 end', 'end end']
+            ['0.1 end', '0.9` end']
     });
 
     const smoothProgress = useSpring(scrollYProgress, {
