@@ -68,7 +68,7 @@ export default function NotFound() {
 
   return (
     <div className={styles.container}>
-      {isMobile ? <GradientCursor/> : null}
+      <GradientCursor/>
       
       <motion.h1 variants={bounceUp} initial="initial" animate="animate"  className={styles.code}>
         4<span className={styles.zero}>O</span>4
