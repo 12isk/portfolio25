@@ -1,0 +1,68 @@
+@import url('../aston.css');
+@import url('../nyght.css');
+
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: #000;
+}
+
+.code{
+    font-size: 10em;
+    color: #fff;
+}
+
+.zero{
+    font-family: 'Aston Script';
+}
+
+.sad{
+    padding-left: 10px;
+    color: #e3436b;
+    transform: scale(2);
+    //animation: scaleAnimation 1s linear;
+    //transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+.yap{
+    font-size: 2em;
+    font-family: 'Nyght Serif';
+}
+
+.homeBtn{
+    margin-top: 3em;
+    padding: 1em 2em;
+    //background-color: #e3436b;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &:hover{
+        color: #e3436b;
+        // transform: scale(1.2);
+        // transition: scale 1s cubic-bezier(0.5, 1, 0.89, 1);
+    }
+}
+
+
+
+@keyframes scaleAnimation {
+    from {
+      transform: scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: scale(2);
+      opacity: 1;
+    }
+  }

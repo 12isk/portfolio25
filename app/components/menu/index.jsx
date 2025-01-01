@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Use router for navigation
 import Link from "next/link";
+import { useLenis } from "lenis/react";
 import { motion, AnimatePresence, transform } from "framer-motion";
 import styles from "./styles.module.scss";
 import Showreel from "../Showreel";
@@ -60,22 +61,40 @@ export default function Menu() {
   };
 
   // TODO: fix navigation to home and scroll to target
-
+  const lenis = useLenis();
+  
   const handleHomeAndScroll = (targetId) => {
     toggleMenu(); // Close the menu
-    router.push("/"); // Navigate to homepage
-    setTimeout(() => {
+    
+    if (window.location.pathname === '/') {
+      // If we're already on the home page, just scroll
       const target = document.querySelector(targetId);
-      if (target) {
-        // console.log("Scrolling to target:", targetId);
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+      if (target && lenis) {
+        lenis.scrollTo(target, {
+          offset: 0,
+          duration: 1.5,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
         });
       }
-    }, 500); // Delay to ensure page has loaded
+    } else {
+      // If we're on a different page, navigate and then scroll
+      router.push('/');
+      setTimeout(() => {
+        const target = document.querySelector(targetId);
+        if (target && lenis) {
+          lenis.scrollTo(target, {
+            offset: 0,
+            immediate: false,
+            duration: 1.5,
+            lock: true, // Prevents scroll interruption
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+        }
+      }, 500); // Wait for page transition
+    }
   };
-  
+
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY; // How far the page is scrolled

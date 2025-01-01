@@ -187,10 +187,18 @@
 
     .menuCopy {
         padding-top: 8em;
+        padding-bottom: 2em; // Add some spacing at the bottom
     }
 
     .menuLinkItemHolder a {
         font-size: 60px;
     }
-   
+
+    .menuInfoCol {
+        margin: 0.5em; // Reduce margin on mobile
+    }
+
+    .menuOverlay {
+        padding: 1em; // Reduce padding on mobile
+    }
 }

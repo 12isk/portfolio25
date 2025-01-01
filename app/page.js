@@ -46,22 +46,27 @@ export default function Home() {
     };
   }, [lenis]);
 
-  return (
-    <ReactLenis root options={lenisOptions} >
-      <main ref={mainRef}>
-          {/* <Specialty  /> */}
-          <Hero />
-          <div style={{ height: "15vh" }} />
-          <div className="body">
-            <ProjectList id="projects" projects={projects} setModal={setModal} />
-            {isMobile ? <div style={{ height: "20vh" }} /> : <div style={{ height: "40vh" }} />}
-            <About id="about"/>
-            {isMobile ? <div style={{ height: "20vh" }}></div> : null}
-          </div>
-          <Modal projects={projects} modal={modal} />
-          <Contact id="contact" lenis={lenis} />
-        
-      </main>
-    </ReactLenis>
-  );
+  // In Home component
+return (
+  
+    <main ref={mainRef}>
+      <Hero />
+      <div style={{ height: "15vh" }} />
+      <div className="body">
+        <div id="projects">  {/* Add wrapper with ID */}
+          <ProjectList projects={projects} setModal={setModal} />
+        </div>
+        {isMobile ? <div style={{ height: "20vh" }} /> : <div style={{ height: "40vh" }} />}
+        <div id="about">     {/* Add wrapper with ID */}
+          <About />
+        </div>
+        {isMobile ? <div style={{ height: "20vh" }}></div> : null}
+      </div>
+      <Modal projects={projects} modal={modal} />
+      <div id="contact">    {/* Add wrapper with ID */}
+        <Contact lenis={lenis} />
+      </div>
+    </main>
+  
+);
 }
