@@ -66,31 +66,33 @@ export default function Menu() {
   const handleHomeAndScroll = (targetId) => {
     toggleMenu(); // Close the menu
     
-    if (window.location.pathname === '/') {
-      // If we're already on the home page, just scroll
+    const scrollToTarget = () => {
       const target = document.querySelector(targetId);
       if (target && lenis) {
-        lenis.scrollTo(target, {
-          offset: 0,
-          duration: 1.5,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-        });
-      }
-    } else {
-      // If we're on a different page, navigate and then scroll
-      router.push('/');
-      setTimeout(() => {
-        const target = document.querySelector(targetId);
-        if (target && lenis) {
+        // On mobile, use a simpler scrolling setup
+        if (window.innerWidth <= 768) {
           lenis.scrollTo(target, {
             offset: 0,
             immediate: false,
+            duration: 1,
+            lock: true,
+          });
+        } else {
+          // On desktop, use the fancier easing
+          lenis.scrollTo(target, {
+            offset: 0,
             duration: 1.5,
-            lock: true, // Prevents scroll interruption
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
           });
         }
-      }, 500); // Wait for page transition
+      }
+    };
+  
+    if (window.location.pathname === '/') {
+      scrollToTarget();
+    } else {
+      router.push('/');
+      setTimeout(scrollToTarget, 750); // Increased timeout for mobile
     }
   };
 

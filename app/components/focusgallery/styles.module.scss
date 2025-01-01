@@ -103,7 +103,7 @@
   /* Add mobile-specific adjustments */
   @media (max-width: 768px) {
     display: flex;
-
+    overflow: hidden;
     .plane {
       // flex: 0 0 80%;
       width: 100%; /* Planes take 60% of the screen width */
