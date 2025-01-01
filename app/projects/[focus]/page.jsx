@@ -5,43 +5,50 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-import projects from "../../data/projects.json";
+import projects from "@/app/data/projects.json";
 import styles from './styles.module.scss';
 import NextButton from '@/app/components/buttons/next_button/page';
 
-// This function generates the static params (slugs) for all projects
-export function generateStaticParams() {
-  return projects.map((project) => ({
-    focus: project.slug,  // Slug for each project
-  }));
-}
-
-const CardScene = dynamic(() => import('../../components/card/CardScene'), {
-  ssr: false // Ensure server-side rendering is disabled for dynamic import
-});
-
-// The focus page that retrieves project details based on the slug
 export default function Focus({ params }) {
-  // Find the project by slug from the params
-  const project = projects.find(
-    (project) => project.slug === params.focus
-  );
-
-  // If the project is not found, return a 404 response
-  if (!project) {
+  if (!params || !params.focus) {
+    console.log('Missing params or focus parameter');
     return notFound();
   }
-  console.log(project.src);
 
- 
+  console.log('Projects data:', projects); // Debug log
+  console.log('Looking for slug:', params.focus); // Debug log
+
+  const project = projects.find(p => p.slug === params.focus);
   
-  // Return the page content for the found project
+  console.log('Found project:', project); // Debug log
+
+  if (!project) {
+    console.log('Project not found for slug:', params.focus);
+    return notFound();
+  }
+
+  if (!project.src || !Array.isArray(project.src)) {
+    console.log('Invalid project data structure:', project);
+    return notFound();
+  }
+
   return (
     <main>
       <ReturnButton />
       <FocusGallery project={project} />
       <NextButton project={project}/>
     </main>
-    
-  )
+  );
+}
+
+// Add error boundary
+export function generateStaticParams() {
+  try {
+    return projects.map((project) => ({
+      focus: project.slug,
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
 }

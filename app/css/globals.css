@@ -32,7 +32,6 @@ main {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   overflow: auto; /* Ensure scrolling is enabled */
   overscroll-behavior-y: none; /* Crucial for preventing default scroll */
-  /* position: relative */
 }
 
 
@@ -62,12 +61,6 @@ body {
   font-weight: 700;
   text-align: center;
   padding: 20px 50px;
-}
-
-.homeSpecialty{
-  position: absolute;
-  top: 30%;
-  left: 5%;
 }
 
 @layer utilities {
