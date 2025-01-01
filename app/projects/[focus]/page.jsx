@@ -1,6 +1,5 @@
-import GlowButton from '@/app/components/buttons/button/page';
 import ReturnButton from '@/app/components/buttons/return_button/page';
-import FocusGallery from '@/app/components/focusgallery/page';
+import FocusGallery from '@/app/components/focusgallery';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
