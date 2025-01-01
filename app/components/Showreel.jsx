@@ -12,14 +12,14 @@ export default function Showreel({ format }) {
   if (format === "4x5") {
     return (
       <div> 
-        <video autoPlay playsinline webkit-playsinline="true" muted loop width="250" height="312" preload="none">
+        <video autoPlay playsInline webkit-playsinline="true" muted loop width="250" height="312" preload="none">
           <source src="media/vids/showreel_4x5.webm" type="video/webm" />
         </video>
       </div>
     );
   } else {
     return (
-      <video autoPlay playsinline webkit-playsinline="true" muted loop width="200" height="200" preload="none">
+      <video autoPlay playsInline webkit-playsinline="true" muted loop width="200" height="200" preload="none">
         <source src="media/vids/showreel.webm" type="video/webm" />
       </video>
     );

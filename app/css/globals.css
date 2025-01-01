@@ -32,6 +32,8 @@ main {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   overflow: auto; /* Ensure scrolling is enabled */
   overscroll-behavior-y: none; /* Crucial for preventing default scroll */
+  touch-action: pan-y; /* Enable vertical touch scrolling */
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
 }
 
 
@@ -49,8 +51,10 @@ body {
     rgb(var(--background-start-rgb));
   margin: 0px;
   font-family: 'Dirtyline';
-  overflow: hidden; /* Ensure overflow is hidden */
+  overflow: auto; /* Ensure overflow is hidden */
+
 }
+
 
 .projects-header {
   font-family: Dirtyline;

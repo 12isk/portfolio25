@@ -80,8 +80,8 @@ export default function GradientCursor({ isHovered }) {
   }, [lenis, animate]);
 
   // Render cursor elements
-  if (isMobile) return null;
-  else
+  if (isMobile) return ;
+  
   return (
     <>
       {colors2.map((color, i, array) => (

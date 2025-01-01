@@ -13,11 +13,10 @@ export default function ClientLayout({ children }) {
     orientation: "vertical",
     smoothWheel: true,
     wheelMultiplier: 1,
+    syncTouch: true,  
     touchInertiaMultiplier: 2,
-    smooth: {
-      mouse: 0.75,
-      touch: 0.8,
-      wheel: 0.75,
+    onTouch: (e) => {
+      console.log('Touch detected:', e);
     },
   };
 

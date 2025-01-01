@@ -36,9 +36,10 @@ export default function Home() {
   const lenis = useLenis(); // Access Lenis instance
 
   useEffect(() => {
-    if (lenis) {
-      console.log("Lenis instance home:", lenis);
-    }
+    // if (lenis) {
+    //   console.log("Lenis instance home:", lenis);
+      
+    // }
     return () => {
       if (lenis) {
         lenis.destroy(); // Clean up the Lenis instance on unmount

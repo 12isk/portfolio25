@@ -3,9 +3,12 @@
 import Link from 'next/link'
 import GradientCursor from './components/GradientCursor'
 import styles from './css/404/styles.module.scss'
+import useIsMobile from './components/hooks/useIsMobile';
 import { motion } from 'framer-motion'
  
 export default function NotFound() {
+
+  const isMobile = useIsMobile();
 
   function easeOutElastic(x) {
     const c4 = (2 * Math.PI) / 3;
@@ -65,7 +68,7 @@ export default function NotFound() {
 
   return (
     <div className={styles.container}>
-      <GradientCursor/>
+      {isMobile ? <GradientCursor/> : null}
       
       <motion.h1 variants={bounceUp} initial="initial" animate="animate"  className={styles.code}>
         4<span className={styles.zero}>O</span>4
