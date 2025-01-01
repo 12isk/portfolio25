@@ -4,7 +4,7 @@ import "./css/globals.css";
 
 export const metadata = {
   title: "12isk",
-  description: "12isk is a creative developer that specializes in web design and development.",
+  description: "All-around creative specializing in web development, graphic design, 3D, and innovative digital experiences. Loves mixing art and tech to turn cool ideas into reality.",
 };
 
 export default function RootLayout({ children }) {
