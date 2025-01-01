@@ -71,7 +71,7 @@ export default function NotFound() {
         4<span className={styles.zero}>O</span>4
       </motion.h1>
       <motion.h2 className={styles.yap} variants={opacity} initial="initial" animate="animate">
-        Couldn't quite find the way there <span className={styles.sad}>:(</span>
+        Couldn&apos;t quite find the way there <span className={styles.sad}>:(</span>
       </motion.h2>
       
       <motion.div className={styles.homeBtn} variants={opacityAndScale} initial="initial" animate="animate" >
