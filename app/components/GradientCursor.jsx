@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import React, { useEffect, useRef } from 'react';
 import useIsMobile from './hooks/useIsMobile';
+import useIsTablet from './hooks/useIsTablet';
 import { useLenis } from 'lenis/react';
 
 const colors2 = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
@@ -8,6 +9,7 @@ const colors2 = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
 export default function GradientCursor({ isHovered }) {
   const size = isHovered ? 100 : 60;
   const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
   const lenis = useLenis();
 
   // Cursor positions
@@ -80,7 +82,7 @@ export default function GradientCursor({ isHovered }) {
   }, [lenis, animate]);
 
   // Render cursor elements
-  if (isMobile) return ;
+  if (isMobile || isTablet) return ;
   
   return (
     <>
