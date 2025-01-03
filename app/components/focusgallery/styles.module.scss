@@ -56,6 +56,11 @@
         &:nth-of-type(1) {
           left: 68%;
           top: 65%;
+
+          @media screen and (max-width: 768px) {
+            left: 68%;
+            top: 80%;
+          }
         }
         &:nth-of-type(2) {
           left: 10%;
@@ -75,14 +80,29 @@
         &:nth-of-type(1) {
           left: 5%;
           top: 10%;
+          
+          @media screen and (max-width: 768px) {
+            left: -35%;
+            top: 20%;
+          }
         }
         &:nth-of-type(2) {
-          left: 80%;
+          left: 65%;
           top: 5%;
+          @media screen and (max-width: 768px) {
+            left: 40%;
+            top: 5%;
+            
+          }
         }
         &:nth-of-type(3) {
-          left: 50%;
+          left: 0%;
           top: 60%;
+
+          @media screen and (max-width: 768px) {
+            left: 65%;
+            top: 60%;
+          }
         }
       }
     }
@@ -112,7 +132,6 @@
       width: 100%; /* Planes take 60% of the screen width */
       height: 100%;
       position: relative; /* Allow planes to flow within flex container */
-      overflow: hidden;
       
       // img {
       //   width: 10vw; /* Adjust the image dimensions for mobile */

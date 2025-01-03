@@ -13,23 +13,10 @@ export default function FocusGallery({ project }) {
   const plane3 = useRef(null);
 
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const [imageSizes, setImageSizes] = useState({ newWidth: 200, newHeight: 270 });
-  
   const defaultSizes = {
     width: 1920,
     height: 1080,
   };
-
-  const scaleAnimation = {
-    initial: { scale: 0, x: "-50%", y: "60%" },
-    open: { scale: 1, x: "-50%", y: "60%", 
-      transition: { duration: 0.5, ease:[0.76, 0, 0.24, 1] } },
-    closed: { scale: 0, x: "-50%", y: "50%", 
-      transition: { duration: 0.8, ease:[0.76, 0, 0.24, 1] } },
-  };
-
-
   const calculateSizes = (width, height) => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
@@ -39,11 +26,30 @@ export default function FocusGallery({ project }) {
 
     const scale = Math.min(widthScale, heightScale);
 
-    const newWidth = width * scale;
-    const newHeight = height * scale;
+    const newWidth = width * scale + 50;
+    const newHeight = height * scale + 50;
 
     return { newWidth, newHeight };
   };
+
+  const [imageSizes, setImageSizes] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return calculateSizes(300, 350); // Larger initial dimensions
+    }
+    return { newWidth: 300, newHeight: 350 };
+  });
+  
+
+  const scaleAnimation = {
+    initial: { scale: 0, x: "-50%", y: "60%" },
+    open: { scale: 1, x: "-50%", y: "60%",
+      transition: { duration: 0.5, ease:[0.76, 0, 0.24, 1] } },
+    closed: { scale: 0, x: "-50%", y: "50%",
+      transition: { duration: 0.8, ease:[0.76, 0, 0.24, 1] } },
+  };
+
+
+
 
   const handleImageClick = (src) => {
     console.log('Image clicked:', src);
@@ -202,6 +208,8 @@ export default function FocusGallery({ project }) {
         {project.src.slice(2, 5).map((src, index) => (
           <Image
             key={index}
+            placeholder="blur"
+            blurDataURL={`data:image/svg+xml;base64,...`}
             src={`../${src}`}
             width={imageSizes.newWidth}
             height={imageSizes.newHeight}
@@ -217,6 +225,8 @@ export default function FocusGallery({ project }) {
           {project.src.slice(5, project.src.length).map((src, index) => (
             <Image
               key={index}
+              placeholder="blur"
+              blurDataURL={`data:image/svg+xml;base64,...`}
               src={`../${src}`}
               width={imageSizes.newWidth * 0.5}
               height={imageSizes.newHeight * 1.1}
@@ -228,7 +238,7 @@ export default function FocusGallery({ project }) {
         </div>
       )}
 
-      <ImageModal 
+      <ImageModal
         isOpen={!!selectedImage}
         image={selectedImage ? `../${selectedImage}` : ''}
         onClose={() => setSelectedImage(null)}
