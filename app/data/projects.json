@@ -43,7 +43,11 @@
     "id": 4,
     "title": "(unsolicited) statements",
     "src": [
-      "media/projects/statements/statement1.webp"
+      "media/projects/statements/statement1.webp",
+      "media/projects/statements/statement2.webp",
+      "media/projects/statements/statement3.webp",
+      "media/projects/statements/statement4.webp"
+
     ],
     "color": "#daa661",
     "desc": "Graphic Design",

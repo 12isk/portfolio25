@@ -1,20 +1,34 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, use } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import styles from "./styles.module.scss";
+import ImageModal from '../ImageModal';
+import { motion, AnimatePresence } from "framer-motion";
+
 
 export default function FocusGallery({ project }) {
   const plane1 = useRef(null);
   const plane2 = useRef(null);
   const plane3 = useRef(null);
 
-  const [imageSizes, setImageSizes] = useState({ newWidth: 200, newHeight: 270 });
+  const [selectedImage, setSelectedImage] = useState(null);
 
+  const [imageSizes, setImageSizes] = useState({ newWidth: 200, newHeight: 270 });
+  
   const defaultSizes = {
     width: 1920,
     height: 1080,
   };
+
+  const scaleAnimation = {
+    initial: { scale: 0, x: "-50%", y: "60%" },
+    open: { scale: 1, x: "-50%", y: "60%", 
+      transition: { duration: 0.5, ease:[0.76, 0, 0.24, 1] } },
+    closed: { scale: 0, x: "-50%", y: "50%", 
+      transition: { duration: 0.8, ease:[0.76, 0, 0.24, 1] } },
+  };
+
 
   const calculateSizes = (width, height) => {
     const windowWidth = window.innerWidth;
@@ -31,7 +45,13 @@ export default function FocusGallery({ project }) {
     return { newWidth, newHeight };
   };
 
+  const handleImageClick = (src) => {
+    console.log('Image clicked:', src);
+    setSelectedImage(selectedImage === src ? null : src);
+  };
+
   useEffect(() => {
+    console.log("src", project.src);
     const handleResize = () => {
       const { newWidth, newHeight } = calculateSizes(200, 270);
       setImageSizes({ newWidth, newHeight });
@@ -165,11 +185,15 @@ export default function FocusGallery({ project }) {
         {project.src.slice(0, 2).map((src, index) => (
           <Image
             key={index}
+            quality={75} // Lower quality for performance
+            placeholder="blur"
+            blurDataURL={`data:image/svg+xml;base64,...`}
             src={`../${src}`}
             width={imageSizes.newWidth}
             height={imageSizes.newHeight}
             alt={`plane1-${index + 1}`}
             priority={true}
+            onClick={() => handleImageClick(src)}
           />
         ))}
       </div>
@@ -183,6 +207,7 @@ export default function FocusGallery({ project }) {
             height={imageSizes.newHeight}
             alt={`plane2-${index + 1}`}
             priority={true}
+            onClick={() => handleImageClick(src)}
           />
         ))}
       </div>
@@ -197,10 +222,19 @@ export default function FocusGallery({ project }) {
               height={imageSizes.newHeight * 1.1}
               alt={`plane3-${index + 1}`}
               priority={true}
+              onClick={() => handleImageClick(src)}
             />
           ))}
         </div>
       )}
+
+      <ImageModal 
+        isOpen={!!selectedImage}
+        image={selectedImage ? `../${selectedImage}` : ''}
+        onClose={() => setSelectedImage(null)}
+        width={imageSizes.newWidth * 2}
+        height={imageSizes.newHeight * 2}
+      />
 
       <div className={styles.title}>
         <h1>{project.title}</h1>

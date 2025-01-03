@@ -1,8 +1,15 @@
-// Create a client component wrapper
 "use client";
 import { ReactLenis } from "lenis/react";
 import Menu from "./components/menu";
+import { useEffect, useState } from "react";
+
 export default function ClientLayout({ children }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const lenisOptions = {
     lerp: 0.03,
     duration: 1,
@@ -19,6 +26,8 @@ export default function ClientLayout({ children }) {
       console.log('Touch detected:', e);
     },
   };
+
+  if (!mounted) return null;
 
   return (
     <ReactLenis root options={lenisOptions}>

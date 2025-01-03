@@ -14,12 +14,12 @@ export default function Focus({ params }) {
     return notFound();
   }
 
-  console.log('Projects data:', projects); // Debug log
-  console.log('Looking for slug:', params.focus); // Debug log
+  // console.log('Projects data:', projects); // Debug log
+  // console.log('Looking for slug:', params.focus); // Debug log
 
   const project = projects.find(p => p.slug === params.focus);
   
-  console.log('Found project:', project); // Debug log
+  //console.log('Found project:', project); // Debug log
 
   if (!project) {
     console.log('Project not found for slug:', params.focus);

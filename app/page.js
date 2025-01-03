@@ -52,13 +52,7 @@ export default function Home() {
       await import('./components/Hero');
     };
     preloadHero();
-    return () => {
-      if (lenis) {
-        lenis.destroy(); // Clean up the Lenis instance on unmount
-      }
-    };
-  }, [lenis]);
-  useEffect(() => {
+    
     
   }, []);
 

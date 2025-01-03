@@ -40,9 +40,12 @@
     height: 100%;
     width: 100%;
     position: absolute;
+    pointer-events: none;
 
     img {
       position: absolute;
+      z-index:8;
+      cursor: pointer;
     
     }
 
@@ -109,6 +112,7 @@
       width: 100%; /* Planes take 60% of the screen width */
       height: 100%;
       position: relative; /* Allow planes to flow within flex container */
+      overflow: hidden;
       
       // img {
       //   width: 10vw; /* Adjust the image dimensions for mobile */

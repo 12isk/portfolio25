@@ -12,7 +12,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="preload" as="fetch" href="/media/models/torus-knot2.glb" type="application/octet-stream" />
+        <link 
+          rel="preload" 
+          href="/media/models/torus-knot2.glb" 
+          as="fetch" 
+          crossOrigin="anonymous"
+          type="application/octet-stream" 
+        />
       </head>
       <link 
         rel="icon" 

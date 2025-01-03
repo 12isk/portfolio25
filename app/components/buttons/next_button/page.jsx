@@ -1,22 +1,28 @@
 'use client'; // This ensures that this code runs only on the client side
 
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import React from 'react';
 import styles from './styles.module.scss';
 import projects from '../../../data/projects.json'; // Update the import statement
+import { animatePageOut } from '@/app/utils/animations';
 
 const NextButton = ({ label = "Go Forward", project }) => {
   const router = useRouter();
-
+  const pathname = usePathname();
   const handleClick = () => {
+
+    
+
     if (project !== undefined) {
       const currentId = project.id;
       const nextId = (currentId % projects.length) + 1; // Ensure the next ID is within bounds
       const nextProject = projects.find(p => p.id === nextId);
+      const href = `/projects/${nextProject.slug}`;
       if (nextProject) {
         console.log(`Navigating to the next project: ${nextProject.slug}`);
-        router.push(`/projects/${nextProject.slug}`);
+        router.push(href);
+        
       }
     }
   };
