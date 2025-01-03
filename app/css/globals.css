@@ -64,6 +64,15 @@ body {
 
 }
 
+@media (max-width: 1024px) {
+  body {
+    overflow: auto;
+  }
+  html{
+    overflow: auto;
+  }
+}
+
 
 .projects-header {
   font-family: Dirtyline;
