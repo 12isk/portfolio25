@@ -1,5 +1,6 @@
 // app/layout.js
 import ClientLayout from "./clientLayout"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "./css/globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
         sizes="<generated>"
       />
       <body>
+        <SpeedInsights />
         <ClientLayout>
           {children}
         </ClientLayout>
