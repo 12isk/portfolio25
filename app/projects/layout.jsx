@@ -12,6 +12,7 @@ export default function ProjectLayout({ children }) {
       };
     return (
         <>
+        <SpeedInsights />
         <GradientCursor />
         
         
