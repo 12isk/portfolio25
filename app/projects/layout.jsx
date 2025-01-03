@@ -1,7 +1,7 @@
 "use client";
 import GradientCursor from "../components/GradientCursor";
 import { ReactLenis, useLenis } from 'lenis/react'
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function ProjectLayout({ children }) {
     const lenisOptions = {
