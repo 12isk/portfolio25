@@ -15,7 +15,19 @@ import Specialty from './components/precisions/specialty';
 import projects from "./data/projects.json";
 
 const Hero = dynamic(() => import('./components/Hero'), {
-  ssr: false // Ensure server-side rendering is disabled for dynamic import
+  ssr: false,
+  loading: () => (
+    <div style={{ 
+      height: '100vh',
+      width: '100vw',
+      backgroundColor: 'black' 
+    }} />
+  ),
+  priority: true
+});
+const Model = dynamic(() => import('./components/Model'), {
+  ssr: false,
+  loading: () => <div style={{height: "100vh"}} />
 });
 
 export default function Home() {
@@ -36,16 +48,19 @@ export default function Home() {
   const lenis = useLenis(); // Access Lenis instance
 
   useEffect(() => {
-    // if (lenis) {
-    //   console.log("Lenis instance home:", lenis);
-      
-    // }
+    const preloadHero = async () => {
+      await import('./components/Hero');
+    };
+    preloadHero();
     return () => {
       if (lenis) {
         lenis.destroy(); // Clean up the Lenis instance on unmount
       }
     };
   }, [lenis]);
+  useEffect(() => {
+    
+  }, []);
 
   // In Home component
 return (

@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
-import { useTransform, useScroll, motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import React, { useRef } from 'react';
+
+import useIsMobile from '../hooks/useIsMobile';
 import Project from './project';
 import styles from './styles.module.scss';
-import useIsMobile from '../hooks/useIsMobile';
 
 export default function ProjectList({ projects, setModal }) {
   const sLetter = useRef(null);
@@ -53,11 +54,11 @@ export default function ProjectList({ projects, setModal }) {
   const bodyVariants = {
     hidden: { 
       opacity: 0,
-      y: -225 
+      top: '225px'
     },
     visible: { 
       opacity: 1,
-      y: 0,
+      top: '0px',
       transition: {
         type: "spring",
         damping: 20,

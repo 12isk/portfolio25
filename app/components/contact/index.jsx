@@ -79,10 +79,9 @@ export default function Contact({lenis}) {
     const rotation = useTransform(smoothProgress, [0, 1], [360, 0]);
 
     useEffect(() => {
-        console.log('lenis', lenis);
-
         if (!lenis) return;
-        let scrollTimeout;
+
+        let isScrolling = false;
         
         const handleScrollEnd = () => {
             if (!container.current) return;
@@ -90,34 +89,37 @@ export default function Contact({lenis}) {
             const rect = container.current.getBoundingClientRect();
             const containerTop = rect.top;
             const windowHeight = window.innerHeight;
-            
             const visiblePercentage = 1 - (Math.abs(containerTop) / windowHeight);
             
             if (visiblePercentage >= 0.12) {
                 const targetScroll = lenis.scroll + containerTop;
                 lenis.scrollTo(targetScroll, {
                     duration: 1.2,
-                    easing: easeInOutExpo
+                    durationMultiplier: 1.3,
+                    easing: (x) => Math.min(1, 1.001 - Math.pow(2, -10 * x))
                 });
             }
         };
 
         const onScroll = () => {
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
+            if (!isScrolling) {
+                isScrolling = true;
             }
             
-            scrollTimeout = setTimeout(() => {
-                handleScrollEnd();
-            }, 50); // Lower value reduces delay 150 originally
+            // Clear any existing timeouts
+            window.clearTimeout(window.scrollTimeout);
             
+            // Set new timeout
+            window.scrollTimeout = window.setTimeout(() => {
+                isScrolling = false;
+                handleScrollEnd();
+            }, 50); // Reduced timeout for faster response
         };
 
-        // Subscribe to Lenis scroll events
         lenis.on('scroll', onScroll);
 
         return () => {
-            if (scrollTimeout) clearTimeout(scrollTimeout);
+            window.clearTimeout(window.scrollTimeout);
             lenis.off('scroll', onScroll);
         };
     }, [lenis]);

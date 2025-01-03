@@ -2,11 +2,12 @@ import { MeshTransmissionMaterial, useGLTF, useProgress } from '@react-three/dre
 import { useFrame, useThree } from '@react-three/fiber';
 import { useMotionValue } from 'framer-motion';
 import { useControls } from 'leva';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+
 import useIsMobile from './hooks/useIsMobile';
 import Preloader from './preloader';
 
-export default function Model() {
+export default function Model({onLoad}) {
 
     //creating a state to know when cursor is hovering over the model/text
     const [isHovered, setIsHovered] = useState(false);
@@ -14,7 +15,7 @@ export default function Model() {
     const isMobile = useIsMobile();
 
     const torus = useRef();
-    const { nodes } = useGLTF('media/models/torus-knot.glb');
+    const { nodes } = useGLTF('media/models/torus-knot2.glb', true);
     const { active, progress, errors, item, loaded, total } = useProgress();
     const { viewport } = useThree();
     
@@ -33,7 +34,7 @@ export default function Model() {
     //     ySpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
     //     //zSpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
     // });
-    const materialProps = {
+    const materialProps =  useMemo(() => ({
         thickness: 0.25,
         roughness: 0,
         transmission: 1,
@@ -42,7 +43,12 @@ export default function Model() {
         BackSide: true,
         xSpeed: 0.016,
         ySpeed: 0.01,
-      };
+    })
+    );
+
+    useEffect(() => {
+    if (nodes) onLoad?.();
+    }, [nodes]);
 
 
 
