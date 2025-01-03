@@ -7,6 +7,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import Cursor from '../Cursor';
 import GradientCursor from '../GradientCursor';
 import useIsMobile from '../hooks/useIsMobile';
+import useIsTablet from '../hooks/useIsTablet';
 import Model from '../Model';
 import Available from '../precisions/available';
 import Clock from '../precisions/clock';
@@ -17,6 +18,7 @@ export default function Hero() {
     const [isHovered, setIsHovered] = useState(false);
     const [dimensions, setDimensions] = useState(getWindowDimensions());
     const isMobile = useIsMobile();
+    const isTablet = useIsTablet();
     const textScaleDivider = isMobile ? 570 : 950;
     const { progress } = useProgress();
     const [showCanvas, setShowCanvas] = useState(false);
@@ -86,7 +88,7 @@ export default function Hero() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider} 
                         font='fonts/Dirtyline.otf' 
-                        position={[0,1.3,-1]}
+                        position={isTablet ? [0,1,-1]: [0,1.3,-1]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         CrEaTivE
@@ -94,7 +96,7 @@ export default function Hero() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider} 
                         font='fonts/Dirtyline.otf' 
-                        position={isMobile? [0,0.5,-1] : [0,-0.5,-1]}
+                        position={isMobile ? [0,0.5,-1] : isTablet ? [0,0,-1] : [0,-0.5,-1]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         DeVeLopPeR

@@ -1,12 +1,14 @@
 "use client";
 import { useState, useEffect } from 'react';
 
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
+
+const useIsTablet = () => {
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Now includes tablets
+      const width = window.innerWidth;
+      setIsTablet(width > 768 && width <= 1024);
     };
 
     handleResize();
@@ -14,7 +16,7 @@ const useIsMobile = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return isMobile;
+  return isTablet;
 };
 
-export default useIsMobile;
+export default useIsTablet;
