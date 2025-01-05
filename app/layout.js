@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
+      {/* <head>
         <link 
           rel="preload" 
           href="/media/models/torus-knot2.glb" 
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
           type="application/octet-stream" 
         />
-      </head>
+      </head> */}
       <link 
         rel="icon" 
         href="/icon?<generated>" 
