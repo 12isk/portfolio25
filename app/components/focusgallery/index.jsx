@@ -73,16 +73,6 @@ export default function FocusGallery({ project }) {
   let yForce = useRef(0);
   let requestAnimationFrameId = useRef(null);
 
-  const manageMouseMove = useCallback(
-    (e) => {
-    const { movementX, movementY } = e;
-    xForce.current += movementX * speed;
-    yForce.current += movementY * speed;
-
-    if (!requestAnimationFrameId) {
-      requestAnimationFrameId.current = requestAnimationFrame(animate);
-    }
-  },[animate]);
 
   const animate = useCallback( 
     () => {
@@ -111,6 +101,18 @@ export default function FocusGallery({ project }) {
         requestAnimationFrameId.current = null;
       }
   },[]);
+
+  const manageMouseMove = useCallback(
+    (e) => {
+    const { movementX, movementY } = e;
+    xForce.current += movementX * speed;
+    yForce.current += movementY * speed;
+
+    if (!requestAnimationFrameId) {
+      requestAnimationFrameId.current = requestAnimationFrame(animate);
+    }
+  },[animate, speed]);
+
 
   const animateReturn = () => {
     xForce.current = lerp(xForce.current, 0, easing);

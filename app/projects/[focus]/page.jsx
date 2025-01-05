@@ -1,4 +1,4 @@
-import ReturnButton from '@/app/components/buttons/return_button/page';
+import ReturnButton from '@/app/components/buttons/return_button';
 import FocusGallery from '@/app/components/focusgallery';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation';
 
 import projects from "@/app/data/projects.json";
 import styles from './styles.module.scss';
-import NextButton from '@/app/components/buttons/next_button/page';
+import NextButton from '@/app/components/buttons/next_button';
 
 export default function Focus({ params }) {
   if (!params || !params.focus) {

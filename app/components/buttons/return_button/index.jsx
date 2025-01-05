@@ -25,6 +25,8 @@ const ReturnButton = ({ label = "Go Back" }) => {
       <Image
         src="../../icons/return.svg"
         alt="Return"
+        width={48}
+        height={48}
         style={{ width: "48px", height: "48px", marginRight: "8px",
           padding: "10px" }}
       />
