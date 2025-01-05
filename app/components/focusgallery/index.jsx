@@ -175,40 +175,40 @@ export default function FocusGallery({ project }) {
   };
 
   // Create an optimized image component that implements progressive loading
-  const OptimizedImage = useCallback(({ src, index, plane }) => {
-    const [isLoaded, setIsLoaded] = useState(false);
+  // const OptimizedImage = useCallback(({ src, index, plane }) => {
+  //   const [isLoaded, setIsLoaded] = useState(false);
     
-    return (
-      <div className={styles.imageWrapper}>
-        {/* Low quality placeholder */}
-        <Image
-          src={`/${src}`}
-          quality={20}
-          width={imageSizes.newWidth * 0.1}
-          height={imageSizes.newHeight * 0.1}
-          className={`${styles.placeholder} ${isLoaded ? styles.hidden : ''}`}
-          alt={`placeholder-${index + 1}`}
-          priority={index === 0}
-        />
+  //   return (
+  //     <div className={styles.imageWrapper}>
+  //       {/* Low quality placeholder */}
+  //       <Image
+  //         src={`/${src}`}
+  //         quality={20}
+  //         width={imageSizes.newWidth * 0.1}
+  //         height={imageSizes.newHeight * 0.1}
+  //         className={`${styles.placeholder} ${isLoaded ? styles.hidden : ''}`}
+  //         alt={`placeholder-${index + 1}`}
+  //         priority={index === 0}
+  //       />
         
-        {/* High quality main image */}
-        <Image
-          src={`/${src}`}
-          quality={95}
-          width={imageSizes.newWidth}
-          height={imageSizes.newHeight}
-          className={`${styles.mainImage} ${isLoaded ? styles.visible : ''}`}
-          alt={`${plane}-${index + 1}`}
-          onLoad={() => setIsLoaded(true)}
-          priority={index === 0}
-          sizes={`(max-width: 768px) 100vw, ${imageSizes.newWidth}px`}
-          onClick={() => handleImageClick(src)}
-          placeholder="blur"
-          blurDataURL={`data:image/svg+xml;base64,${generateOptimizedBlurPlaceholder()}`}
-        />
-      </div>
-    );
-  }, [imageSizes, handleImageClick]);
+  //       {/* High quality main image */}
+  //       <Image
+  //         src={`/${src}`}
+  //         quality={95}
+  //         width={imageSizes.newWidth}
+  //         height={imageSizes.newHeight}
+  //         className={`${styles.mainImage} ${isLoaded ? styles.visible : ''}`}
+  //         alt={`${plane}-${index + 1}`}
+  //         onLoad={() => setIsLoaded(true)}
+  //         priority={index === 0}
+  //         sizes={`(max-width: 768px) 100vw, ${imageSizes.newWidth}px`}
+  //         onClick={() => handleImageClick(src)}
+  //         placeholder="blur"
+  //         blurDataURL={`data:image/svg+xml;base64,${generateOptimizedBlurPlaceholder()}`}
+  //       />
+  //     </div>
+  //   );
+  // }, [imageSizes, handleImageClick]);
 
   // Generate a better blur placeholder
   const generateOptimizedBlurPlaceholder = () => {
