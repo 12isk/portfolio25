@@ -1,7 +1,6 @@
 'use client';
 import React from 'react'
 import styles from './style.module.scss';
-import { GeistSans } from 'geist/font/sans';
 
 
 export default function index({index, title, setModal, desc}) {
