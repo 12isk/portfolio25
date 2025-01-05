@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import React, { useRef, useState, useEffect, useCallback, useMemo, use } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import styles from "./styles.module.scss";
@@ -29,7 +29,7 @@ export default function FocusGallery({ project }) {
     const newHeight = height * scale + 50;
 
     return { newWidth, newHeight };
-  });
+  },[defaultSizes.width, defaultSizes.height]);
 
   const [imageSizes, setImageSizes] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -65,29 +65,29 @@ export default function FocusGallery({ project }) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [calculateSizes, project.src]);
 
   const easing = 0.079;
   const speed = 0.01;
-  let xForce = 0;
-  let yForce = 0;
-  let requestAnimationFrameId = null;
+  let xForce = useRef(0);
+  let yForce = useRef(0);
+  let requestAnimationFrameId = useRef(null);
 
   const manageMouseMove = useCallback(
     (e) => {
     const { movementX, movementY } = e;
-    xForce += movementX * speed;
-    yForce += movementY * speed;
+    xForce.current += movementX * speed;
+    yForce.current += movementY * speed;
 
     if (!requestAnimationFrameId) {
-      requestAnimationFrameId = requestAnimationFrame(animate);
+      requestAnimationFrameId.current = requestAnimationFrame(animate);
     }
-  });
+  },[animate]);
 
   const animate = useCallback( 
     () => {
-      xForce = lerp(xForce, 0, easing);
-      yForce = lerp(yForce, 0, easing);
+      xForce.current = lerp(xForce.current, 0, easing);
+      yForce.current = lerp(yForce.current, 0, easing);
 
       if (plane1.current) {
         gsap.set(plane1.current, { x: `+=${xForce}`, y: `+=${yForce}` });
@@ -99,22 +99,22 @@ export default function FocusGallery({ project }) {
         gsap.set(plane3.current, { x: `+=${xForce * 0.25}`, y: `+=${yForce * 0.25}` });
       }
 
-      if (Math.abs(xForce) < 0.01 && Math.abs(yForce) < 0.01) {
-        xForce = 0;
-        yForce = 0;
+      if (Math.abs(xForce.current) < 0.01 && Math.abs(yForce.current) < 0.01) {
+        xForce.current = 0;
+        yForce.current = 0;
       }
 
-      if (xForce > 0 || yForce > 0) {
+      if (xForce.current > 0 || yForce.current > 0) {
         requestAnimationFrame(animate);
       } else {
         cancelAnimationFrame(requestAnimationFrameId);
-        requestAnimationFrameId = null;
+        requestAnimationFrameId.current = null;
       }
-  });
+  },[]);
 
   const animateReturn = () => {
-    xForce = lerp(xForce, 0, easing);
-    yForce = lerp(yForce, 0, easing);
+    xForce.current = lerp(xForce.current, 0, easing);
+    yForce.current = lerp(yForce.current, 0, easing);
 
     if (plane1.current) {
       gsap.set(plane1.current, { x: `-=${xForce}`, y: `-=${yForce}` });
@@ -131,7 +131,7 @@ export default function FocusGallery({ project }) {
       yForce = 0;
     }
 
-    if (xForce > 0 || yForce > 0) {
+    if (xForce.current > 0 || yForce.current > 0) {
       requestAnimationFrame(animateReturn);
     } else {
       cancelAnimationFrame(requestAnimationFrameId);

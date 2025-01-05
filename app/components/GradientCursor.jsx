@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import useIsMobile from './hooks/useIsMobile';
 import useIsTablet from './hooks/useIsTablet';
 import { useLenis } from 'lenis/react';
@@ -50,7 +50,7 @@ export default function GradientCursor({ isHovered }) {
   };
 
   // Animation loop
-  const animate = () => {
+  const animate = useCallback( () => {
     // Smoothly lerp the scroll position
     //currentScroll.current = lerp(currentScroll.current, targetScroll.current, ease);
 
@@ -64,7 +64,7 @@ export default function GradientCursor({ isHovered }) {
     moveCircle(delayedMouse.current.x, delayedMouse.current.y);
 
     requestAnimationFrame(animate);
-  };
+  },[]);
 
   // Setup event listeners
   useEffect(() => {

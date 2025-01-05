@@ -72,6 +72,7 @@ export default function Props({ project }) {
           rotation={[0, 0, 0]}
           transparent={true}
           opacity={1}
+          alt={'f'}
         />
         {/* Rings component will now float over HTML */}
         <Rings />

@@ -58,7 +58,7 @@ useEffect(() => {
   handleResize(); // Set initial scale based on current window width
 
   return () => {window.removeEventListener('resize', handleResize)};
-}, []);
+}, [meshScale]);
 
 
  

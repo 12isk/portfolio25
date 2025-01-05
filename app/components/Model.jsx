@@ -44,11 +44,11 @@ export default function Model({onLoad}) {
         xSpeed: 0.016,
         ySpeed: 0.01,
     })
-    );
+    ,[]);
 
     useEffect(() => {
     if (nodes) onLoad?.();
-    }, [nodes]);
+    }, [nodes, onLoad]);
 
 
 

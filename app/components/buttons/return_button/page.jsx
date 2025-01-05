@@ -1,6 +1,7 @@
 'use client'; // This ensures that this code runs only on the client side
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import React from 'react';
 import styles from './styles.module.scss';
 
@@ -21,13 +22,14 @@ const ReturnButton = ({ label = "Go Back" }) => {
       className={styles.returnButton}
       aria-label={label}
     >
-      <img
+      <Image
         src="../../icons/return.svg"
         alt="Return"
         style={{ width: "48px", height: "48px", marginRight: "8px",
           padding: "10px" }}
       />
     </button>
+    
   );
 };
 

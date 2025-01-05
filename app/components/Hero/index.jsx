@@ -4,7 +4,6 @@ import { Canvas } from '@react-three/fiber';
 
 import React, { Suspense, useEffect, useState } from 'react';
 
-import Cursor from '../Cursor';
 import GradientCursor from '../GradientCursor';
 import useIsMobile from '../hooks/useIsMobile';
 import useIsTablet from '../hooks/useIsTablet';
@@ -12,7 +11,6 @@ import Model from '../Model';
 import Available from '../precisions/available';
 import Clock from '../precisions/clock';
 import Specialty from '../precisions/specialty';
-import styles from './styles.module.scss';
 
 export default function Hero() {
     const [isHovered, setIsHovered] = useState(false);
