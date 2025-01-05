@@ -26,7 +26,7 @@ const nextConfig = {
   
     // Additional Next.js features you can now use
     experimental: {
-      optimizeCss: true,
+      optimizeCss: false,
       //serverActions: true, // Enable if you want to use server actions
     },
   };

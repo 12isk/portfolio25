@@ -41,13 +41,13 @@ export default function Focus({ params }) {
 }
 
 // Add error boundary
-export function generateStaticParams() {
-  try {
-    return projects.map((project) => ({
-      focus: project.slug,
-    }));
-  } catch (error) {
-    console.error('Error generating static params:', error);
-    return [];
-  }
-}
+// export function generateStaticParams() {
+//   try {
+//     return projects.map((project) => ({
+//       focus: project.slug,
+//     }));
+//   } catch (error) {
+//     console.error('Error generating static params:', error);
+//     return [];
+//   }
+// }
