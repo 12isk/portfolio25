@@ -52,165 +52,128 @@ export default function FocusGallery({ project }) {
     setSelectedImage(selectedImage === src ? null : src);
   };
 
-  useEffect(() => {
-    console.log("src", project.src);
-    const handleResize = () => {
-      const { newWidth, newHeight } = calculateSizes(200, 270);
-      setImageSizes({ newWidth, newHeight });
-    };
+  // useEffect(() => {
+  //   console.log("src", project.src);
+  //   const handleResize = () => {
+  //     const { newWidth, newHeight } = calculateSizes(200, 270);
+  //     setImageSizes({ newWidth, newHeight });
+  //   };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [calculateSizes, project.src]);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, [calculateSizes, project.src]);
 
   const easing = 0.079;
   const speed = 0.01;
+  const isDragging = useRef(false);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
   let xForce = useRef(0);
   let yForce = useRef(0);
   let requestAnimationFrameId = useRef(null);
 
+  const lerp = useCallback((start, end, amount) => {
+    return start * (1 - amount) + end * amount;
+  }, []);
 
-  const animate = useCallback( 
-    () => {
-      xForce.current = lerp(xForce.current, 0, easing);
-      yForce.current = lerp(yForce.current, 0, easing);
-
-      if (plane1.current) {
-        gsap.set(plane1.current, { x: `+=${xForce}`, y: `+=${yForce}` });
-      }
-      if (plane2.current) {
-        gsap.set(plane2.current, { x: `+=${xForce * 0.5}`, y: `+=${yForce * 0.5}` });
-      }
-      if (plane3.current) {
-        gsap.set(plane3.current, { x: `+=${xForce * 0.25}`, y: `+=${yForce * 0.25}` });
-      }
-
-      if (Math.abs(xForce.current) < 0.01 && Math.abs(yForce.current) < 0.01) {
-        xForce.current = 0;
-        yForce.current = 0;
-      }
-
-      if (xForce.current > 0 || yForce.current > 0) {
-        requestAnimationFrame(animate);
-      } else {
-        cancelAnimationFrame(requestAnimationFrameId);
-        requestAnimationFrameId.current = null;
-      }
-  },[]);
-
-  const manageMouseMove = useCallback(
-    (e) => {
-    const { movementX, movementY } = e;
-    xForce.current += movementX * speed;
-    yForce.current += movementY * speed;
-
-    if (!requestAnimationFrameId) {
-      requestAnimationFrameId.current = requestAnimationFrame(animate);
-    }
-  },[animate, speed]);
-
-
-  const animateReturn = () => {
+  // Animation function with proper ref handling
+  const animate = useCallback(() => {
+    // Update forces using lerp
     xForce.current = lerp(xForce.current, 0, easing);
     yForce.current = lerp(yForce.current, 0, easing);
 
+    // Apply transformations to planes
     if (plane1.current) {
-      gsap.set(plane1.current, { x: `-=${xForce}`, y: `-=${yForce}` });
+      gsap.set(plane1.current, { 
+        x: `+=${xForce.current}`, 
+        y: `+=${yForce.current}` 
+      });
     }
     if (plane2.current) {
-      gsap.set(plane2.current, { x: `-=${xForce * 0.5}`, y: `-=${yForce * 0.5}` });
+      gsap.set(plane2.current, { 
+        x: `+=${xForce.current * 0.5}`, 
+        y: `+=${yForce.current * 0.5}` 
+      });
     }
     if (plane3.current) {
-      gsap.set(plane3.current, { x: `-=${xForce * 0.25}`, y: `-=${yForce * 0.25}` });
+      gsap.set(plane3.current, { 
+        x: `+=${xForce.current * 0.25}`, 
+        y: `+=${yForce.current * 0.25}` 
+      });
     }
 
-    if (Math.abs(xForce) < 0.01 && Math.abs(yForce) < 0.01) {
-      xForce = 0;
-      yForce = 0;
+    // Check if animation should stop
+    if (Math.abs(xForce.current) < 0.01 && Math.abs(yForce.current) < 0.01) {
+      xForce.current = 0;
+      yForce.current = 0;
+      cancelAnimationFrame(requestAnimationFrameId.current);
+      requestAnimationFrameId.current = null;
+      return;
     }
 
-    if (xForce.current > 0 || yForce.current > 0) {
-      requestAnimationFrame(animateReturn);
-    } else {
-      cancelAnimationFrame(requestAnimationFrameId);
-      requestAnimationFrameId = null;
-    }
-  };
+    // Continue animation
+    requestAnimationFrameId.current = requestAnimationFrame(animate);
+  }, [lerp]); // Only depend on lerp
 
-  let isDragging = false;
-  let touchStartX = 0;
-  let touchStartY = 0;
-  const manageTouchStart = (e) => {
-    const touch = e.touches[0];
-    isDragging = true;
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-  };
-
-  const manageTouchMove = (e) => {
-    if (!isDragging) return;
-
-    const touch = e.touches[0];
-    const movementX = touch.clientX - touchStartX;
-    const movementY = touch.clientY - touchStartY;
-
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-
-    xForce += movementX * speed;
-    yForce += movementY * speed;
-
-    if (!requestAnimationFrameId) {
-      requestAnimationFrameId = requestAnimationFrame(animate);
-    }
-  };
-
-  const manageTouchEnd = () => {
-    isDragging = false;
-    if (!requestAnimationFrameId) {
-      requestAnimationFrameId = requestAnimationFrame(animateReturn);
-    }
-  };
-
-  // Create an optimized image component that implements progressive loading
-  // const OptimizedImage = useCallback(({ src, index, plane }) => {
-  //   const [isLoaded, setIsLoaded] = useState(false);
+  // Mouse movement handler with proper animation triggering
+  const manageMouseMove = useCallback((e) => {
+    const { movementX, movementY } = e;
     
-  //   return (
-  //     <div className={styles.imageWrapper}>
-  //       {/* Low quality placeholder */}
-  //       <Image
-  //         src={`/${src}`}
-  //         quality={20}
-  //         width={imageSizes.newWidth * 0.1}
-  //         height={imageSizes.newHeight * 0.1}
-  //         className={`${styles.placeholder} ${isLoaded ? styles.hidden : ''}`}
-  //         alt={`placeholder-${index + 1}`}
-  //         priority={index === 0}
-  //       />
-        
-  //       {/* High quality main image */}
-  //       <Image
-  //         src={`/${src}`}
-  //         quality={95}
-  //         width={imageSizes.newWidth}
-  //         height={imageSizes.newHeight}
-  //         className={`${styles.mainImage} ${isLoaded ? styles.visible : ''}`}
-  //         alt={`${plane}-${index + 1}`}
-  //         onLoad={() => setIsLoaded(true)}
-  //         priority={index === 0}
-  //         sizes={`(max-width: 768px) 100vw, ${imageSizes.newWidth}px`}
-  //         onClick={() => handleImageClick(src)}
-  //         placeholder="blur"
-  //         blurDataURL={`data:image/svg+xml;base64,${generateOptimizedBlurPlaceholder()}`}
-  //       />
-  //     </div>
-  //   );
-  // }, [imageSizes, handleImageClick]);
+    // Update forces based on mouse movement
+    xForce.current += movementX * speed;
+    yForce.current += movementY * speed;
+
+    // Start animation if not already running
+    if (!requestAnimationFrameId.current) {
+      requestAnimationFrameId.current = requestAnimationFrame(animate);
+    }
+  }, [animate, speed]);
+
+  // Touch handlers with proper ref usage
+  const manageTouchStart = useCallback((e) => {
+    const touch = e.touches[0];
+    isDragging.current = true;
+    touchStartX.current = touch.clientX;
+    touchStartY.current = touch.clientY;
+  }, []);
+
+  const manageTouchMove = useCallback((e) => {
+    if (!isDragging.current) return;
+
+    const touch = e.touches[0];
+    const movementX = touch.clientX - touchStartX.current;
+    const movementY = touch.clientY - touchStartY.current;
+
+    // Update touch positions
+    touchStartX.current = touch.clientX;
+    touchStartY.current = touch.clientY;
+
+    // Update forces
+    xForce.current += movementX * speed;
+    yForce.current += movementY * speed;
+
+    // Start animation if not running
+    if (!requestAnimationFrameId.current) {
+      requestAnimationFrameId.current = requestAnimationFrame(animate);
+    }
+  }, [animate, speed]);
+
+  const manageTouchEnd = useCallback(() => {
+    isDragging.current = false;
+  }, []);
+
+  // Clean up animations on unmount
+  useEffect(() => {
+    return () => {
+      if (requestAnimationFrameId.current) {
+        cancelAnimationFrame(requestAnimationFrameId.current);
+      }
+    };
+  }, []);
 
   // Generate a better blur placeholder
   const generateOptimizedBlurPlaceholder = () => {
@@ -219,48 +182,6 @@ export default function FocusGallery({ project }) {
     return 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
   };
 
-
-  const lerp = (start, end, amount) => start * (1 - amount) + end * amount;
-
-  // return (
-
-  //   <div className={styles.main} /* ... other props ... */>
-  //     <div ref={plane1} className={styles.plane}>
-  //       {project.src.slice(0, 2).map((src, index) => (
-  //         <OptimizedImage
-  //           key={index}
-  //           src={src}
-  //           index={index}
-  //           plane="plane1"
-  //         />
-  //       ))}
-  //     </div>
-
-  //     <div ref={plane2} className={styles.plane}>
-  //       {project.src.slice(2, 5).map((src, index) => (
-  //         <OptimizedImage
-  //           key={index}
-  //           src={src}
-  //           index={index}
-  //           plane="plane1"
-  //         />
-  //       ))}
-  //     </div>
-
-  //     <div ref={plane3} className={styles.plane}>
-  //       {project.src.slice(5, 9).map((src, index) => (
-  //         <OptimizedImage
-  //           key={index}
-  //           src={src}
-  //           index={index}
-  //           plane="plane1"
-  //         />
-  //       ))}
-  //     </div>
-
-
-  //   </div>
-  // );
 
   return (
     <div
