@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect, use } from "react";
+import React, { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import styles from "./styles.module.scss";
@@ -13,11 +13,10 @@ export default function FocusGallery({ project }) {
   const plane3 = useRef(null);
 
   const [selectedImage, setSelectedImage] = useState(null);
-  const defaultSizes = {
-    width: 1920,
-    height: 1080,
-  };
-  const calculateSizes = (width, height) => {
+  const defaultSizes = useMemo(() => ({ width: 1920, height: 1080 }), []);
+
+  const calculateSizes = useCallback(
+    (width, height) => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
@@ -30,7 +29,7 @@ export default function FocusGallery({ project }) {
     const newHeight = height * scale + 50;
 
     return { newWidth, newHeight };
-  };
+  });
 
   const [imageSizes, setImageSizes] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -47,9 +46,6 @@ export default function FocusGallery({ project }) {
     closed: { scale: 0, x: "-50%", y: "50%",
       transition: { duration: 0.8, ease:[0.76, 0, 0.24, 1] } },
   };
-
-
-
 
   const handleImageClick = (src) => {
     console.log('Image clicked:', src);
@@ -77,7 +73,8 @@ export default function FocusGallery({ project }) {
   let yForce = 0;
   let requestAnimationFrameId = null;
 
-  const manageMouseMove = (e) => {
+  const manageMouseMove = useCallback(
+    (e) => {
     const { movementX, movementY } = e;
     xForce += movementX * speed;
     yForce += movementY * speed;
@@ -85,34 +82,35 @@ export default function FocusGallery({ project }) {
     if (!requestAnimationFrameId) {
       requestAnimationFrameId = requestAnimationFrame(animate);
     }
-  };
+  });
 
-  const animate = () => {
-    xForce = lerp(xForce, 0, easing);
-    yForce = lerp(yForce, 0, easing);
+  const animate = useCallback( 
+    () => {
+      xForce = lerp(xForce, 0, easing);
+      yForce = lerp(yForce, 0, easing);
 
-    if (plane1.current) {
-      gsap.set(plane1.current, { x: `+=${xForce}`, y: `+=${yForce}` });
-    }
-    if (plane2.current) {
-      gsap.set(plane2.current, { x: `+=${xForce * 0.5}`, y: `+=${yForce * 0.5}` });
-    }
-    if (plane3.current) {
-      gsap.set(plane3.current, { x: `+=${xForce * 0.25}`, y: `+=${yForce * 0.25}` });
-    }
+      if (plane1.current) {
+        gsap.set(plane1.current, { x: `+=${xForce}`, y: `+=${yForce}` });
+      }
+      if (plane2.current) {
+        gsap.set(plane2.current, { x: `+=${xForce * 0.5}`, y: `+=${yForce * 0.5}` });
+      }
+      if (plane3.current) {
+        gsap.set(plane3.current, { x: `+=${xForce * 0.25}`, y: `+=${yForce * 0.25}` });
+      }
 
-    if (Math.abs(xForce) < 0.01 && Math.abs(yForce) < 0.01) {
-      xForce = 0;
-      yForce = 0;
-    }
+      if (Math.abs(xForce) < 0.01 && Math.abs(yForce) < 0.01) {
+        xForce = 0;
+        yForce = 0;
+      }
 
-    if (xForce > 0 || yForce > 0) {
-      requestAnimationFrame(animate);
-    } else {
-      cancelAnimationFrame(requestAnimationFrameId);
-      requestAnimationFrameId = null;
-    }
-  };
+      if (xForce > 0 || yForce > 0) {
+        requestAnimationFrame(animate);
+      } else {
+        cancelAnimationFrame(requestAnimationFrameId);
+        requestAnimationFrameId = null;
+      }
+  });
 
   const animateReturn = () => {
     xForce = lerp(xForce, 0, easing);
@@ -176,7 +174,91 @@ export default function FocusGallery({ project }) {
     }
   };
 
+  // Create an optimized image component that implements progressive loading
+  const OptimizedImage = useCallback(({ src, index, plane }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    
+    return (
+      <div className={styles.imageWrapper}>
+        {/* Low quality placeholder */}
+        <Image
+          src={`/${src}`}
+          quality={20}
+          width={imageSizes.newWidth * 0.1}
+          height={imageSizes.newHeight * 0.1}
+          className={`${styles.placeholder} ${isLoaded ? styles.hidden : ''}`}
+          alt={`placeholder-${index + 1}`}
+          priority={index === 0}
+        />
+        
+        {/* High quality main image */}
+        <Image
+          src={`/${src}`}
+          quality={95}
+          width={imageSizes.newWidth}
+          height={imageSizes.newHeight}
+          className={`${styles.mainImage} ${isLoaded ? styles.visible : ''}`}
+          alt={`${plane}-${index + 1}`}
+          onLoad={() => setIsLoaded(true)}
+          priority={index === 0}
+          sizes={`(max-width: 768px) 100vw, ${imageSizes.newWidth}px`}
+          onClick={() => handleImageClick(src)}
+          placeholder="blur"
+          blurDataURL={`data:image/svg+xml;base64,${generateOptimizedBlurPlaceholder()}`}
+        />
+      </div>
+    );
+  }, [imageSizes, handleImageClick]);
+
+  // Generate a better blur placeholder
+  const generateOptimizedBlurPlaceholder = () => {
+    // Create a more sophisticated blur placeholder
+    // This is a simplified version - you might want to generate this server-side
+    return 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+  };
+
+
   const lerp = (start, end, amount) => start * (1 - amount) + end * amount;
+
+  // return (
+
+  //   <div className={styles.main} /* ... other props ... */>
+  //     <div ref={plane1} className={styles.plane}>
+  //       {project.src.slice(0, 2).map((src, index) => (
+  //         <OptimizedImage
+  //           key={index}
+  //           src={src}
+  //           index={index}
+  //           plane="plane1"
+  //         />
+  //       ))}
+  //     </div>
+
+  //     <div ref={plane2} className={styles.plane}>
+  //       {project.src.slice(2, 5).map((src, index) => (
+  //         <OptimizedImage
+  //           key={index}
+  //           src={src}
+  //           index={index}
+  //           plane="plane1"
+  //         />
+  //       ))}
+  //     </div>
+
+  //     <div ref={plane3} className={styles.plane}>
+  //       {project.src.slice(5, 9).map((src, index) => (
+  //         <OptimizedImage
+  //           key={index}
+  //           src={src}
+  //           index={index}
+  //           plane="plane1"
+  //         />
+  //       ))}
+  //     </div>
+
+
+  //   </div>
+  // );
 
   return (
     <div
@@ -191,10 +273,10 @@ export default function FocusGallery({ project }) {
         {project.src.slice(0, 2).map((src, index) => (
           <Image
             key={index}
-            quality={75} // Lower quality for performance
+            quality={100} 
             placeholder="blur"
             blurDataURL={`data:image/svg+xml;base64,...`}
-            src={`../${src}`}
+            src={`/${src}`}
             width={imageSizes.newWidth}
             height={imageSizes.newHeight}
             alt={`plane1-${index + 1}`}
@@ -208,9 +290,10 @@ export default function FocusGallery({ project }) {
         {project.src.slice(2, 5).map((src, index) => (
           <Image
             key={index}
+            quality={100} 
             placeholder="blur"
             blurDataURL={`data:image/svg+xml;base64,...`}
-            src={`../${src}`}
+            src={`/${src}`}
             width={imageSizes.newWidth}
             height={imageSizes.newHeight}
             alt={`plane2-${index + 1}`}
@@ -226,8 +309,9 @@ export default function FocusGallery({ project }) {
             <Image
               key={index}
               placeholder="blur"
+              quality={100} 
               blurDataURL={`data:image/svg+xml;base64,...`}
-              src={`../${src}`}
+              src={`/${src}`}
               width={imageSizes.newWidth * 0.5}
               height={imageSizes.newHeight * 1.1}
               alt={`plane3-${index + 1}`}

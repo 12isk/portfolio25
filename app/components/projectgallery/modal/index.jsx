@@ -137,7 +137,7 @@ export default function Modal({ modal, projects }) {
                 <div className={styles.modal} style={{backgroundColor: color}} key={idx}>
                   <div className={styles.modalContent}>
                     <Image
-                      src={src[0]} // Assuming src is an array of image paths
+                      src={`/${src[0]}`} // Assuming src is an array of image paths
                       alt={title} // Assuming title is a property of project
                       width={300}
                       height={200} // Set a proper height value

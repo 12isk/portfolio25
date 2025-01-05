@@ -20,7 +20,7 @@ export default function Showreel({ format }) {
   } else {
     return (
       <video autoPlay playsInline webkit-playsinline="true" muted loop width="200" height="200" preload="none">
-        <source src="media/vids/showreel.webm" type="video/webm" />
+        <source src="/media/vids/showreel.webm" type="video/webm" />
       </video>
     );
   }

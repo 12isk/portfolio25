@@ -1,9 +1,34 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output:"export",
-    images:{
-        unoptimized:true,
-    }
-};
-
-export default nextConfig;
+    // Remove the output: "export" line
+    
+    images: {
+      // Now we can use Next.js image optimization
+      unoptimized: false,
+      domains: [], // Add any external image domains you might use
+    },
+    
+    webpack: (config, { dev, isServer }) => {
+      if (!isServer) {
+        config.module.rules.push({
+          test: /\.worker\.(js|ts)$/,
+          use: {
+            loader: 'worker-loader',
+            options: {
+              filename: 'static/[hash].worker.js',
+              publicPath: '/_next/',
+            },
+          },
+        });
+      }
+      return config;
+    },
+  
+    // Additional Next.js features you can now use
+    experimental: {
+      optimizeCss: true,
+      //serverActions: true, // Enable if you want to use server actions
+    },
+  };
+  
+  export default nextConfig;
