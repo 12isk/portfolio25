@@ -1,9 +1,10 @@
-import styles from './styles.module.scss';
-import Image from 'next/image';
-import React, { useEffect, useState} from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 
-export default function index({src}) {
+import styles from './styles.module.scss';
+
+export default function ImageFocus({src}) {
     
   const [shown, setShown] = useState(false);
   
