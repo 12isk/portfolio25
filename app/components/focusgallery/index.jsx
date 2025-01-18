@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect, useCallback, useMemo, use } from "r
 import Image from "next/image";
 import gsap from "gsap";
 import styles from "./styles.module.scss";
-import ImageModal from '../ImageModal';
+import ImageFocus from "./ImageFocus"
 import { motion, AnimatePresence } from "framer-motion";
 
 
@@ -25,8 +25,8 @@ export default function FocusGallery({ project }) {
 
     const scale = Math.min(widthScale, heightScale);
 
-    const newWidth = width * scale + 50;
-    const newHeight = height * scale + 50;
+    const newWidth = width * scale + 30;
+    const newHeight = height * scale + 30;
 
     return { newWidth, newHeight };
   },[defaultSizes.width, defaultSizes.height]);
@@ -168,6 +168,7 @@ export default function FocusGallery({ project }) {
 
   // Clean up animations on unmount
   useEffect(() => {
+    console.log("selectedImage", selectedImage);
     return () => {
       if (requestAnimationFrameId.current) {
         cancelAnimationFrame(requestAnimationFrameId.current);
@@ -192,11 +193,15 @@ export default function FocusGallery({ project }) {
       onTouchEnd={manageTouchEnd}
       style={{ overflow: "hidden" }}
     >
+
+          
+    
       <div ref={plane1} className={styles.plane}>
-        {project.src.slice(0, 2).map((src, index) => (
+        {project.src.slice(0, 3).map((src, index) => (
           <Image
             key={index}
             quality={100} 
+            //className={styles.image}
             placeholder="blur"
             blurDataURL={`data:image/svg+xml;base64,...`}
             src={`/${src}`}
@@ -210,11 +215,12 @@ export default function FocusGallery({ project }) {
       </div>
 
       <div ref={plane2} className={styles.plane}>
-        {project.src.slice(2, 5).map((src, index) => (
+        {project.src.slice(3, 6).map((src, index) => (
           <Image
             key={index}
             quality={100} 
             placeholder="blur"
+            //className={styles.image}
             blurDataURL={`data:image/svg+xml;base64,...`}
             src={`/${src}`}
             width={imageSizes.newWidth}
@@ -226,12 +232,13 @@ export default function FocusGallery({ project }) {
         ))}
       </div>
 
-      {project.src.length >= 5 && (
+      {project.src.length >= 6 && (
         <div ref={plane3} className={styles.plane}>
           {project.src.slice(5, project.src.length).map((src, index) => (
             <Image
               key={index}
               placeholder="blur"
+              //className={styles.image}
               quality={100} 
               blurDataURL={`data:image/svg+xml;base64,...`}
               src={`/${src}`}
@@ -244,16 +251,11 @@ export default function FocusGallery({ project }) {
           ))}
         </div>
       )}
+      <ImageFocus src={selectedImage} />
 
-      <ImageModal
-        isOpen={!!selectedImage}
-        image={selectedImage ? `../${selectedImage}` : ''}
-        onClose={() => setSelectedImage(null)}
-        width={imageSizes.newWidth * 2}
-        height={imageSizes.newHeight * 2}
-      />
+      
 
-      <div className={styles.title}>
+      <div className={styles.title} style={{ filter: `drop-shadow(0px 0px 8px ${project.color})` }}>
         <h1>{project.title}</h1>
         <p>{project.desc}</p>
       </div>

@@ -38,7 +38,7 @@ main {
 
 
 * {
-  cursor: none; /* Set default cursor style */
+  cursor: default; /* Set default cursor style */
 }
 
 html {

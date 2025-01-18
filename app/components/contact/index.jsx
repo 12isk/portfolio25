@@ -128,15 +128,15 @@ export default function Contact({lenis}) {
         <div ref={container} className={styles.aboutContainer}>
             <Available />
             
-            <div className={styles.socials}>
-                <motion.a 
-                    style={{ y: small }} 
+                   
+            <motion.div style={{ y: large }} className={styles.socials} >
+                <a 
                     ref={insta} 
                     href={INSTA}
                 >
                     [instagram]
-                </motion.a>
-            </div>
+                </a>
+            </motion.div>
 
             <motion.div 
                 style={{ y: small }} 

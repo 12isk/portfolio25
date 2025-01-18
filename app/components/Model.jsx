@@ -1,40 +1,33 @@
 import { MeshTransmissionMaterial, useGLTF, useProgress } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useMotionValue } from 'framer-motion';
-import { useControls } from 'leva';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import useIsMobile from './hooks/useIsMobile';
-import Preloader from './preloader';
 
-export default function Model({onLoad}) {
-
-    //creating a state to know when cursor is hovering over the model/text
+export default function Model({ onLoad }) {
+    // States for debugging
+    const [debugState, setDebugState] = useState({
+        isVisible: true,
+        position: { x: 0, y: 0, z: 0 },
+        rotation: { x: 0, y: 0, z: 0 },
+        frameCount: 0
+    });
     const [isHovered, setIsHovered] = useState(false);
     const [meshScale, setMeshScale] = useState(0.4);
     const isMobile = useIsMobile();
 
+    // Refs
+    const containerRef = useRef(null);
     const torus = useRef();
+    const frameCountRef = useRef(0);
+
+    // Three.js hooks
     const { nodes } = useGLTF('media/models/torus-knot2.glb', true);
-    const { active, progress, errors, item, loaded, total } = useProgress();
     const { viewport } = useThree();
     
-    // Show the loading screen with progress while the model is loading
-    
-    
-
-    // const materialProps = useControls('material',{
-    //     thickness: {value: 0.25, min: 0.01, max: 1, step: 0.05},
-    //     roughness: {value: 0, min: 0, max: 1, step: 0.1},
-    //     transmission: {value: 1, min: 0, max: 1, step: 0.1},
-    //     ior: {value: 1.5, min: 1, max: 2, step: 0.1},
-    //     chromaticAberration: {value: 0.22, min: 0, max: 1},
-    //     BackSide: {value: true},
-    //     xSpeed: {value: 0.016, min: 0, max: 0.1, step: 0.01},
-    //     ySpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
-    //     //zSpeed: {value: 0.01, min: 0, max: 10, step: 0.01},
-    // });
-    const materialProps =  useMemo(() => ({
+    // Material properties exposed for debugging
+    const materialProps = useMemo(() => ({
         thickness: 0.25,
         roughness: 0,
         transmission: 1,
@@ -43,47 +36,127 @@ export default function Model({onLoad}) {
         BackSide: true,
         xSpeed: 0.016,
         ySpeed: 0.01,
-    })
-    ,[]);
+    }), []);
 
+    // Update debug state
+    const updateDebugState = () => {
+        if (torus.current) {
+            setDebugState(prev => ({
+                ...prev,
+                position: {
+                    x: torus.current.position.x,
+                    y: torus.current.position.y,
+                    z: torus.current.position.z
+                },
+                rotation: {
+                    x: torus.current.rotation.x,
+                    y: torus.current.rotation.y,
+                    z: torus.current.rotation.z
+                },
+                frameCount: frameCountRef.current
+            }));
+        }
+    };
+
+    // Notify when model is loaded
     useEffect(() => {
-    if (nodes) onLoad?.();
-    }, [nodes, onLoad]);
+        if (nodes) {
+            onLoad?.();
+            // Log initial mesh rotation
+            // console.log('Initial mesh rotation:', {
+            //     x: torus.current?.rotation.x || 0,
+            //     y: torus.current?.rotation.y || 0,
+            //     z: torus.current?.rotation.z || 0
+            // });
+        }
+    }, [nodes, onLoad, materialProps, viewport]);
 
+    // Intersection Observer setup
+    useEffect(() => {
+        const options = {
+            root: null,
+            rootMargin: '50px',
+            threshold: 0.3
+        };
 
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                setDebugState(prev => ({ ...prev, isVisible: entry.isIntersecting }));
+            });
+        }, options);
 
+        const canvas = document.querySelector('canvas');
+        if (canvas) {
+            observer.observe(canvas);
+        }
+
+        return () => {
+            if (canvas) {
+                observer.unobserve(canvas);
+            }
+        };
+    }, []);
+
+    // Animation frame
     useFrame(() => {
-        torus.current.rotation.x += materialProps.xSpeed;
-        torus.current.rotation.y += materialProps.ySpeed;
+        if (debugState.isVisible && torus.current) {
+            torus.current.rotation.x += materialProps.xSpeed;
+            torus.current.rotation.y += materialProps.ySpeed;
+            frameCountRef.current += 1;
+            
+        //     // Update debug state every 30 frames to avoid performance issues
+        //     if (frameCountRef.current % 30 === 0) {
+        //         updateDebugState();
+        //         console.log('Mesh rotation:', {
+        //             x: torus.current.rotation.x,
+        //             y: torus.current.rotation.y,
+        //             z: torus.current.rotation.z
+        //         });
+        //     }
+        }
     });
 
+    // Resize handler
     useEffect(() => {
-
-        //handle resize function to change the scale of the model based on the window width
         const handleResize = () => {
-            if (window.innerWidth < 768) {
-                setMeshScale(0.7);
-            } else {
-                setMeshScale(0.4);
-            }
-            // console.log(window.innerWidth, meshScale);
+            const newScale = window.innerWidth < 768 ? 0.7 : 0.4;
+            setMeshScale(newScale);
+            setDebugState(prev => ({ ...prev, meshScale: newScale }));
         };
 
         window.addEventListener('resize', handleResize);
-        handleResize(); // Set initial scale based on current window width
+        handleResize();
 
-        return () => {window.removeEventListener('resize', handleResize); };
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
-    // Show the loading screen with progress while the model is loading
-    // if (isLoading || progress < 100) {
-    //     return <LoadingScreen progress={progress} />;
-    // }
+    // Expose debug object to window for console access
+    // useEffect(() => {
+    //     window._modelDebug = {
+    //         state: debugState,
+    //         materialProps,
+    //         refs: {
+    //             torus: torus.current,
+    //             container: containerRef.current
+    //         },
+    //         viewport
+    //     };
+    // }, [debugState, materialProps, viewport]);
 
     return (
-        <group scale={isMobile ? viewport.width/5.5 : viewport.width / 6}>
-           
-            <mesh ref={torus} {...nodes.TorusKnot001} scale={meshScale}>
+        <group 
+            ref={containerRef}
+            scale={isMobile ? viewport.width/5.5 : viewport.width / 6}
+            onPointerOver={() => setIsHovered(true)}
+            onPointerOut={() => setIsHovered(false)}
+        >
+            <mesh 
+                ref={torus} 
+                {...nodes.TorusKnot001} 
+                scale={meshScale}
+            >
                 <MeshTransmissionMaterial {...materialProps} />
             </mesh>
         </group>

@@ -73,7 +73,7 @@ export default function Menu() {
         if (window.innerWidth <= 768) {
           lenis.scrollTo(target, {
             offset: 0,
-            immediate: false,
+            immediate: true,
             duration: 1,
             lock: true,
           });

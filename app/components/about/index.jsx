@@ -6,8 +6,10 @@ import Paragraph from './parts/Paragraph';
 import Word from './parts/Word';
 import Showreel from '../Showreel';
 import useIsMobile from '../hooks/useIsMobile';
-
-const paragraph = "My name is iBrAhima and as You've seen, i'm an all around creative! I loVe MakinG aLl sorts of viSual CrEaTiOnS and tell stories with them. i alsO reaaaally like textures !! I'd love to help you bring your vision to liFe! br AlsO Did I mention I LOOOOVE TexTUreS?";
+import textData from './text.json'
+import Line from './parts/Line';
+const paragraph2 = "My name is iBrAhima and as You've seen, i'm an all around creative! I loVe MakinG aLl sorts of viSual CrEaTiOnS and tell stories with them. i alsO reaaaally like textures !! I'd love to help you bring your vision to liFe! br AlsO Did I mention I LOOOOVE TexTUreS?";
+const paragraph = "The most important thing you need to know about me is that I can craft a path for your art to be seen.\nI am Ibrahima, an aspiring graphic designer passionate about turning ideas into impactful visuals.\nAs I embark on this journey, I strive to create designs that inspire, resonate, and leave a lasting impression. Dedicated to honing my craft, let me help bring your vision to life as where creativity meets purpose, great design happens.";
 
 export default function Index() {
   const title = useRef(null);
@@ -27,9 +29,9 @@ export default function Index() {
     mass: 0.1,
   });
 
-  // useEffect(() => {
-  //   scrollYProgress.on('change', e => console.log(e));
-  // }, []);
+  useEffect(() => {
+  console.table(textData.text);
+  }, []);
 
   const sm = useTransform(scrollYProgress, [0, 1], [0, -50]); // small med large
   // Start from higher positions and move to the CSS-defined positions
@@ -38,8 +40,7 @@ export default function Index() {
   const preview2Y = useTransform(smoothProgress, [0, 1], [-300, 0]);
   const par = useTransform(smoothProgress, [0, 1], [0, 50]);
 
-  const lerp = (a, b, n) => (1 - n) * a + n * b;
-  // TODO: when on mobile, make the preview1Y -200 ? -250
+
 
   const isInView = useInView(title, { once: true });
 
@@ -54,7 +55,7 @@ export default function Index() {
       </motion.h1>
 
       <motion.div style={{ top: isInView ? par : 0 }} className="div">
-        <Word value={paragraph} />
+        <Line text={paragraph} />
       </motion.div>
 
       <motion.div

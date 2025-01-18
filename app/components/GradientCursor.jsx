@@ -1,8 +1,9 @@
 import { gsap } from 'gsap';
+import { useLenis } from 'lenis/react';
 import React, { useCallback, useEffect, useRef } from 'react';
+
 import useIsMobile from './hooks/useIsMobile';
 import useIsTablet from './hooks/useIsTablet';
-import { useLenis } from 'lenis/react';
 
 const colors2 = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
 
@@ -22,7 +23,7 @@ export default function GradientCursor({ isHovered }) {
 
   const circles = useRef([]); // Refs for the cursor circles
 
-  const ease = 0.025; // Lerp easing factor
+  const ease = 0.1; // Lerp easing factor
 
   // Lerp function
   const lerp = (a, b, n) => (1 - n) * a + n * b;
