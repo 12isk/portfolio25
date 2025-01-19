@@ -66,11 +66,11 @@ return (
         <div id="projects">  {/* Add wrapper with ID */}
           <ProjectList projects={projects} setModal={setModal} />
         </div>
-        {isMobile ? <div style={{ height: "20vh" }} /> : <div style={{ height: "40vh" }} />}
+        {isMobile ? <div style={{ height: "20vh" }} /> : <div style={{ height: "20vh" }} />}
         <div id="about">     {/* Add wrapper with ID */}
           <About />
         </div>
-        {isMobile ? <div style={{ height: "20vh" }}></div> : null}
+        {isMobile ? <div style={{ height: "20vh" }}></div> : <div style={{ height: "60vh" }}></div>}
       </div>
       <Modal projects={projects} modal={modal} />
       <div id="contact">    {/* Add wrapper with ID */}

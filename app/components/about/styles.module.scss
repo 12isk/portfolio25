@@ -1,16 +1,19 @@
-@font-face {
-    font-family: 'Dirtyline';
-    src: url('/fonts/Dirtyline.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Dirtyline';
+//     src: url('/fonts/Dirtyline.otf') format('opentype');
+//     font-weight: 400;
+//     font-style: normal;
+// }
+@import url('../../css/nyght.css');
+@import url('../../css/dirtyline.css');
 @import url('../../css/satoshi.css');
+@import url('../../css/aston.css');
 
 .main {
     font-family: 'Dirtyline';
     font-size: 2.75rem;
     color: #fff;
-    opacity: 0.97;
+    opacity: 0.965;
     padding: 1em 2em;
     width: 100%;
     height: 100vh;
@@ -30,6 +33,12 @@
 
 .slike{
     text-decoration: line-through;
+    font-weight:200;
+}
+
+.newLine{
+    display: block;
+    margin-top: 20px;
 }
 
 .title {
@@ -64,6 +73,9 @@
     display: flex;
     flex-wrap: wrap;
     line-height: 1;
+    font-family: 'Dirtyline';
+    filter: drop-shadow(0px 5px 5px  rgba(0, 0, 0, 0.5));
+    margin-bottom: 2em;
 
     @media (max-width: 768px) {
         line-height: 1.2; // Improve readability on mobile
@@ -87,6 +99,12 @@
             top: 6px;
         }
     }
+
+    
+}
+.upper{
+    font-family: 'Dirtyline';
+    //color: #e3436b;
 }
 
 .preview {

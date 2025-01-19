@@ -9,7 +9,7 @@ import useIsMobile from '../hooks/useIsMobile';
 import textData from './text.json'
 import Line from './parts/Line';
 const paragraph2 = "My name is iBrAhima and as You've seen, i'm an all around creative! I loVe MakinG aLl sorts of viSual CrEaTiOnS and tell stories with them. i alsO reaaaally like textures !! I'd love to help you bring your vision to liFe! br AlsO Did I mention I LOOOOVE TexTUreS?";
-const paragraph = "The most important thing you need to know about me is that I can craft a path for your art to be seen.\nI am Ibrahima, an aspiring graphic designer passionate about turning ideas into impactful visuals.\nAs I embark on this journey, I strive to create designs that inspire, resonate, and leave a lasting impression. Dedicated to honing my craft, let me help bring your vision to life as where creativity meets purpose, great design happens.";
+const paragraph = "The most important thing you need to know about me is that I can craft a path for your art to be seen.\n I am Ibrahima, an aspiring graphic designer passionate about turning ideas into impactful visuals.\nAs I embark on this journey, I strive to create designs that inspire, resonate, and leave a lasting impression.\n Dedicated to honing my craft, let me help bring your vision to life as where creativity meets purpose, great design happens.";
 
 export default function Index() {
   const title = useRef(null);
@@ -20,7 +20,7 @@ export default function Index() {
   const { scrollYProgress } =
     useScroll({
       target: title,
-      offset: isMobile ? ['start 0.9', 'start 0.4'] :['start end', 'start 0.7']
+      offset: isMobile ? ['start 0.9', 'start 0.4'] :['start end', 'start 0.6']
     });
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -72,7 +72,7 @@ export default function Index() {
       >
         <Showreel format="4x5" />
       </motion.div>
-      {/* <div style={{height:"100vh"}}></div> */}
+      {/* <div style={{height:"20vh"}}></div> */}
     </div>
   );
 }
