@@ -11,7 +11,7 @@ const menuLinks = [
   { label: "About", path: "#about" },
   { label: "Projects", path: "#projects" },
   { label: "Contact", path: "#contact" },
-  { label: "Play", path: "/playground" },
+  { label: "Playground", path: "/playground" },
 
 ];
 
