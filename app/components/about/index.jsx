@@ -29,9 +29,7 @@ export default function Index() {
     mass: 0.1,
   });
 
-  useEffect(() => {
-  console.table(textData.text);
-  }, []);
+ 
 
   const sm = useTransform(scrollYProgress, [0, 1], [0, -50]); // small med large
   // Start from higher positions and move to the CSS-defined positions

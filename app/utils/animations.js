@@ -59,7 +59,7 @@ export const animatePageIn = () => {
         tl.to(banners[banner], {
           yPercent: timeline[1].yPercent,
           duration: timeline[1].time - timeline[0].time,
-          ease: 'none'
+          ease: 'none',
         }, timeline[0].time);
       });
       

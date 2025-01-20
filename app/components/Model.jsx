@@ -1,9 +1,9 @@
 import { MeshTransmissionMaterial, useGLTF, useProgress } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useMotionValue } from 'framer-motion';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import useIsMobile from './hooks/useIsMobile';
+import { useLoading } from '../context/LoadingContext';
 
 export default function Model({ onLoad }) {
     // States for debugging
@@ -25,6 +25,8 @@ export default function Model({ onLoad }) {
     // Three.js hooks
     const { nodes } = useGLTF('media/models/torus-knot2.glb', true);
     const { viewport } = useThree();
+    const { progress } = useProgress();
+    const { setModelProgress } = useLoading();
     
     // Material properties exposed for debugging
     const materialProps = useMemo(() => ({
@@ -58,6 +60,31 @@ export default function Model({ onLoad }) {
         }
     };
 
+    useEffect(() => {
+        // Create smooth transition to target progress
+        let startProgress = 0;
+        const targetProgress = progress;
+        const duration = 1000; // 1 second
+        const startTime = performance.now();
+
+        function updateProgress() {
+            const currentTime = performance.now();
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Smooth easing function
+            const easedProgress = progress * (2 - progress);
+            
+            const currentProgress = Math.floor(startProgress + (targetProgress - startProgress) * easedProgress);
+            setModelProgress(currentProgress);
+
+            if (progress < 1) {
+                requestAnimationFrame(updateProgress);
+            }
+        }
+
+        requestAnimationFrame(updateProgress);
+    }, [progress, setModelProgress]);
     // Notify when model is loaded
     useEffect(() => {
         if (nodes) {

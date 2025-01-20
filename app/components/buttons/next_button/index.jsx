@@ -28,6 +28,7 @@ const NextButton = ({ label = "Go Forward", project }) => {
   };
 
   return (
+    <>
     <button
       onClick={handleClick}
       className={styles.returnButton}
@@ -41,6 +42,7 @@ const NextButton = ({ label = "Go Forward", project }) => {
         style={{ width: "48px", height: "48px", marginRight: "8px", padding: "10px" }}
       />
     </button>
+    <p>Next Project</p></>
   );
 };
 

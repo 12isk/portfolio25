@@ -17,81 +17,54 @@ export default function Paragraph({ text }) {
    
 
     const lines = text.split("\n");
-    useEffect(() => {
-        console.log(lines);
-    }, [lines]);
+    // useEffect(() => {
+    //     console.log(lines);
+    // }, [lines]);
     return (
-        <div className={styles.paragraph} ref={element}>
-            {lines.map((line, lineIndex) => {
-            // Calculate opacity range for each line
-            const start = lineIndex / lines.length;
-            const end = start + (1 / lines.length);
-            
-            // if (lineIndex === 0 ){
-            //     let parts = line.split("that");
-            //     return(
-            //         <>
-            //         <span className={styles.slike}>{parts[0]}</span>
-            //         {/* {parts=parts.slice(1)} */}
-            //         <Line 
-            //         key={lineIndex}
-            //         words={parts.slice(1).join(' ').split('') }
-            //         range={[start, end]}
-            //         progress={smoothProgress}
-            //         />
-            //         </>
-            //     )
-            // } 
-            // else return (
-            //if (line === "\n") return <br className={styles.newLine} key={lineIndex} />;
-            //else
-            return(
-                <>
-                <Line 
-                key={lineIndex}
-                words={line.split('')}
-                range={[start, end]}
-                progress={smoothProgress}
-                />
-                <span className={styles.newLine} key={lineIndex} />
-                </>
-            );
-            })}
-        </div>
-        );
-    };
+      <div className={styles.paragraph} ref={element}>
+          {lines.map((line, lineIndex) => {
+              const start = lineIndex / lines.length;
+              const end = start + (1 / lines.length);
+              
+              // Create a unique wrapper for each line and its line break
+              return (
+                  <div key={`line-wrapper-${lineIndex}`}>
+                      <Line 
+                          words={line.split('')}
+                          range={[start, end]}
+                          progress={smoothProgress}
+                      />
+                      {lineIndex < lines.length - 1 && (
+                          <span className={styles.newLine} />
+                      )}
+                  </div>
+              );
+          })}
+      </div>
+  );
+}
 
 const Line = ({ words, range, progress }) => {
-    const opacity = useTransform(progress, range, [0, 1]);
-    
-    return (
-      <motion.span 
-        style={{ opacity }} 
-        className=""
-      >
-        {words.map((word, index) => (
-          <Word 
-            key={index} 
-            word={word} 
-          />
-        ))}
-      </motion.span>
-    );
-  };
+  const opacity = useTransform(progress, range, [0, 1]);
   
-  const Word = ({ word }) => {
-    
-    if ( word[0].match(/[A-Z]/) && word[0].toUpperCase() === word[0] ){
-      return (
-        <span className={styles.upper}>
+  return (
+      <motion.span style={{ opacity }} className="">
+          {words.map((word, index) => (
+              <Word 
+                  key={`word-${index}`} 
+                  word={word} 
+              />
+          ))}
+      </motion.span>
+  );
+};
+
+const Word = ({ word }) => {
+  const isUpperCase = word[0]?.match(/[A-Z]/) && word[0]?.toUpperCase() === word[0];
+  
+  return (
+      <span className={isUpperCase ? styles.upper : undefined}>
           {word}
-        </span>
-      );
-    } else
-      return (
-        <span >
-          {word}
-        </span>
-      );
-    
-  };
+      </span>
+  );
+};

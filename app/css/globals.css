@@ -36,6 +36,29 @@ main {
   -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
 }
 
+/* First, style the parent container */
+.infoContainer { /* or whatever your parent element's class is */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+/* Then modify your info class */
+.info {
+  display: block;
+  font-family: 'Satoshi-Medium';
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;  /* This will push it to the bottom */
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  padding: 20px 50px;
+  filter: drop-shadow(0px 0px 5px rgba(80, 80, 80, 0.5));
+  margin-bottom: 0; /* Ensure it sits at the bottom */
+}
 
 * {
   cursor: default; /* Set default cursor style */

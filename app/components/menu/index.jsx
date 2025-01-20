@@ -8,10 +8,11 @@ import styles from "./styles.module.scss";
 import Showreel from "../Showreel";
 
 const menuLinks = [
-  { label: "Home", path: "/" },
   { label: "About", path: "#about" },
   { label: "Projects", path: "#projects" },
   { label: "Contact", path: "#contact" },
+  { label: "Playground", path: "/playground" },
+
 ];
 
 const colors = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];

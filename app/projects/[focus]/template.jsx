@@ -20,7 +20,7 @@ export default function Template({children}) {
               //ref={(ref) => (banners.current[index] = ref)} 
               style={{ width: "110vw", height: "110vh", 
                 backgroundColor: color, zIndex: index + 11, 
-                filter: index !== 4 ? "blur(30px)" : "none" 
+                filter: index !== 4 ? "none" : "none" 
               }} />
           ))}
           {children}

@@ -19,7 +19,6 @@ export default function Hero() {
     const isTablet = useIsTablet();
     const textScaleDivider = isMobile ? 570 : 950;
     const { progress } = useProgress();
-    const [showCanvas, setShowCanvas] = useState(false);
     const [modelLoaded, setModelLoaded] = useState(false);
     function getWindowDimensions() {
         const { innerWidth: width, innerHeight: height } = window;
@@ -28,9 +27,7 @@ export default function Hero() {
             height
         };
     }
-    const manageMouseMove = (e) => {
-        const { clientX, clientY } = e;
-      }
+
     useEffect(() => {
         function handleResize() {
             setDimensions(getWindowDimensions());

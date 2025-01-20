@@ -24,6 +24,7 @@ export default function ImageFocus({src}) {
       setShown(false);
   }
 
+  //TODO: await image focus before blurring bg
     
   return (
     <>
