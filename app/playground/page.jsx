@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense, useEffect, useState, useRef } from 'react';
-import { useControls } from 'leva';
+import { useControls, Leva } from 'leva';
 import { MeshTransmissionMaterial, useGLTF, useProgress, Environment, Text, OrbitControls } from '@react-three/drei';
 import { useFrame, useThree, Canvas } from '@react-three/fiber';
 
@@ -11,8 +11,8 @@ export default function ModelPlayground() {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [isHovered, setIsHovered] = useState(false);
     const isMobile = useIsMobile();
-    const textScaleDivider = isMobile ? 570 : 940;
     const isTablet = useIsTablet();
+    const textScaleDivider = isMobile ? 450 : 940;
     const [modelLoaded, setModelLoaded] = useState(false);
 
     function getWindowDimensions() {
@@ -38,7 +38,7 @@ export default function ModelPlayground() {
             backgroundColor: 'transparent'  }}>
             
             {/* <span className={"info"}>Play around and find out what you like !</span> */}
-            
+            <Leva collapsed={true} oneLineLabels hideTitleBar/>
             <Canvas>
                 <color attach="background" args={[0,0,0]} />
                 <directionalLight intensity={4} position={[0, 3, 2]} />
@@ -57,7 +57,7 @@ export default function ModelPlayground() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider/4} 
                         font='fonts/Dirtyline.otf' 
-                        position={isTablet ? [0,-1.2,-1]: [0,-2,-2]}
+                        position={isTablet ? [0,-1.2,-1]: (isMobile ? [0,-1.3,-1] : [0,-2,-2])}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         FinD oUT wHaT yOu LiKe !
@@ -65,7 +65,7 @@ export default function ModelPlayground() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider/5.5} 
                         font='fonts/Dirtyline.otf' 
-                        position={isTablet ? [0,-1.7,-1]: [0,-3.4,-2]}
+                        position={isTablet ?  [0,-1.7,-1]: (isMobile ? [0,-1.7,-1] : [0,-3.4,-1])}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         (EveNtUaLly I&#39;lL aDd MoRE moDels)
@@ -94,6 +94,7 @@ export default function ModelPlayground() {
 function Model({ isHovered, setIsHovered, onLoad }) {
     const [meshScale, setMeshScale] = useState(0.4);
     const isMobile = useIsMobile();
+    const isTablet = useIsTablet();
 
     // Refs
     const containerRef = useRef(null);
