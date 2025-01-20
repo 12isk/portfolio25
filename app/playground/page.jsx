@@ -77,7 +77,7 @@ export default function ModelPlayground() {
                         rotation={[0,-Math.PI/2,0]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
-                        oH yOu'Re lOoKiNg around?
+                        oH yOu&#39;Re lOoKiNg around?
                     </Text>
                     <OrbitControls />
                     <Model
