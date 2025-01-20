@@ -70,14 +70,15 @@ export default function ModelPlayground() {
                         onPointerLeave={() => setIsHovered(false)}>
                         (EveNtUaLly I&#39;lL aDd MoRE moDels)
                     </Text>
-                    {/* <Text 
-                        scale={getWindowDimensions().width/textScaleDivider/6} 
+                    <Text 
+                        scale={getWindowDimensions().width/textScaleDivider/5.5} 
                         font='fonts/Dirtyline.otf' 
-                        position={isTablet ? [0,-2,-1]: [0,-3.9,-2]}
+                        position={[7,2,1]}
+                        rotation={[0,-Math.PI/2,0]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
-                         YoU cAn dRaG aNd zOoM
-                    </Text> */}
+                        oH yOu'Re lOoKiNg around?
+                    </Text>
                     <OrbitControls />
                     <Model
                         isHovered={isHovered}

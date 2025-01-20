@@ -99,12 +99,13 @@ function HomeContent(){
           <div id="about">
             <About />
           </div>
-          {isMobile ? <div style={{ height: "20vh" }}/> : ( isTablet ? ( window.innerHeight >= 1360 ? null : <div style={{ height: "20vh" }}/>) : <div style={{ height: "60vh" }}/>)}
-        </div>
+          <ResponsiveSpacer/>      
         <Modal projects={projects} modal={modal} />
         <div id="contact">
           <Contact lenis={lenis} />
         </div>
+      </div>
+
       </motion.main>
     </>
   );
@@ -117,3 +118,38 @@ export default function Home() {
   </LoadingProvider>
   )
 }
+
+const ResponsiveSpacer = () => {
+  const [windowHeight, setWindowHeight] = useState(0);
+  const { isTablet } = useIsTablet();
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    // Function to update height
+    const updateHeight = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    // Set initial height
+    updateHeight();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', updateHeight);
+
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []); // Empty dependency array means this runs once on mount
+
+  if (isMobile) {
+    return <div style={{ height: "20vh" }} />;
+  }
+
+  if (isTablet) {
+    return windowHeight >= 1360 ? null : <div style={{ height: "20vh" }} />;
+  }
+
+  return <div style={{ height: "60vh" }} />;
+};
+
