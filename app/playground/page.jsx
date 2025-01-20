@@ -68,7 +68,7 @@ export default function ModelPlayground() {
                         position={isTablet ? [0,-2,-1]: [0,-3.4,-2]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
-                        (EveNtUaLly I'lL aDd MoRE moDels)
+                        (EveNtUaLly I&#39;lL aDd MoRE moDels)
                     </Text>
                     {/* <Text 
                         scale={getWindowDimensions().width/textScaleDivider/6} 
