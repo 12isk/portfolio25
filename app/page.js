@@ -147,7 +147,7 @@ const ResponsiveSpacer = () => {
   }
 
   if (isTablet) {
-    return windowHeight >= 1360 ? null : <div style={{ height: "20vh" }} />;
+    return windowHeight >= 1360 ? null : <div style={{ height: "10vh" }} />;
   }
 
   return <div style={{ height: "60vh" }} />;
