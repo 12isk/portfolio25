@@ -12,7 +12,7 @@ export default function ModelPlayground() {
     const [isHovered, setIsHovered] = useState(false);
     const isMobile = useIsMobile();
     const isTablet = useIsTablet();
-    const textScaleDivider = isMobile ? 450 : 940;
+    const textScaleDivider = isMobile ? 570 : 940;
     const [modelLoaded, setModelLoaded] = useState(false);
 
     function getWindowDimensions() {
