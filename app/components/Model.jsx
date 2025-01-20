@@ -35,7 +35,7 @@ export default function Model({ onLoad }) {
         transmission: 1,
         ior: 1.5,
         chromaticAberration: 0.22,
-        BackSide: true,
+        BackSide: false,
         xSpeed: 0.006,
         ySpeed: 0.005,
     }), []);
