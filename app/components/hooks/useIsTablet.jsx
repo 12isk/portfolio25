@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const useTabletDetection = () => {
-  const [deviceType, setDeviceType] = useState({
-    isTablet: false,
-    isIpad: false,
-    isAndroidTablet: false
-  });
+const useIsTablet = () => {
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
     const checkDevice = () => {
@@ -78,11 +74,7 @@ const useTabletDetection = () => {
       const isGenericTablet = isTabletDimensions && hasTabletFeatures && hasTabletRatio;
       const isAnyTablet = isIpad || isAndroidTablet || isWindowsTablet || isGenericTablet;
 
-      setDeviceType({
-        isTablet: isAnyTablet,
-        isIpad: isIpad,
-        isAndroidTablet: isAndroidTablet
-      });
+      setIsTablet(isAnyTablet);
     };
 
     // Initial check
@@ -99,7 +91,7 @@ const useTabletDetection = () => {
     };
   }, []);
 
-  return deviceType;
+  return isTablet;
 };
 
-export default useTabletDetection;
+export default useIsTablet;

@@ -11,7 +11,7 @@ export default function ProjectLayout({ children }) {
       };
     return (
         <>
-        <GradientCursor />
+        
         
         
             

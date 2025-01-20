@@ -18,11 +18,12 @@ export default function Hero() {
     const isMobile = useIsMobile();
     const isTablet = useIsTablet();
     const textScaleDivider = 
-      isMobile ? 
+      isMobile ?    
         660 : (
              isTablet ? 
                (window.innerHeight >= 1360 ? 1050: 1080)
              : 950);
+    
     const { progress } = useProgress();
     const [modelLoaded, setModelLoaded] = useState(false);
     function getWindowDimensions() {
@@ -88,10 +89,17 @@ export default function Hero() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider} 
                         font='fonts/Dirtyline.otf' 
-                        position={isMobile ? [0,0.8,-1] : 
-                            isTablet ? 
-                              (window.innerHeight >= 1360 ? [0,0.9,-1] : [0,0.9,-1] )
-                            : [0,-0.5,-1]}
+                        position={isMobile ? 
+                            (window.innerWidth === 768 && window.innerHeight === 1024)  ? 
+                              [0, 1, -1]    // iPad mini dimensions
+                              : [0, 0.8, -1]  // Regular mobile
+                            : isTablet ? 
+                              (window.innerHeight >= 1360 ? 
+                                [0, 0.9, -1] 
+                                : [0, 1, -1]
+                              ) 
+                              : [0, 0.9, -1]
+                          }
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         CrEaTivE
