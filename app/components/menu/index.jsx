@@ -204,7 +204,7 @@ export default function Menu() {
               <div className={styles.menuInfo}>
                 <div className={styles.menuInfoCol}>
                   <a href="https://instagram.com/twelveisk">Instagram &#8599;</a>
-                  <a href="#">LinkedIn &#8599;</a>
+                  <a href="https://www.linkedin.com/in/ibrahima-s-keita-18295b22a/">LinkedIn &#8599;</a>
                   <a href="https://github.com/12isk">Github &#8599;</a>
                 </div>
                 <div className={styles.menuInfoCol}>
