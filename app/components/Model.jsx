@@ -34,8 +34,8 @@ export default function Model({ onLoad }) {
         ior: 1.5,
         chromaticAberration: 0.22,
         BackSide: true,
-        xSpeed: 0.016,
-        ySpeed: 0.01,
+        xSpeed: 0.006,
+        ySpeed: 0.005,
     }), []);
 
     // Update debug state
