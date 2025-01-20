@@ -20,7 +20,7 @@
     position: relative;
 
     @media (max-width: 1024px) {
-        font-size: 2.25rem;
+        font-size: 2.65rem;
         padding: 1em 1.5em;
     }
 
@@ -153,28 +153,3 @@
     }
 }
 
-// Preserved commented code
-// .firstLetter::before {
-//     content: "A"; /* Uncomment to make it visible */
-//     color: #e3436b;
-//     position: absolute;
-//     left: 2px; /* Adjust as needed to place it above */
-//     // left: 0; /* Align with the first letter */
-//     //font-size: larger;
-//     transform: translateX(-10px); /* Fine-tune positioning */
-//     filter: blur(2px);
-//     mix-blend-mode: difference;
-//     z-index: -2;
-// }
-
-// .firstLetter::after {
-//     content: "A"; /* Uncomment to make it visible */
-//     color: #33CCFF ;
-//     position: absolute;
-//     // top: 20px; /* Adjust as needed to place it below */
-//     left: -4px; /* Align with the first letter */
-//     //font-size: larger;
-//     filter: blur(2px);
-//     mix-blend-mode: difference;
-//     z-index: -1;
-// }

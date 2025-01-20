@@ -17,7 +17,12 @@ export default function Hero() {
     const [dimensions, setDimensions] = useState(getWindowDimensions());
     const isMobile = useIsMobile();
     const isTablet = useIsTablet();
-    const textScaleDivider = isMobile ? 570 : 950;
+    const textScaleDivider = 
+      isMobile ? 
+        660 : (
+             isTablet ? 
+               (window.innerHeight >= 1360 ? 1050: 1080)
+             : 950);
     const { progress } = useProgress();
     const [modelLoaded, setModelLoaded] = useState(false);
     function getWindowDimensions() {
@@ -83,7 +88,10 @@ export default function Hero() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider} 
                         font='fonts/Dirtyline.otf' 
-                        position={isTablet ? [0,1,-1]: [0,1.3,-1]}
+                        position={isMobile ? [0,0.8,-1] : 
+                            isTablet ? 
+                              (window.innerHeight >= 1360 ? [0,0.9,-1] : [0,0.9,-1] )
+                            : [0,-0.5,-1]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         CrEaTivE
@@ -91,7 +99,10 @@ export default function Hero() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider} 
                         font='fonts/Dirtyline.otf' 
-                        position={isMobile ? [0,0.5,-1] : isTablet ? [0,0,-1] : [0,-0.5,-1]}
+                        position={isMobile ? [0,0,-1] : 
+                            isTablet ? 
+                              (window.innerHeight >= 1360 ? [0,0,-1] : [0,-0.2,-1] )
+                            : [0,-0.5,-1]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         DeVeLopPeR

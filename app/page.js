@@ -99,7 +99,7 @@ function HomeContent(){
           <div id="about">
             <About />
           </div>
-          {isMobile ? ( isTablet ? <div style={{ height: "20vh" }}/> : <div style={{ height: "20vh" }}/>) : <div style={{ height: "10vh" }}></div>}
+          {isMobile ? <div style={{ height: "20vh" }}/> : ( isTablet ? ( window.innerHeight >= 1360 ? null : <div style={{ height: "20vh" }}/>) : <div style={{ height: "60vh" }}/>)}
         </div>
         <Modal projects={projects} modal={modal} />
         <div id="contact">

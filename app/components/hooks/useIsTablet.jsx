@@ -1,74 +1,105 @@
-"use client";
 import { useState, useEffect } from 'react';
 
-const useIsTablet = () => {
-  const [isTablet, setIsTablet] = useState(false);
+const useTabletDetection = () => {
+  const [deviceType, setDeviceType] = useState({
+    isTablet: false,
+    isIpad: false,
+    isAndroidTablet: false
+  });
 
   useEffect(() => {
-    const checkTablet = () => {
-      // Get both screen dimensions and window dimensions
+    const checkDevice = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       const screenWidth = window.screen.width;
       const screenHeight = window.screen.height;
-      
-      // Check for common tablet dimensions (both portrait and landscape)
-      const isTabletDimensions = (
-        // iPad Mini, Air, Pro 11"
-        (width >= 768 && width <= 1024 && height >= 1024 && height <= 1366) ||
-        (width >= 1024 && width <= 1366 && height >= 768 && height <= 1024) ||
-        
+      const userAgent = navigator.userAgent;
+
+      // iPad-specific checks
+      const isIpadDimensions = (
+        // iPad Mini (7.9")
+        (width === 768 && height === 1024) ||
+        (width === 1024 && height === 768) ||
+        // iPad (10.2")
+        (width === 810 && height === 1080) ||
+        (width === 1080 && height === 810) ||
+        // iPad Air (10.5" and 10.9")
+        (width === 834 && height === 1112) ||
+        (width === 1112 && height === 834) ||
+        (width === 820 && height === 1180) ||
+        (width === 1180 && height === 820) ||
+        // iPad Pro 11"
+        (width === 834 && height === 1194) ||
+        (width === 1194 && height === 834) ||
         // iPad Pro 12.9"
-        (width >= 1024 && width <= 1366 && height >= 1366 && height <= 1024) ||
-        
-        // Common Android tablets
+        (width === 1024 && height === 1366) ||
+        (width === 1366 && height === 1024)
+      );
+
+      const isIpadUA = /iPad|Macintosh/.test(userAgent) && navigator.maxTouchPoints > 1;
+      const isIpadOS = navigator.platform === 'MacIntel' && 
+                      navigator.maxTouchPoints > 1 && 
+                      !window.MSStream;
+
+      // Android tablet checks
+      const isAndroidTablet = /Android/.test(userAgent) && 
+                             !/Mobile/.test(userAgent);
+
+      // General tablet dimension checks
+      const isTabletDimensions = (
+        // Common Android tablet dimensions
+        (width >= 600 && width <= 1280 && height >= 800 && height <= 1920) ||
+        // Samsung Galaxy Tab dimensions
         (width >= 800 && width <= 1280 && height >= 1280 && height <= 800) ||
-        
-        // Generic tablet size ranges
+        // Amazon Fire tablet dimensions
+        (width >= 600 && width <= 1200 && height >= 800 && height <= 1920) ||
+        // Generic tablet ranges
         (width >= 768 && width <= 1280 && height >= 600 && height <= 1280)
       );
 
-      // Check for tablet-specific features
-      const isTabletFeatures = (
-        // Check if device has touch capabilities
+      // Additional tablet feature checks
+      const hasTabletFeatures = (
         ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
-        // Check if device is not a phone (using screen width as indicator)
-        screenWidth >= 768 &&
-        // Check if not a desktop/laptop (using userAgent as a hint)
-        !/Windows NT|Mac OS X/.test(navigator.userAgent)
+        screenWidth >= 600 &&
+        !/Windows NT|Mac OS X/.test(userAgent)
       );
 
-      // Additional checks for specific tablet indicators
-      const isTabletUA = /iPad|Android(?!.*Mobile)|Tablet/.test(navigator.userAgent);
-      
       // Aspect ratio check (most tablets are between 4:3 and 16:10)
       const aspectRatio = width / height;
-      const isTabletRatio = aspectRatio >= 0.5 && aspectRatio <= 1.8;
+      const hasTabletRatio = aspectRatio >= 0.5 && aspectRatio <= 1.8;
 
-      // Combined check for tablet determination
-      setIsTablet(
-        isTabletDimensions &&
-        isTabletFeatures &&
-        isTabletRatio ||
-        isTabletUA
-      );
+      // Microsoft Surface and Windows tablet detection
+      const isWindowsTablet = /Windows/.test(userAgent) && 
+                             (navigator.maxTouchPoints > 0) && 
+                             (/Tablet|Touch/.test(userAgent) || 
+                              width >= 768 && hasTabletRatio);
+
+      const isIpad = isIpadDimensions || isIpadUA || isIpadOS;
+      const isGenericTablet = isTabletDimensions && hasTabletFeatures && hasTabletRatio;
+      const isAnyTablet = isIpad || isAndroidTablet || isWindowsTablet || isGenericTablet;
+
+      setDeviceType({
+        isTablet: isAnyTablet,
+        isIpad: isIpad,
+        isAndroidTablet: isAndroidTablet
+      });
     };
 
     // Initial check
-    checkTablet();
+    checkDevice();
 
-    // Add event listeners for changes
-    window.addEventListener('resize', checkTablet);
-    window.addEventListener('orientationchange', checkTablet);
+    // Add event listeners
+    window.addEventListener('resize', checkDevice);
+    window.addEventListener('orientationchange', checkDevice);
 
     // Cleanup
     return () => {
-      window.removeEventListener('resize', checkTablet);
-      window.removeEventListener('orientationchange', checkTablet);
+      window.removeEventListener('resize', checkDevice);
+      window.removeEventListener('orientationchange', checkDevice);
     };
   }, []);
 
-  return isTablet;
+  return deviceType;
 };
 
-export default useIsTablet;
+export default useTabletDetection;
