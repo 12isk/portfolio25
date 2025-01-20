@@ -73,7 +73,7 @@ export default function ModelPlayground() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider/5.5} 
                         font='fonts/Dirtyline.otf' 
-                        position={[9,2,1]}
+                        position={[10,2,1]}
                         rotation={[0,-Math.PI/2,0]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
