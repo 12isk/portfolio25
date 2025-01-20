@@ -11,7 +11,7 @@ const menuLinks = [
   { label: "About", path: "#about" },
   { label: "Projects", path: "#projects" },
   { label: "Contact", path: "#contact" },
-  { label: "Playground", path: "/playground" },
+  { label: "Play", path: "/playground" },
 
 ];
 
@@ -59,7 +59,7 @@ export default function Menu() {
         staggerChildren: 0.1,
       },
     },
-  };
+  };  
 
   // TODO: fix navigation to home and scroll to target
   const lenis = useLenis();
