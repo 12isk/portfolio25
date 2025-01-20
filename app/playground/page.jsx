@@ -11,7 +11,7 @@ export default function ModelPlayground() {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [isHovered, setIsHovered] = useState(false);
     const isMobile = useIsMobile();
-    const textScaleDivider = isMobile ? 570 : 950;
+    const textScaleDivider = isMobile ? 570 : 940;
     const isTablet = useIsTablet();
     const [modelLoaded, setModelLoaded] = useState(false);
 
@@ -49,7 +49,7 @@ export default function ModelPlayground() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider} 
                         font='fonts/Dirtyline.otf' 
-                        position={isTablet ? [0,-1,-1]: [0,0,-1]}
+                        position={isTablet ? [0,0,-1]: [0,0,-1]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         PlAyGrOuNd
@@ -57,7 +57,7 @@ export default function ModelPlayground() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider/4} 
                         font='fonts/Dirtyline.otf' 
-                        position={isTablet ? [0,-2,-1]: [0,-2,-2]}
+                        position={isTablet ? [0,-1.2,-1]: [0,-2,-2]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         FinD oUT wHaT yOu LiKe !
@@ -65,7 +65,7 @@ export default function ModelPlayground() {
                     <Text 
                         scale={getWindowDimensions().width/textScaleDivider/5.5} 
                         font='fonts/Dirtyline.otf' 
-                        position={isTablet ? [0,-2,-1]: [0,-3.4,-2]}
+                        position={isTablet ? [0,-1.7,-1]: [0,-3.4,-2]}
                         onPointerOver={() => setIsHovered(true)} 
                         onPointerLeave={() => setIsHovered(false)}>
                         (EveNtUaLly I&#39;lL aDd MoRE moDels)
@@ -157,7 +157,7 @@ function Model({ isHovered, setIsHovered, onLoad }) {
     return (
         <group 
             ref={containerRef}
-            scale={isMobile ? viewport.width/5.5 : viewport.width / 6}
+            scale={isMobile ? (isTablet ? viewport.width / 4 : viewport.width/5.5) : viewport.width / 6}
             onPointerOver={() => setIsHovered(true)}
             onPointerOut={() => setIsHovered(false)}
         >

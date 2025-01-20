@@ -128,8 +128,15 @@
     line-height: 1.2; /* Adjust line-height for better spacing */
 
     @media (max-width: 768px) {
-        font-size: clamp(6vw, 10vw, 12vw); /* Responsive font size */
+        font-size: clamp(6vw, 10vw, 12vw); 
         
+    }
+    @media ((min-width: 768px) and (max-width: 1080px)) {
+        font-size: clamp(6vw, 12vw, 12vw); 
+        
+    }
+    @media(min-width: 1080px) {
+        font-size: clamp(7vw, 7vw, 14vw); 
     }
 
     .newLine {
@@ -184,6 +191,10 @@
             font-size: clamp(6vw, 9vw, 12vw); // Increase font size on mobile
             text-align: center; // Center the text horizontally
         }
+        @media ((min-width: 768px) and (max-width: 1080px)) {
+            font-size: clamp(6vw, 9vw, 12vw); 
+        }
+        
     }
 }
 
@@ -197,7 +208,9 @@
     align-items: center;
     z-index: 2;
 
-    //margin-top: auto;
+    @media ((min-width: 768px) and (max-width: 1080px)) {
+        top: 80%;   
+    }
 
     a {
         font-family: 'Satoshi-Variable';
@@ -211,6 +224,13 @@
             transform: scale(1.2) ;
         }
 
+        @media ((min-width: 768px) and (max-width: 1080px)) {
+            font-size: clamp(4vw, 4vw, 12vw); 
+            
+        }
+        @media(min-width: 1080px) {
+            font-size: clamp(2.5vw, 2.5vw, 12vw); 
+        }
         
     
     }

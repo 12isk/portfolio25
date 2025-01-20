@@ -9,8 +9,9 @@ import ProjectList from './components/projectgallery/projectList';
 import About from './components/about';
 import Contact from './components/contact';
 import useIsMobile from './components/hooks/useIsMobile';
+import useIsTablet from './components/hooks/useIsTablet';
 import Specialty from './components/precisions/specialty';
-import Preloader from './loading/page';
+import Preloader from './loading';
 import { useLoading, LoadingProvider } from './context/LoadingContext';
 
 
@@ -40,6 +41,7 @@ function HomeContent(){
   const [progress, setProgress] = useState(0);
   const mainRef = useRef(null);
   const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
   const { modelProgress, loading, setLoading } = useLoading();
 
   const lenisOptions = {
@@ -97,7 +99,7 @@ function HomeContent(){
           <div id="about">
             <About />
           </div>
-          {isMobile ? <div style={{ height: "20vh" }}></div> : <div style={{ height: "60vh" }}></div>}
+          {isMobile ? ( isTablet ? <div style={{ height: "20vh" }}/> : <div style={{ height: "20vh" }}/>) : <div style={{ height: "60vh" }}></div>}
         </div>
         <Modal projects={projects} modal={modal} />
         <div id="contact">
