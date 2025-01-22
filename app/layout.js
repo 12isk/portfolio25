@@ -18,15 +18,36 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* <head>
+      <head>
         <link 
           rel="preload" 
-          href="/media/models/torus-knot2.glb" 
+          href="/fonts/Dirtyline.otf" 
           as="fetch" 
           crossOrigin="anonymous"
           type="application/octet-stream" 
         />
-      </head> */}
+        <link 
+          rel="preload" 
+          href="/fonts/aston/AstonScriptBold-Bold.woff" 
+          as="fetch" 
+          crossOrigin="anonymous"
+          type="application/octet-stream" 
+        />
+        <link 
+          rel="preload" 
+          href="/fonts/nyghtserif/NyghtSerif-Dark.woff2" 
+          as="fetch" 
+          crossOrigin="anonymous"
+          type="application/octet-stream" 
+        />
+        <link 
+          rel="preload" 
+          href="/fonts/satoshi/Satoshi-Black.woff" 
+          as="fetch" 
+          crossOrigin="anonymous"
+          type="application/octet-stream" 
+        />
+      </head>
       <link rel="icon" href="/favicon.ico" sizes="any" />
       {/* <link 
         rel="icon" 
