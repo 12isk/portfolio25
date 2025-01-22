@@ -7,7 +7,13 @@ import "./css/globals.css";
 export const metadata = {
   title: "12isk",
   description: "All-around creative specializing in web development, graphic design, 3D, and innovative digital experiences. Loves mixing art and tech to turn cool ideas into reality.",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' }
+    ]
+  }
 };
+
 
 export default function RootLayout({ children }) {
   return (
@@ -21,12 +27,13 @@ export default function RootLayout({ children }) {
           type="application/octet-stream" 
         />
       </head> */}
-      <link 
+      <link rel="icon" href="/favicon.ico" sizes="any" />
+      {/* <link 
         rel="icon" 
         href="/icon?<generated>" 
         type="image/<generated>"
         sizes="<generated>"
-      />
+      /> */}
       <body>
         <SpeedInsights />
         <ClientLayout>

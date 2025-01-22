@@ -65,7 +65,7 @@ main {
 }
 
 html {
-  overflow: hidden;
+  /* Remove overflow: hidden from here */
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -73,6 +73,7 @@ html {
 html::-webkit-scrollbar {
   display: none;
 }
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -83,16 +84,48 @@ body {
     rgb(var(--background-start-rgb));
   margin: 0px;
   font-family: 'Dirtyline';
-  /* overflow: auto;  */
-
+  /* Let Lenis handle the scrolling behavior */
+  position: relative;
+  min-height: 100vh;
 }
 
+main {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Remove overflow: auto as Lenis will handle this */
+  overscroll-behavior: none;
+  /* Update touch-action to allow all touch behaviors */
+  touch-action: manipulation;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  width: 100%;
+}
+
+/* Update media query to handle landscape orientation specifically */
+@media (max-width: 1024px) and (orientation: landscape) {
+  html, 
+  body {
+    overflow: visible;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+  }
+  
+  main {
+    /* Ensure main content is scrollable on tablets */
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+
+/* General tablet/mobile fixes */
 @media (max-width: 1024px) {
   body {
-    overflow: auto;
+    overflow: visible;
   }
-  html{
-    overflow: auto;
+  
+  html {
+    overflow: visible;
   }
 }
 
@@ -106,6 +139,29 @@ body {
   font-weight: 700;
   text-align: center;
   padding: 20px 50px;
+}
+
+.responsive-spacer {
+  height: 60vh;
+  transition: height 0.3s ease-in-out;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .responsive-spacer {
+    height: 10vh;
+  }
+
+  @media screen and (min-height: 1360px) {
+    .responsive-spacer {
+      height: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .responsive-spacer {
+    height: 20vh;
+  }
 }
 
 @layer utilities {

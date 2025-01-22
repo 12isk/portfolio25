@@ -44,12 +44,12 @@ function HomeContent(){
   const isTablet = useIsTablet();
   const { modelProgress, loading, setLoading } = useLoading();
 
-  const lenisOptions = {
-    lerp: 0.03,
-    duration: 0.85,
-    smoothTouch: false,
-    smooth: true,
-  };
+  // const lenisOptions = {
+  //   lerp: 0.03,
+  //   duration: 0.85,
+  //   smoothTouch: false,
+  //   smooth: true,
+  // };
 
   const lenis = useLenis();
 
@@ -99,7 +99,7 @@ function HomeContent(){
           <div id="about">
             <About />
           </div>
-          <ResponsiveSpacer/>      
+          <div className="responsiveSpacer"/>      
         <Modal projects={projects} modal={modal} />
         <div id="contact">
           <Contact lenis={lenis} />

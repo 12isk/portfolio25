@@ -20,13 +20,22 @@ export default function ClientLayout({ children }) {
     orientation: "vertical",
     smoothWheel: true,
     wheelMultiplier: 1,
-    syncTouch: false,  
+    syncTouch: true,  
     touchInertiaMultiplier: 1.3,
+    breakpoints: {
+      tablet: {
+        smooth: true,
+        breakpoint: 1024,
+        touchMultiplier: 1.5,  // Slightly higher for tablets
+        duration: 0.8,  // Slightly faster for tablets
+      }
+    },
     onTouch: (e) => {
-      console.log('Touch detected:', e);
+      if (e.event) {
+        e.event.preventDefault(); // Prevent default touch behavior
+      }
     },
   };
-
   if (!mounted) return null;
 
   return (
