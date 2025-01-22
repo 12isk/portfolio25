@@ -38,7 +38,7 @@ export default function ModelPlayground() {
             backgroundColor: 'transparent', overflow: 'auto'  }}>
             
             {/* <span className={"info"}>Play around and find out what you like !</span> */}
-            <Leva collapsed={true} oneLineLabels hideTitleBar/>
+            <Leva collapsed={true} oneLineLabels titleBar={{title:"Open Me!"}}/>
             <Canvas>
                 <color attach="background" args={[0,0,0]} />
                 <directionalLight intensity={4} position={[0, 3, 2]} />
