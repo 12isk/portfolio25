@@ -13,7 +13,7 @@ export default function ClientLayout({ children }) {
   const lenisOptions = {
     lerp: 0.03,
     duration: 1,
-    smoothTouch: true,
+    smoothTouch: false,
     touchMultiplier: 1.2,
     infinite: false,
     gestureOrientation: "vertical",
