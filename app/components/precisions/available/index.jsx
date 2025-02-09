@@ -1,4 +1,5 @@
 import React from 'react'
+
 import styles from './styles.module.scss';
 
 export default function index({home}) {
@@ -30,7 +31,7 @@ const size = 10;
             </div>
         </div>
         
-        <div className={styles.text}>Available in Jan 2025</div>
+        <div className={styles.text}>Available for 2025</div>
       
     </div>
   )
