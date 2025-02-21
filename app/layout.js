@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
         />
         <link 
           rel="preload" 
-          href="/fonts/aston/AstonScriptBold-Bold.woff" 
+          href="/fonts/aston/AstonScriptBold-Bold.woff2" 
           as="fetch" 
           crossOrigin="anonymous"
           type="application/octet-stream" 
@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
         />
         <link 
           rel="preload" 
-          href="/fonts/satoshi/Satoshi-Black.woff" 
+          href="/fonts/satoshi/Satoshi-Black.woff2" 
           as="fetch" 
           crossOrigin="anonymous"
           type="application/octet-stream" 

@@ -79,7 +79,7 @@ export default function Contact({lenis}) {
     const rotation = useTransform(smoothProgress, [0, 1], [360, 0]);
 
     useEffect(() => {
-        if (!lenis) return;
+        if (!lenis || isMobile) return; // Disable scroll handling on mobile
 
         let isScrolling = false;
         
@@ -91,7 +91,7 @@ export default function Contact({lenis}) {
             const windowHeight = window.innerHeight;
             const visiblePercentage = 1 - (Math.abs(containerTop) / windowHeight);
             
-            if (visiblePercentage >= 0.12) {
+            if (visiblePercentage >= 0.2) {
                 const targetScroll = lenis.scroll + containerTop;
                 lenis.scrollTo(targetScroll, {
                     duration: 1.2,
@@ -122,7 +122,7 @@ export default function Contact({lenis}) {
             window.clearTimeout(window.scrollTimeout);
             lenis.off('scroll', onScroll);
         };
-    }, [lenis]);
+    }, [lenis, isMobile]);
 
     return (
         <div ref={container} className={styles.aboutContainer}>
