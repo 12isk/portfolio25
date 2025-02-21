@@ -13,15 +13,15 @@ export default function ClientLayout({ children }) {
   const lenisOptions = {
     lerp: 0.03,
     duration: 1,
-    smoothTouch: false,
+    smoothTouch: true,
     touchMultiplier: 1.2,
     infinite: false,
     gestureOrientation: "vertical",
     orientation: "vertical",
     smoothWheel: true,
     wheelMultiplier: 1,
-    syncTouch: true,  
-    touchInertiaMultiplier: 1.3,
+    //syncTouch: true,  
+    //touchInertiaMultiplier: 1.3,
     breakpoints: {
       tablet: {
         smooth: true,
