@@ -2,8 +2,8 @@ import { MeshTransmissionMaterial, useGLTF, useProgress } from '@react-three/dre
 import { useFrame, useThree } from '@react-three/fiber';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import useIsMobile from './hooks/useIsMobile';
 import { useLoading } from '../context/LoadingContext';
+import useIsMobile from './hooks/useIsMobile';
 
 export default function Model({ onLoad }) {
     // States for debugging
@@ -123,6 +123,32 @@ export default function Model({ onLoad }) {
             }
         };
     }, []);
+
+    // Initialize the worker
+    const workerRef = useRef(null);
+
+    useEffect(() => {
+        workerRef.current = new Worker(new URL('../utils/workers/modelAnimationWorker.js', import.meta.url));
+
+        workerRef.current.onmessage = (event) => {
+            const { x, y } = event.data;
+            if (torus.current) {
+                torus.current.rotation.x = x;
+                torus.current.rotation.y = y;
+            }
+        };
+
+        // Start the worker with initial data
+        workerRef.current.postMessage({
+            xSpeed: materialProps.xSpeed,
+            ySpeed: materialProps.ySpeed,
+            frameCount: frameCountRef.current
+        });
+
+        return () => {
+            workerRef.current.terminate();
+        };
+    }, [materialProps.xSpeed, materialProps.ySpeed]);
 
     // Animation frame
     useFrame(() => {

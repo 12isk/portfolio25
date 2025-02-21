@@ -1,10 +1,11 @@
 import React from 'react';
 import Clock from 'react-live-clock';
-import styles from './styles.module.scss';
+
 import useIsMobile from '../../hooks/useIsMobile';
+import styles from './styles.module.scss';
 
 // JSX
-export default function index() {
+export default function Index() {
     const colors = ["#3FFF00", "#00FFBF"]
     const size = 10;
     const isMobile = useIsMobile();

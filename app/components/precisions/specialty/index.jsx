@@ -1,9 +1,9 @@
 import React from 'react'
 
-import styles from './styles.module.scss';
 import useIsMobile from '../../hooks/useIsMobile';
+import styles from './styles.module.scss';
 
-export default function index() {
+export default function Index() {
   const isMobile = useIsMobile();
   return (
     <div className={styles.specialty}>

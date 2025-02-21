@@ -2,7 +2,7 @@ import React from 'react'
 
 import styles from './styles.module.scss';
 
-export default function index({home}) {
+export default function Index({home}) {
 
 const colors = ["#832388", "#e3436b", "#f0772f", "#33CCFF"];
 const colors2 = [
