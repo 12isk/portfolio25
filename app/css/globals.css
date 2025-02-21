@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -139,6 +139,12 @@ main {
   font-weight: 700;
   text-align: center;
   padding: 20px 50px;
+  margin-bottom: 1em;
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px){
+  #about{margin-bottom: 8em;}
 }
 
 .responsive-spacer {
@@ -148,12 +154,12 @@ main {
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .responsive-spacer {
-    height: 10vh;
+    height: 20vh;
   }
 
   @media screen and (min-height: 1360px) {
     .responsive-spacer {
-      height: 0;
+      height: 0vh;
     }
   }
 }

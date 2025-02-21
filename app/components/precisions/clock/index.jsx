@@ -1,15 +1,17 @@
 import React from 'react';
 import Clock from 'react-live-clock';
 import styles from './styles.module.scss';
+import useIsMobile from '../../hooks/useIsMobile';
 
 // JSX
 export default function index() {
     const colors = ["#3FFF00", "#00FFBF"]
     const size = 10;
+    const isMobile = useIsMobile();
 
   return (
     <div className={styles.clockContainer}>
-        <span className={styles.lv1}>Currently in Lyon<span className={styles.location}>, France</span></span>
+        <span className={styles.lv1}>Currently in <span className={styles.location}>{isMobile ? <span className={styles.France}> Lyon, France</span> : "Lyon, France"} </span></span>
         <div className={styles.wrap}>
             <div className={styles.diskContainer}>
                 <div className={styles.diskWrapper}>
