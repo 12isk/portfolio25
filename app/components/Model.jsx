@@ -2,7 +2,7 @@ import { MeshTransmissionMaterial, useGLTF, useProgress } from '@react-three/dre
 import { useFrame, useThree } from '@react-three/fiber';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-useGLTF.preload('media/models/torus-knotDecimated2-v1.glb'); // Preload model for faster rendering
+useGLTF.preload('media/models/torus-knotDecimated.glb'); // Preload model for faster rendering
 
 import { useLoading } from '../context/LoadingContext';
 import useIsMobile from './hooks/useIsMobile';
@@ -31,7 +31,7 @@ export default function Model({ onLoad }) {
     let lastFrameTime = performance.now();
 
     // Three.js hooks
-    const { nodes } = useGLTF('media/models/torus-knotDecimated2-v1.glb', true);
+    const { nodes } = useGLTF('media/models/torus-knotDecimated.glb', true);
     const { viewport } = useThree();
     const { progress } = useProgress();
     const { setModelProgress } = useLoading();
