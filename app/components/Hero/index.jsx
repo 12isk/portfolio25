@@ -1,8 +1,8 @@
 import { Environment, Text, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 // ./components/Presentation.js
-
-import React, { Suspense, useEffect, useState } from 'react';
+import { Perf } from 'r3f-perf'
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 
 import GradientCursor from '../GradientCursor';
 import useIsMobile from '../hooks/useIsMobile';
@@ -34,18 +34,15 @@ export default function Hero() {
         };
     }
 
-    useEffect(() => {
-        function handleResize() {
-            setDimensions(getWindowDimensions());
-        }
-
-        window.addEventListener('resize', handleResize);
-        // Call handleResize immediately to set initial size
-        handleResize();
-
-        // Cleanup the event listener on component unmount
-        return () => window.removeEventListener('resize', handleResize);
+    const handleResize = useCallback(() => {
+        setDimensions(getWindowDimensions());
     }, []);
+    
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [handleResize]); // Only runs when necessary
+    
 
     return (
         <div style={{ 
@@ -80,6 +77,8 @@ export default function Hero() {
                 <color attach="background" args={[0,0,0]} />
                 <directionalLight intensity={0.5} position={[0, 3, 2]} />
                 <Environment preset="city" />
+                {process.env.NODE_ENV === 'development' && <Perf />}
+
                 <Suspense fallback={null}>
                     <Model
                         onPointerOver={() => setIsHovered(true)}

@@ -2,6 +2,8 @@ import { MeshTransmissionMaterial, useGLTF, useProgress } from '@react-three/dre
 import { useFrame, useThree } from '@react-three/fiber';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
+useGLTF.preload('media/models/torus-knot2.glb'); // Preload model for faster rendering
+
 import { useLoading } from '../context/LoadingContext';
 import useIsMobile from './hooks/useIsMobile';
 
@@ -21,6 +23,12 @@ export default function Model({ onLoad }) {
     const containerRef = useRef(null);
     const torus = useRef();
     const frameCountRef = useRef(0);
+
+    // Detect low-end device (e.g., less than 6 CPU cores)
+    const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 6;
+    const targetFPS = isLowEnd ? 30 : 90;
+    const frameInterval = 1000 / targetFPS; // Convert FPS to milliseconds per frame
+    let lastFrameTime = performance.now();
 
     // Three.js hooks
     const { nodes } = useGLTF('media/models/torus-knot2.glb', true);
@@ -61,6 +69,7 @@ export default function Model({ onLoad }) {
     };
 
     useEffect(() => {
+        //aconsole.log("is low end:", isLowEnd);
         // Create smooth transition to target progress
         let startProgress = 0;
         const targetProgress = progress;
@@ -89,40 +98,27 @@ export default function Model({ onLoad }) {
     useEffect(() => {
         if (nodes) {
             onLoad?.();
-            // Log initial mesh rotation
-            // console.log('Initial mesh rotation:', {
-            //     x: torus.current?.rotation.x || 0,
-            //     y: torus.current?.rotation.y || 0,
-            //     z: torus.current?.rotation.z || 0
-            // });
         }
-    }, [nodes, onLoad, materialProps, viewport]);
+    }, [onLoad]);
 
     // Intersection Observer setup
     useEffect(() => {
-        const options = {
+        const observer = new IntersectionObserver(([entry]) => {
+            setDebugState(prev => ({ ...prev, isVisible: entry.isIntersecting }));
+        }, {
             root: null,
             rootMargin: '50px',
             threshold: 0.3
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                setDebugState(prev => ({ ...prev, isVisible: entry.isIntersecting }));
-            });
-        }, options);
+        });
 
         const canvas = document.querySelector('canvas');
-        if (canvas) {
-            observer.observe(canvas);
-        }
+        if (canvas) observer.observe(canvas);
 
         return () => {
-            if (canvas) {
-                observer.unobserve(canvas);
-            }
+            if (canvas) observer.unobserve(canvas);
         };
-    }, []);
+    }, []); // No dependencies needed
+
 
     // Initialize the worker
     const workerRef = useRef(null);
@@ -151,25 +147,38 @@ export default function Model({ onLoad }) {
     }, [materialProps.xSpeed, materialProps.ySpeed]);
 
     // Animation frame
-    useFrame(() => {
-        if (debugState.isVisible && torus.current) {
-            torus.current.rotation.x += materialProps.xSpeed;
-            torus.current.rotation.y += materialProps.ySpeed;
-            frameCountRef.current += 1;
+    // useFrame(() => {
+    //     if (!debugState.isVisible || !torus.current) return; // Skip update if offscreen
+    //     torus.current.rotation.x += materialProps.xSpeed;
+    //     torus.current.rotation.y += materialProps.ySpeed;
+    //         //console.log("rotation",torus.current.rotation)
             
-        //     // Update debug state every 30 frames to avoid performance issues
-        //     if (frameCountRef.current % 30 === 0) {
-        //         updateDebugState();
-        //         console.log('Mesh rotation:', {
-        //             x: torus.current.rotation.x,
-        //             y: torus.current.rotation.y,
-        //             z: torus.current.rotation.z
-        //         });
-        //     }
-        }
-    });
+    //     //     // Update debug state every 30 frames to avoid performance issues
+    //     //     if (frameCountRef.current % 30 === 0) {
+    //     //         updateDebugState();
+    //     //         console.log('Mesh rotation:', {
+    //     //             x: torus.current.rotation.x,
+    //     //             y: torus.current.rotation.y,
+    //     //             z: torus.current.rotation.z
+    //     //         });
+    //     //     }
+        
+    // });
 
     // Resize handler
+    
+    // Animation frame with FPS cap
+    useFrame(() => {
+        if (!torus.current) return;
+
+        const now = performance.now();
+        if (now - lastFrameTime < frameInterval) return; // Skip frame if not enough time passed
+        lastFrameTime = now; // Update last frame time
+
+        torus.current.rotation.x += materialProps.xSpeed;
+        torus.current.rotation.y += materialProps.ySpeed;
+    });
+    
     useEffect(() => {
         const handleResize = () => {
             const newScale = window.innerWidth < 768 ? 0.7 : 0.4;

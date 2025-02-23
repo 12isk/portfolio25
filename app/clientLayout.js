@@ -4,42 +4,27 @@ import Menu from "./components/menu";
 import { useEffect, useState } from "react";
 
 export default function ClientLayout({ children }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const isSlower = typeof window !== "undefined" && navigator.hardwareConcurrency < 6;
 
   const lenisOptions = {
-    lerp: 0.03,
-    duration: 1,
+    lerp: isSlower ? 0.1 : 0.07,
+    duration: isSlower ? 0.4 : 1,
     smoothTouch: true,
-    touchMultiplier: 1.2,
+    touchMultiplier: 1.1,
     infinite: false,
-    gestureOrientation: "vertical",
-    orientation: "vertical",
-    smoothWheel: true,
-    wheelMultiplier: 1,
-    //syncTouch: true,  
-    //touchInertiaMultiplier: 1.3,
-    breakpoints: {
-      tablet: {
-        smooth: true,
-        breakpoint: 1024,
-        touchMultiplier: 1.5,  // Slightly higher for tablets
-        duration: 0.8,  // Slightly faster for tablets
-      }
-    },
+    smoothWheel: !isSlower,
+    wheelMultiplier: isSlower ? 0.8 : 1,
     onTouch: (e) => {
-      if (e.event) {
-        e.event.preventDefault(); // Prevent default touch behavior
+      if (e.event?.target?.closest(".no-scroll")) {
+        e.event.preventDefault();
       }
     },
   };
-  if (!mounted) return null;
+
+  
 
   return (
-    <ReactLenis root options={lenisOptions}>
+    <ReactLenis root options={lenisOptions} suppressHydrationWarning>
       <Menu />
       {children}
     </ReactLenis>
