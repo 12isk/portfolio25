@@ -7,9 +7,6 @@ useGLTF.preload('media/models/torus-knotDecimated.glb'); // Preload model for fa
 import { useLoading } from '../context/LoadingContext';
 import useIsMobile from './hooks/useIsMobile';
 
-
-
-
 export default function Model({ onLoad }) {
     // States for debugging
     const [debugState, setDebugState] = useState({
@@ -21,7 +18,6 @@ export default function Model({ onLoad }) {
     const [isHovered, setIsHovered] = useState(false);
     const [meshScale, setMeshScale] = useState(0.4);
     const isMobile = useIsMobile();
-    const [deviceTier, setDeviceTier] = useState('high');
 
     // Refs
     const containerRef = useRef(null);
@@ -40,35 +36,7 @@ export default function Model({ onLoad }) {
     const { progress } = useProgress();
     const { setModelProgress } = useLoading();
     
-    useEffect(() => {
-        // Check device capabilities on mount
-        const checkPerformance = () => {
-            // Check GPU tier using WebGL parameters
-            const canvas = document.createElement('canvas');
-            const gl = canvas.getContext('webgl');
-            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-            const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-            
-            // Check CPU cores
-            const cores = navigator.hardwareConcurrency || 4;
-            
-            // Check if mobile
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            
-            // Determine device tier
-            if (isMobile || cores < 4) {
-                setDeviceTier('low');
-            } else if (cores < 8) {
-                setDeviceTier('medium');
-            } else {
-                setDeviceTier('high');
-            }
-        };
-        console.log("deviceTier", deviceTier);
-        
-        checkPerformance();
-    }, []);
-    
+    // Material properties exposed for debugging
     const materialProps = useMemo(() => ({
         thickness: 0.25,
         roughness: 0,
@@ -78,13 +46,9 @@ export default function Model({ onLoad }) {
         BackSide: false,
         xSpeed: 0.006,
         ySpeed: 0.005,
-        samples: {
-            'low': 1,
-            'medium': 4,
-            'high': 6
-        }[deviceTier],
+        //samples: 1,
         //resolution: 1024,
-    }), [deviceTier]);
+    }), []);
 
     // Update debug state
     const updateDebugState = () => {
@@ -162,27 +126,27 @@ export default function Model({ onLoad }) {
     const workerRef = useRef(null);
 
     useEffect(() => {
-    workerRef.current = new Worker(new URL('../utils/workers/modelAnimationWorker.js', import.meta.url));
+        workerRef.current = new Worker(new URL('../utils/workers/modelAnimationWorker.js', import.meta.url));
 
-    workerRef.current.onmessage = (event) => {
-        const { x, y } = event.data;
-        if (torus.current) {
-            torus.current.rotation.x = x;
-            torus.current.rotation.y = y;
-        }
-    };
+        workerRef.current.onmessage = (event) => {
+            const { x, y } = event.data;
+            if (torus.current) {
+                torus.current.rotation.x = x;
+                torus.current.rotation.y = y;
+            }
+        };
 
-    // Start the worker with initial data
-    workerRef.current.postMessage({
-        xSpeed: materialProps.xSpeed,
-        ySpeed: materialProps.ySpeed,
-        startTime: performance.now() // Changed from frameCount
-    });
+        // Start the worker with initial data
+        workerRef.current.postMessage({
+            xSpeed: materialProps.xSpeed,
+            ySpeed: materialProps.ySpeed,
+            frameCount: frameCountRef.current
+        });
 
-    return () => {
-        workerRef.current.terminate();
-    };
-}, [materialProps.xSpeed, materialProps.ySpeed]);
+        return () => {
+            workerRef.current.terminate();
+        };
+    }, [materialProps.xSpeed, materialProps.ySpeed]);
 
     // Animation frame
     // useFrame(() => {
@@ -216,6 +180,12 @@ export default function Model({ onLoad }) {
         torus.current.rotation.x += materialProps.xSpeed;
         torus.current.rotation.y += materialProps.ySpeed;
     });
+
+    // useFrame((state, delta) => {
+    //     if (!torus.current) return;
+    //     torus.current.rotation.x += materialProps.xSpeed * delta;
+    //     torus.current.rotation.y += materialProps.ySpeed * delta;
+    // });
     
     useEffect(() => {
         const handleResize = () => {
@@ -249,8 +219,8 @@ export default function Model({ onLoad }) {
         <group 
             ref={containerRef}
             scale={isMobile ? viewport.width/5.5 : viewport.width / 6}
-            onPointerOver={() => setIsHovered(true)}
-            onPointerOut={() => setIsHovered(false)}
+            // onPointerOver={() => setIsHovered(true)}
+            // onPointerOut={() => setIsHovered(false)}
         >
             <mesh 
                 ref={torus} 

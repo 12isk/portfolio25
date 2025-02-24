@@ -1,39 +1,38 @@
 import { Environment, PerformanceMonitor, Text, useProgress } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-// ./components/Presentation.js
-import { Perf } from 'r3f-perf'
+
 import React, { Suspense, useCallback, useEffect, useState } from 'react';
 
 import GradientCursor from '../GradientCursor';
 import useIsMobile from '../hooks/useIsMobile';
 import useIsTablet from '../hooks/useIsTablet';
-import Model from '../Model';
+
 import Available from '../precisions/available';
 import Clock from '../precisions/clock';
 import Specialty from '../precisions/specialty';
+import VideoModel from '../videoModel';
 
 export default function Hero() {
     const [isHovered, setIsHovered] = useState(false);
-    const [dimensions, setDimensions] = useState(getWindowDimensions());
-    const isMobile = useIsMobile();
-    const isTablet = useIsTablet();
-    const textScaleDivider = 
-      isMobile ?    
-        660 : (
-             isTablet ? 
-               (window.innerHeight >= 1360 ? 1050: 1080)
-             : 950);
+    // const [dimensions, setDimensions] = useState(getWindowDimensions());
+    // const isMobile = useIsMobile();
+    // const isTablet = useIsTablet();
+    // const textScaleDivider = 
+    //   isMobile ?    
+    //     660 : (
+    //          isTablet ? 
+    //            (window.innerHeight >= 1360 ? 1050: 1080)
+    //          : 950);
     
-    const { progress } = useProgress();
-    const [modelLoaded, setModelLoaded] = useState(false);
-    function getWindowDimensions() {
-        const { innerWidth: width, innerHeight: height } = window;
-        return {
-            width,
-            height
-        };
-    }
-    const [dpr, setDpr] = useState(1.5);
+    // const { progress } = useProgress();
+    // const [modelLoaded, setModelLoaded] = useState(false);
+    // function getWindowDimensions() {
+    //     const { innerWidth: width, innerHeight: height } = window;
+    //     return {
+    //         width,
+    //         height
+    //     };
+    // }
+    // const [dpr, setDpr] = useState(1.5);
 
     const handleResize = useCallback(() => {
         setDimensions(getWindowDimensions());
@@ -56,8 +55,8 @@ export default function Hero() {
             <Available home={true} />
             <Clock />
             <GradientCursor isHovered={isHovered} />
-            
-            {!modelLoaded && (
+            <VideoModel />
+            {/* {!modelLoaded && (
                 <div style={{ 
                     position: 'absolute',
                     top: 0,
@@ -74,7 +73,7 @@ export default function Hero() {
                 </div>
             )}
             <Canvas dpr={dpr}>
-                <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} />
+                <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(0.9)} />
 
                 <color attach="background" args={[0,0,0]} />
                 <directionalLight intensity={0.5} position={[0, 3, 2]} />
@@ -117,7 +116,7 @@ export default function Hero() {
                         DeVeLopPeR
                     </Text>
                 </Suspense>
-            </Canvas>
+            </Canvas> */}
         </div>
     );
 }

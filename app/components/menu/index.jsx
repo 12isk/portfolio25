@@ -27,14 +27,14 @@ export default function Menu() {
     open: {
       clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
       transition: {
-        duration: 0.75,
+        duration: 0.7,
         ease: [0.42, 0, 0.58, 1], // Cubic Bézier easing
       },
     },
     closed: {
       clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
       transition: {
-        duration: 0.9,
+        duration: 0.7,
         ease: [0.42, 0, 0.58, 1], // Cubic Bézier easing
       },
     },

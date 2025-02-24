@@ -36,7 +36,7 @@ const nextConfig = {
   
     // Additional Next.js features you can now use
     experimental: {
-      optimizeCss: false,
+      optimizeCss: true,
       optimizePackageImports: ['ReactThreeFiber', 'Framermotion', 'three', 'gsap', 'framer-motion','motion'],
       //serverActions: true, // Enable if you want to use server actions
     },

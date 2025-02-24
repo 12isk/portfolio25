@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link 
+        {/* <link 
           rel="preload" 
           href="/fonts/Dirtyline.otf" 
           as="fetch" 
@@ -46,7 +46,8 @@ export default function RootLayout({ children }) {
           as="fetch" 
           crossOrigin="anonymous"
           type="application/octet-stream" 
-        />
+        /> */}
+        <link rel="preload" href="/media/hero-rec.webm" as="video" />
       </head>
       <link rel="icon" href="/favicon.ico" sizes="any" />
       {/* <link 

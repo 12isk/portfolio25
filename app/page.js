@@ -30,10 +30,7 @@ const Hero = dynamic(() => import('./components/Hero'), {
   priority: true
 });
 
-const Model = dynamic(() => import('./components/Model'), {
-  ssr: false,
-  loading: () => <div style={{height: "100vh"}} />
-});
+
 
 function HomeContent(){
   const [modal, setModal] = useState({ active: false, index: 0 });
@@ -56,7 +53,7 @@ function HomeContent(){
   
 
   useEffect(() => {
-    
+    setLoading(false);
     if (modelProgress === 100){
       setTimeout(() => {
         setLoading(false);
@@ -80,14 +77,12 @@ function HomeContent(){
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      {/* <AnimatePresence mode="wait">
         {loading && <Preloader progress={modelProgress} />}
-      </AnimatePresence>
-      <motion.main 
+      </AnimatePresence> */}
+      <main 
         ref={mainRef} 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: loading ? 0 : 1 }}
-        transition={{ duration: .7, delay: loading ? 0 : 0.2 }}
+       
       >
         <Hero />
         <div style={{ height: "15vh" }} />
@@ -106,7 +101,7 @@ function HomeContent(){
         </div>
       </div>
 
-      </motion.main>
+      </main>
     </>
   );
 }

@@ -8,7 +8,7 @@ export default function ClientLayout({ children }) {
 
   const lenisOptions = {
     lerp: 0.03,
-    duration: isSlower ? 0.7 : 1,
+    duration: isSlower ? 0.7 : 0.7,
     smoothTouch: true,
     touchMultiplier: 1.2,
     infinite: false,
