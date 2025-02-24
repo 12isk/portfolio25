@@ -1,4 +1,4 @@
-import { Environment, Text, useProgress } from '@react-three/drei';
+import { Environment, PerformanceMonitor, Text, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 // ./components/Presentation.js
 import { Perf } from 'r3f-perf'
@@ -33,6 +33,7 @@ export default function Hero() {
             height
         };
     }
+    const [dpr, setDpr] = useState(1.5);
 
     const handleResize = useCallback(() => {
         setDimensions(getWindowDimensions());
@@ -72,8 +73,9 @@ export default function Hero() {
                     <span>Loading... {Math.round(progress)}%</span>
                 </div>
             )}
-            
-            <Canvas>
+            <Canvas dpr={dpr}>
+                <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} />
+
                 <color attach="background" args={[0,0,0]} />
                 <directionalLight intensity={0.5} position={[0, 3, 2]} />
                 <Environment preset="city" />

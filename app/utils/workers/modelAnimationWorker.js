@@ -1,20 +1,23 @@
 self.onmessage = function(event) {
-    const { xSpeed, ySpeed, frameCount } = event.data;
-    let currentFrame = frameCount;
+    // Add performance monitoring to measure impact
+let frameTimeLog = [];
 
-    function animate() {
-        currentFrame += 1;
-        const rotation = {
-            x: xSpeed * currentFrame,
-            y: ySpeed * currentFrame
-        };
+// In your worker
+function animate() {
+    const start = performance.now();
+    
+    // Your animation calculations
+    currentRotationX += xSpeed * deltaTime;
+    currentRotationY += ySpeed * deltaTime;
 
-        // Send the updated rotation back to the main thread
-        self.postMessage(rotation);
-
-        // Continue the animation
-        requestAnimationFrame(animate);
+    // Log performance occasionally
+    frameTimeLog.push(performance.now() - start);
+    if (frameTimeLog.length > 100) {
+        const avgTime = frameTimeLog.reduce((a, b) => a + b) / frameTimeLog.length;
+        console.log('Average calculation time:', avgTime.toFixed(2), 'ms');
+        frameTimeLog = [];
     }
 
-    animate();
+    self.postMessage({x: currentRotationX, y: currentRotationY});
+}
 };
