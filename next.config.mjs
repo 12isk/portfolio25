@@ -1,7 +1,6 @@
 // Import bundle analyzer using ES Module syntax
 import bundleAnalyzer from '@next/bundle-analyzer';
 
-
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -36,7 +35,7 @@ const nextConfig = {
   
     // Additional Next.js features you can now use
     experimental: {
-      optimizeCss: true,
+      optimizeCss: false,
       optimizePackageImports: ['ReactThreeFiber', 'Framermotion', 'three', 'gsap', 'framer-motion','motion'],
       //serverActions: true, // Enable if you want to use server actions
     },
