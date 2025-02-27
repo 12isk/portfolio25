@@ -108,16 +108,17 @@ function Model({ isHovered, setIsHovered, onLoad }) {
     // Material properties using Leva controls
     const materialProps = useControls('Material Properties', {
         meshPhysicalMaterial: false,
-        transmissionSampler: false,
+        
         backside: false,
-        samples: { value: 1, min: 1, max: 32, step: 1 },
-        resolution: { value: 1530, min: 256, max: 2048, step: 256 },
+        xSpeed: { value: 0.006, min: 0, max: 0.1, step: 0.001 },
+        ySpeed: { value: 0.005, min: 0, max: 0.1, step: 0.001 },
+        zSpeed: { value: 0, min: 0, max: 0.1, step: 0.001 },
         transmission: { value: 1, min: 0, max: 1 },
         roughness: { value: 0.0, min: 0, max: 1, step: 0.01 },
         thickness: { value: 0.05, min: 0, max: 10, step: 0.01 },
         ior: { value: 1, min: 1, max: 5, step: 0.01 },
         chromaticAberration: { value: 0.03, min: 0, max: 1 },
-        anisotropy: { value: 0.42, min: 0, max: 1, step: 0.01 },
+        //anisotropy: { value: 0.42, min: 0, max: 1, step: 0.01 },
         distortion: { value: 0.0, min: 0, max: 1, step: 0.01 },
         distortionScale: { value: 0.01, min: 0.01, max: 1, step: 0.01 },
         temporalDistortion: { value: 0.5, min: 0, max: 1, step: 0.01 },
@@ -126,10 +127,11 @@ function Model({ isHovered, setIsHovered, onLoad }) {
         // attenuationColor: '#ffffff',
         // color: '#4ECDC4',
         // bg: '#FF6B6B',
-        xSpeed: { value: 0.006, min: 0, max: 0.02, step: 0.001 },
-        ySpeed: { value: 0.005, min: 0, max: 0.02, step: 0.001 },
-        zSpeed: { value: 0, min: 0, max: 0.02, step: 0.001 },
+        
     });
+    // Fixed values for samples and resolution
+    const fixedSamples = 1; // Set your desired value
+    const fixedResolution = 1530;
 
     useEffect(() => {
         if (nodes) {
@@ -168,7 +170,12 @@ function Model({ isHovered, setIsHovered, onLoad }) {
                 {...nodes.TorusKnot001} 
                 scale={meshScale}
             >
-                <MeshTransmissionMaterial {...materialProps} />
+                <MeshTransmissionMaterial 
+                    {...materialProps}
+                    samples={fixedSamples}
+                    resolution={fixedResolution}
+                    anisotropy={0.42}
+                />
             </mesh>
         </group>
     );
