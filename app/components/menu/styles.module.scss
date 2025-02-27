@@ -158,6 +158,15 @@
     justify-content: center;
     align-items: center;
     width: 50%; // Take half of the available space
+
+    @media (max-width: 768px) {
+        padding-left: 20px;        
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        padding-left: 100px;
+        gap: 2em;
+    }
+    
 }
 
 .menuInfoCol {
@@ -166,10 +175,17 @@
     justify-content: flex-end;
     margin: 0 1em; // Add margin to separate columns
     text-align: center;
+
 }
 
 .menuInfoCol a, .menuInfoCol p {
     font-size: 14px;
+    @media (min-width: 768px) and (max-width: 1024px) {
+        font-size: 18px;
+    }
+    @media(min-width: 1024px) {
+        font-size: 17px;
+    }
 }
 
 .menuPreview {
