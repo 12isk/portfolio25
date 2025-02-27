@@ -87,13 +87,13 @@ export default function ProjectList({ projects, setModal }) {
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
     >
-      <motion.h2 
+      <h2 
         ref={title} 
         className='projects-header'
         variants={titleVariants}
       >
         ProJec<span ref={sLetter} className={styles.specialLetter}>T</span>s
-      </motion.h2>
+      </h2>
 
       <motion.div 
         ref={bodyRef}

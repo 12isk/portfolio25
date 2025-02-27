@@ -105,6 +105,7 @@ main {
 @media (max-width: 1024px) and (orientation: landscape) {
   html, 
   body {
+    position: relative;
     overflow: visible;
     overscroll-behavior: none;
     touch-action: manipulation;

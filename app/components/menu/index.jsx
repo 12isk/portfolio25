@@ -208,7 +208,7 @@ export default function Menu() {
                   <a href="https://github.com/12isk">Github &#8599;</a>
                 </div>
                 <div className={styles.menuInfoCol}>
-                  <p>contact@12isk.xyz</p>
+                  <a href="mailto:contact@12isk.xyz">contact@12isk.xyz</a>
                   <p>HMU!</p>
                 </div>
               </div>

@@ -203,7 +203,7 @@ export default function FocusGallery({ project }) {
             quality={100} 
             //className={styles.image}
             placeholder="blur"
-            blurDataURL={`data:image/svg+xml;base64,...`}
+            blurDataURL={generateOptimizedBlurPlaceholder()}
             src={`/${src}`}
             width={imageSizes.newWidth}
             height={imageSizes.newHeight}
@@ -221,7 +221,7 @@ export default function FocusGallery({ project }) {
             quality={100} 
             placeholder="blur"
             //className={styles.image}
-            blurDataURL={`data:image/svg+xml;base64,...`}
+            blurDataURL={generateOptimizedBlurPlaceholder()}
             src={`/${src}`}
             width={imageSizes.newWidth}
             height={imageSizes.newHeight}
@@ -240,7 +240,7 @@ export default function FocusGallery({ project }) {
               placeholder="blur"
               //className={styles.image}
               quality={100} 
-              blurDataURL={`data:image/svg+xml;base64,...`}
+              blurDataURL={generateOptimizedBlurPlaceholder()}
               src={`/${src}`}
               width={imageSizes.newWidth * 0.5}
               height={imageSizes.newHeight * 1.1}

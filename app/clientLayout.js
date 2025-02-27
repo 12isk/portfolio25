@@ -2,6 +2,7 @@
 import { ReactLenis } from "lenis/react";
 import Menu from "./components/menu";
 import { useEffect, useState } from "react";
+import GradientCursor from "./components/GradientCursor";
 
 export default function ClientLayout({ children }) {
   const isSlower = typeof window !== "undefined" && navigator.hardwareConcurrency < 6;
@@ -30,6 +31,7 @@ export default function ClientLayout({ children }) {
 
   return (
     <ReactLenis root options={lenisOptions} suppressHydrationWarning>
+      {/* <GradientCursor /> */}
       <Menu />
       {children}
     </ReactLenis>

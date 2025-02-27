@@ -141,6 +141,7 @@ export default function Modal({ modal, projects }) {
                       alt={title} // Assuming title is a property of project
                       width={300}
                       height={200} // Set a proper height value
+                      priority
                     />
                   </div>
                 </div>

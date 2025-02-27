@@ -1,11 +1,9 @@
 import { Environment, PerformanceMonitor, Text, useProgress } from '@react-three/drei';
-
 import React, { Suspense, useCallback, useEffect, useState } from 'react';
 
 import GradientCursor from '../GradientCursor';
 import useIsMobile from '../hooks/useIsMobile';
 import useIsTablet from '../hooks/useIsTablet';
-
 import Available from '../precisions/available';
 import Clock from '../precisions/clock';
 import Specialty from '../precisions/specialty';
@@ -34,14 +32,14 @@ export default function Hero() {
     // }
     // const [dpr, setDpr] = useState(1.5);
 
-    const handleResize = useCallback(() => {
-        setDimensions(getWindowDimensions());
-    }, []);
+    // const handleResize = useCallback(() => {
+    //     setDimensions(getWindowDimensions());
+    // }, []);
     
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [handleResize]); // Only runs when necessary
+    // useEffect(() => {
+    //     window.addEventListener('resize', handleResize);
+    //     return () => window.removeEventListener('resize', handleResize);
+    // }, [handleResize]); // Only runs when necessary
     
 
     return (

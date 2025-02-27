@@ -1,6 +1,7 @@
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 // app/layout.js
 import ClientLayout from "./clientLayout"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "./css/globals.css";
 
@@ -47,9 +48,10 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
           type="application/octet-stream" 
         /> */}
-        <link rel="preload" href="/media/hero-rec.webm" as="video" />
+        {/* <link rel="preload" href="/media/model-rec.webm" as="fetch" type="video/webm" /> */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+
       </head>
-      <link rel="icon" href="/favicon.ico" sizes="any" />
       {/* <link 
         rel="icon" 
         href="/icon?<generated>" 
