@@ -1,5 +1,6 @@
-import styles from './styles.module.scss';
 import React, { useEffect, useRef, useState } from 'react';
+
+import styles from './styles.module.scss';
 
 // Create this CSS module
 
@@ -47,7 +48,7 @@ export default function VideoModel({ onPointerOver, onPointerLeave, onLoad }) {
         }}
         autoPlay
         preload="auto"
-        //poster="/model-poster.jpg" // Optional: Add a poster image
+        poster="/media/model-rec-poster.webp" // Optional: Add a poster image
       >
         <source src="/media/model-rec.webm" type="video/webm" />
         {/* <source src="/hero-rec.webm" type="video/webm" /> Add WebM format for better compression */}
