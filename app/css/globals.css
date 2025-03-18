@@ -23,9 +23,7 @@
   font-style: normal;
 }
 
-main::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
-}
+
 
 main {
   scrollbar-width: none; /* Firefox */

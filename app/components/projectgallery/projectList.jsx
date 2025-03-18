@@ -105,9 +105,9 @@ export default function ProjectList({ projects, setModal }) {
             variants={projectVariants}
           >
             <Link
-              href={{
+              href= {project.id === 5 ? project.src[1] : ({
                 pathname: `/projects/${encodeURIComponent(project.slug)}`
-              }}
+              })}
             >
               <Project
                 index={index}
@@ -118,6 +118,7 @@ export default function ProjectList({ projects, setModal }) {
             </Link>
           </motion.div>
         ))}
+        
       </motion.div>
     </motion.div>
   );

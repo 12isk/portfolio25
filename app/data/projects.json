@@ -53,5 +53,17 @@
     "desc": "Graphic Design",
     "paragraph": "",
     "slug": "statements"
+  },
+  {
+    "id": 5,
+    "title": "PersOnal eXploRation",
+    "src": [
+      "media/projects/personal/personal.png",
+      "https://me.12isk.xyz"
+    ],
+    "color": "#ff4f00",
+    "desc": "Web Design",
+    "paragraph": "A personal project that explores the concept of personal identity and self-expression.\nThe website is designed to be a digital representation of the creator's identity, with each section representing a different aspect of their personality.",
+    "slug": "personal"
   }
 ]
