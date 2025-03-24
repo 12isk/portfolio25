@@ -105,7 +105,7 @@ export default function ProjectList({ projects, setModal }) {
             variants={projectVariants}
           >
             <Link
-              href= {project.id === 5 ? project.src[1] : ({
+              href= {project.id === 5 ? project.url : ({
                 pathname: `/projects/${encodeURIComponent(project.slug)}`
               })}
             >

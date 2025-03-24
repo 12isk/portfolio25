@@ -258,6 +258,7 @@ export default function FocusGallery({ project }) {
       <div className={styles.title} style={{ filter: `drop-shadow(0px 0px 8px ${project.color})` }}>
         <h1>{project.title}</h1>
         <p>{project.desc}</p>
+        <p className={styles.paragraph}>{project.paragraph}</p>
       </div>
     </div>
   );

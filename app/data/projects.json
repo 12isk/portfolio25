@@ -24,7 +24,7 @@
     ],
     "color": "#f0772f",
     "desc": "Graphic Design",
-    "paragraph": "",
+    "paragraph": "Gryse is a semi-luxury streetwear clothing brand based in Paris.\n For Gryse, the mission was to create a Contest poster while respecting their aesthetic.",
     "slug": "gryse"
   },
   {
@@ -36,7 +36,7 @@
     ],
     "color": "#e3436b",
     "desc": "Graphic Design",
-    "paragraph": "A series of posters that explore the concept of (re)generation.\nThe posters are meant to be displayed in a sequence, with each poster representing a different form of the process.",
+    "paragraph": "Initially about falling in love, this project evolved to represent personal reconstruction and resilience, our ability to regenerate ourselves from very little, portrayed through dual perspectives of endless chaos and isolation.",
     "slug": "regen"
   },
   {
@@ -58,12 +58,17 @@
     "id": 5,
     "title": "PersOnal eXploRation",
     "src": [
-      "media/projects/personal/personal.png",
-      "https://me.12isk.xyz"
+      "media/projects/personal/blur serifa.jpeg",
+      "media/projects/personal/chromatic abb.gif",
+      "media/projects/personal/kazakhstan.webp",
+      "media/projects/personal/me.webp",
+      "media/projects/personal/soloEx.webp",
+      "media/projects/personal/pixels.jpeg"
     ],
     "color": "#ff4f00",
     "desc": "Web Design",
-    "paragraph": "A personal project that explores the concept of personal identity and self-expression.\nThe website is designed to be a digital representation of the creator's identity, with each section representing a different aspect of their personality.",
-    "slug": "personal"
+    "paragraph": "A personal project that explores the concept of personal identity and self-expression.\nThe website is designed to be a digital representation of the creator's identity, with each image representing a different aspect of me.",
+    "slug": "personal",
+    "url": "https://me.12isk.xyz"
   }
 ]
